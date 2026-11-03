@@ -21,8 +21,8 @@
   --comb: rgba(242, 177, 52, 0.07);
   --shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
 
-  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Barlow Semi Condensed", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
 
   --gutter: clamp(16px, 4vw, 40px);
@@ -75,10 +75,10 @@ code {
   border-radius: 5px;
   overflow-wrap: anywhere;
 }
-h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.12; margin: 0; letter-spacing: -0.015em; }
-h1 { font-size: clamp(2.3rem, 5.2vw, 3.7rem); font-weight: 700; letter-spacing: -0.03em; }
-h2 { font-size: clamp(1.45rem, 2.6vw, 1.9rem); font-weight: 650; }
-h3 { font-size: 1.15rem; font-weight: 650; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.12; margin: 0; letter-spacing: 0; }
+h1 { font-size: clamp(2.5rem, 5.6vw, 4rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.45rem, 2.6vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.15rem; font-weight: 600; }
 p { margin: 0 0 1em; }
 .lead { font-size: 1.15rem; color: var(--text-2); max-width: 62ch; }
 .muted { color: var(--text-2); }
@@ -359,7 +359,7 @@ p { margin: 0 0 1em; }
 
 /* ---------- Changelog ---------- */
 .release { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 16px 48px; padding: 40px 0; border-bottom: 1px solid var(--line); }
-.release-side .ver { font: 700 2.4rem/1 var(--font-display); color: var(--honey-ink); letter-spacing: -0.03em; }
+.release-side .ver { font: 700 2.4rem/1 var(--font-display); color: var(--honey-ink); letter-spacing: -0.01em; }
 .release-side time { display: block; color: var(--text-2); margin-top: 8px; }
 .release h2 { margin-bottom: 10px; }
 .release .hl-list { margin-top: 20px; }
