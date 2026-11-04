@@ -8,7 +8,7 @@ BB.text = BB.text || {};
 BB.text.en = {
   ui: {
     skip: "Skip to content",
-    nav: { home: "Overview", start: "Quick start", tools: "Tools", issues: "Known issues", changes: "Changelog", roadmap: "Roadmap" },
+    nav: { home: "Overview", install: "Install", start: "Quick start", tools: "Tools", issues: "Known issues", changes: "Changelog", roadmap: "Roadmap" },
     theme: { toDark: "Dark mode", toLight: "Light mode" },
     langName: "Deutsch",
     langSwitch: "Auf Deutsch lesen",
@@ -59,7 +59,8 @@ BB.text.en = {
     },
     notFound: "That page doesn't exist. Pick a tool from the list.",
     caption: "Screenshot from Revit 2026 with BusyBee set to English. Category names appear in the Revit language. Click to see it full size.",
-    close: "Close"
+    close: "Close",
+    oldShot: "This screenshot is from version 1.18. The window now has more options, described below."
   },
 
   home: {
@@ -78,18 +79,73 @@ BB.text.en = {
     paneAlt: "The BusyBee panel in Revit with the tool groups expanded"
   },
 
+  install: {
+    title: "Install and update",
+    lead: "BusyBee installs for your own Windows user in about a minute. You don't need admin rights, and one installer covers Revit 2025 and 2026.",
+    needTitle: "What you need",
+    need: [
+      "Windows with Revit 2025 or 2026.",
+      "The BusyBee ZIP file, for example `BusyBee-1.30.0.zip`. Ask Sascha for the current one.",
+      "No admin rights. BusyBee installs into your own user folder, so it doesn't affect anyone else on the PC."
+    ],
+    sections: [
+      { id: "install", h: "Install",
+        steps: [
+          { h: "Close Revit", p: "Close every Revit window. While Revit runs, the installer stops and changes nothing." },
+          { h: "Extract the whole ZIP", p: "Right-click the ZIP, choose Extract All, and open the extracted folder. The installer doesn't work from inside the ZIP." },
+          { h: "Run the installer", p: "Double-click `Install BusyBee.cmd`. A black window shows what it does and ends with \"BusyBee … is installed for Revit 2025 and 2026\". Press any key to close it." },
+          { h: "Start Revit and load BusyBee", p: "Revit asks once whether to load BusyBee, because the add-in isn't signed. Choose [[Always Load]]. Then open the BusyBee tab and click [[BusyBee Manager]]." },
+          { h: "Check the version", p: "The version is shown at the top of the BusyBee panel, next to the name, for example v1.30.0." }
+        ] },
+      { id: "update", h: "Update to a new version",
+        steps: [
+          { h: "Close Revit and extract the new ZIP", p: "Use a new folder for each version, so you don't mix old and new files." },
+          { h: "Run the installer from the new folder", p: "Double-click `Install BusyBee.cmd`. It replaces the old version; you don't have to uninstall first." },
+          { h: "Your settings stay", p: "Your language, the panel layout, saved clash approvals, LOIN mappings and the Select by ID history are kept. They're stored outside the add-in." },
+          { h: "Check the version", p: "Start Revit and look at the top of the BusyBee panel. Use the same version as the rest of your project team: settings saved by a newer version can't always be read by an older one." }
+        ] },
+      { id: "uninstall", h: "Uninstall",
+        steps: [
+          { h: "Close Revit", p: "The uninstaller also stops and changes nothing while Revit runs." },
+          { h: "Run the uninstaller", p: "Double-click `Uninstall BusyBee.cmd` in any extracted BusyBee folder. The BusyBee tab is gone the next time you start Revit." },
+          { h: "Remove your settings too, if you want", p: "Your settings and logs are kept, in case you install again. To remove them, delete the two BusyBee folders listed under \"Where BusyBee keeps its files\"." }
+        ] }
+    ],
+    helpTitle: "If something goes wrong",
+    help: [
+      { q: "The window says \"Please close Revit first\"",
+        a: "Revit is still running, sometimes without a visible window. Close it, or end Revit in Task Manager, then run the installer again." },
+      { q: "The window says \"Please extract the whole ZIP first\" or \"BusyBee.bundle was not found\"",
+        a: "The installer was started from inside the ZIP, or only some files were copied. Extract the whole ZIP and run it from the extracted folder." },
+      { q: "Windows shows a warning before the installer runs",
+        a: "Windows marks files that came from email or the internet. Make sure the ZIP came from Sascha. If your company settings block the installer, ask Sascha." },
+      { q: "The BusyBee tab doesn't appear in Revit",
+        a: "BusyBee runs in Revit 2025 and 2026 only. If Revit asked about loading BusyBee and you chose [[Do Not Load]], close Revit, start it again and choose [[Always Load]]. If the tab is still missing, run the installer again and send Sascha a screenshot of the black window." },
+      { q: "BusyBee shows an error or does something unexpected",
+        a: "Send Sascha a short note on what you did and today's log file from `%LOCALAPPDATA%\\BusyBee\\logs`." }
+    ],
+    filesTitle: "Where BusyBee keeps its files",
+    filesLead: "Paste a path into the address bar of File Explorer to open it.",
+    filesHead: ["Folder", "What's in it"],
+    files: [
+      ["%APPDATA%\\Autodesk\\ApplicationPlugins\\BusyBee.bundle", "The add-in itself, for both Revit versions. Installing replaces it and uninstalling removes it."],
+      ["%APPDATA%\\BusyBee", "Your settings: language, panel layout, clash approvals, LOIN mappings and the Select by ID history."],
+      ["%LOCALAPPDATA%\\BusyBee\\logs", "Error logs, one file per day, kept for 14 days. Send today's file with a bug report."]
+    ]
+  },
+
   start: {
     title: "Quick start",
-    lead: "Your first ten minutes with BusyBee. You need BusyBee installed in Revit 2025 or 2026; ask Sascha for the current version.",
+    lead: "Your first ten minutes with BusyBee. You need BusyBee installed in Revit 2025 or 2026; if it isn't yet, start with the Install page.",
     steps: [
       { h: "Open the BusyBee panel",
-        p: "In Revit, open the BusyBee tab and click [[BusyBee Manager]]. The panel docks next to the Project Browser. You can drag it anywhere, like any Revit panel." },
+        p: "In Revit, open the BusyBee tab and click [[BusyBee Manager]]. The panel docks next to the Project Browser. You can drag it anywhere, like any Revit panel. Each tool also has its own button on the BusyBee tab, so you can open it without the panel." },
       { h: "Pick your language",
         p: "Click the flag at the bottom right of the panel to switch BusyBee between English and German. It changes straight away and is remembered. Your Revit language doesn't matter: BusyBee works with both." },
       { h: "Open a view that shows what you want to work on",
         p: "Most tools work on the elements visible in the active view. Open a 3D view, plan or section with those elements before you start. Write tools stop and change nothing if the view shows no model elements." },
       { h: "Open a tool and set it up",
-        p: "Click a tool's name in the panel to open its window. Click the arrow on the right to read a short description first. Tool windows stay open while you keep working in Revit." },
+        p: "Click a tool's name in the panel to open its window. Click the arrow on the right to read a short description first. To find a tool fast, type part of its name in the search box at the top of the panel, in English or German. Tool windows stay open while you keep working in Revit." },
       { h: "Click Start",
         p: "Every tool has a yellow [[Start]] button at the bottom right. Long runs show a progress window with [[Cancel]]. Every change is one Revit undo step, so Ctrl+Z takes back a whole run." },
       { h: "Save your setup for the project",
@@ -97,6 +153,8 @@ BB.text.en = {
     ],
     goodToKnow: "Good to know",
     notes: [
+      "Click the star next to a tool to add it to Favourites at the top of the panel. Your three most recently used tools are listed below them.",
+      "Give any tool a keyboard shortcut: in Revit, open View > User Interface > Keyboard Shortcuts and search for BusyBee.",
       "Revit asks once whether to load BusyBee because the add-in isn't signed. Choose [[Always Load]].",
       "While a tool runs, Revit itself is busy. The progress window still responds, and Cancel takes effect after the current element.",
       "Problems? Send Sascha a short note and today's log file from `%LOCALAPPDATA%\\BusyBee\\logs`."
@@ -110,10 +168,11 @@ BB.text.en = {
   tools: {
     "parameter-automation": {
       name: "Parameter Automation",
-      tagline: "Fill parameters with IF and ELIF rules, by category.",
-      summary: "Read a source parameter, check it against one or more conditions and write a value to a target parameter. Rules are organised in category groups, so one setup can cover ducts, pipes and fittings at once.",
+      tagline: "Fill parameters with IF and ELIF rules or formulas, and check every change before it's written.",
+      summary: "Read a source parameter, check it against one or more conditions and write a value to a target parameter. The value can be fixed text or a formula such as `{Level}-{Mark}`. Rules are organised in category groups, so one setup can cover ducts, pipes and fittings at once. Before anything is written, a preview lists every change.",
       when: [
         "Fill Comments, Mark or a project parameter from another parameter, such as Level or System Name.",
+        "Build values from other parameters, for example door numbers as `{Level}-{Mark}`.",
         "Translate codes into readable values, for example SA_F → Supply air.",
         "Fill only the empty values on a model someone else started."
       ],
@@ -121,21 +180,26 @@ BB.text.en = {
         "Open a view that shows the elements you want to update.",
         "Pick a category in [[Category]] and click [[+ New Category Group]]. Use [[+ Add Category]] to put more categories in the same group.",
         "Click [[+ Add Parameter Map]]. Choose the [[Source Parameter]] to read and the [[Target Parameter]] to write.",
-        "Under [[Conditional Rules]], pick an operator such as [[equals]] or [[contains]], type the value to look for, and type the value to write after the arrow.",
+        "Under [[Conditional Rules]], pick an operator such as [[equals]] or [[contains]], type the value to look for, and type the value to write after the arrow. The value to write can contain `{Parameter}` formulas.",
         "Click [[+ Add Condition]] for more cases. They're checked from top to bottom as ELIF, and the first match wins.",
-        "Click [[Start]]. A summary shows how many values were changed, unchanged or skipped."
+        "Click [[Start]]. Nothing is written yet: a preview lists every element whose value would change, with its value now and after writing. Double-click a row to select and zoom to the element.",
+        "Click [[Write N changes]] to write them, or close the preview to leave the model untouched. A summary shows what was changed, and one Ctrl+Z undoes the whole run."
       ],
       settings: [
         ["Operators", "equals, does not equal, greater or less than (with or equal), contains, starts with, ends with and their opposites, has value, has no value. Greater and less than compare numbers, also when Revit shows units."],
-        ["Only write empty parameters", "In the settings (gear icon). Skips elements whose target already has a value."],
-        ["Numbers and units", "Values are written in project units, like typing in the Properties palette. 2500, 2500 mm and 2,5 m all work. Yes/No parameters accept Yes, No, Ja and Nein."],
+        ["Formulas", "`{Level}-{Mark}` gives every element its own value, such as L1-101. Any parameter of the element or its type works, with the name Revit shows. `{Level}` also works in German Revit and `{Ebene}` in English Revit. Write `{{` or `}}` for a brace. An element that lacks a parameter in the formula shows as Can't write in the preview and is left alone."],
+        ["Numbers and units", "Values are read the way the Properties palette reads them: 2500 uses the project unit, and 2500 mm, 2,5 m or 8' 2\" use the unit you typed. A unit that doesn't fit, such as kg on a length, shows as Can't write. Yes/No parameters accept Yes, No, Ja and Nein."],
+        ["Type parameters", "Written once per type. If the instances of one type would need different values, for example doors of one type on two levels, the type is left unchanged and shown as Type skipped."],
+        ["Show values that stay the same", "In the preview. Values that wouldn't change are hidden unless you tick it."],
+        ["Only write empty parameters", "In the settings (gear icon). Skips elements whose target already has a value. Works for type parameters too."],
         ["Save Config / Load Config", "Store the rules as a file, for reuse in another project."]
       ],
       tips: [
         "Copy a category group with the copy icon to start a similar rule set.",
-        "Values that can't be converted, such as text in a number parameter, are counted and reported, not skipped silently."
+        "The write uses the rules as they were when you clicked Start, so editing them while the preview is open doesn't change what gets written.",
+        "Hover over a value box for a short help text on formulas."
       ],
-      issues: ["type-param-writes", "english-messages"],
+      issues: ["type-param-writes", "english-messages", "reports-english"],
       shots: [{ src: "param-rules.webp", alt: "Parameter Automation with an IF and an ELIF rule for air terminals" }]
     },
 
@@ -164,7 +228,8 @@ BB.text.en = {
       ],
       tips: [
         "Levels use project elevation, so a raised Project Base Point gives correct results.",
-        "Use Fully Contained to find elements that cross a level: they get no value."
+        "Use Fully Contained to find elements that cross a level: they get no value.",
+        "Type parameters are written once per type. If its instances fall into different ranges, the type is left unchanged and named in the result."
       ],
       issues: ["type-param-writes"],
       shots: [{ src: "level-mapping.webp", alt: "Level Mapping with two elevation ranges for ducts and air terminals" }]
@@ -173,7 +238,7 @@ BB.text.en = {
     "spatial-parameters": {
       name: "Spatial Parameters",
       tagline: "Write the room or the grid position into each element.",
-      summary: "Room Mapping finds the room or space each element sits in and writes its number and name. Grid Mapping finds the nearest grid lines or intersection and writes them as text, such as C-4.",
+      summary: "Room Mapping finds the room or space each element sits in and writes its number and name, also from rooms in linked models. Grid Mapping finds the nearest grid lines or intersection and writes them as text, such as C-4.",
       when: [
         "Add room numbers to doors, furniture, fixtures or MEP terminals for schedules.",
         "Give structural or MEP elements a grid reference."
@@ -194,7 +259,8 @@ BB.text.en = {
       ],
       tips: [
         "If an element's centre isn't in a room, BusyBee also tries its ends, its connectors and small offsets before giving up.",
-        "Rooms are found in the phase of the element."
+        "Rooms are found in the phase of the element.",
+        "If an element is in no room or space of the open model, BusyBee looks in every loaded link, using the link phase with the same name as the view's. So an MEP model can write the architect's room numbers. The summary says how many came from links."
       ],
       issues: ["spatial-linked-rooms", "type-param-writes"],
       shots: [
@@ -234,35 +300,47 @@ BB.text.en = {
 
     "clash-detection": {
       name: "Clash Detection",
-      tagline: "Find hard clashes and clearance problems, inside Revit.",
-      summary: "Checks one set of categories against another, in the main model or against a linked model. It ignores the usual false positives: connected duct and pipe runs, insulation, hosted inserts, nested families and joined geometry. You can approve clashes, add notes and export the list.",
+      tagline: "Find hard clashes and clearance problems, track them between runs, export BCF and cut openings.",
+      summary: "Checks one set of categories against another: inside the main model, against one linked model, against all links at once, or one link against another. It ignores the usual false positives: connected duct and pipe runs, insulation, hosted inserts, nested families and joined geometry. You can save the setup as a named test, see which clashes are new or resolved since the last run, approve clashes, export them as BCF or CSV, and cut openings where ducts and pipes pass walls and floors.",
       when: [
         "Check ducts and pipes against slabs and walls before a coordination meeting.",
+        "Check the HVAC link against the structural link without opening either model.",
         "Find tight spots with a clearance check, for example 50 mm around cable trays.",
-        "Track which clashes you've already discussed by approving them."
+        "See what changed since last week's run, and hand the open clashes to BIMcollab, Solibri, Navisworks or Revizto as BCF.",
+        "Cut the openings for the engineer's linked ducts in your architecture model."
       ],
       steps: [
-        "Tick the categories under [[1. Primary Categories]], for example Ducts and Duct Fittings.",
-        "Under [[2. Clashing Categories In]], choose [[Main Model]] or a linked model, then tick the categories to check against.",
+        "To reuse a saved setup, pick it in [[Test]] at the top left. Otherwise set up the check as below.",
+        "Under [[1. Primary Categories In]], choose where the primary elements come from, [[Main Model]] or one link, and tick their categories, for example Ducts and Duct Fittings.",
+        "Under [[2. Clashing Categories In]], choose the model to check against: [[Main Model]], one link or [[All Linked Models]]. Then tick the categories, for example Floors and Walls.",
         "Under [[3. Clash Mode & Tolerance]], pick [[Hard Clash]] or [[Clearance (Soft)]] and set the distance in mm.",
-        "Click [[Start]].",
-        "Click a result to select both elements and see their details. Use [[Zoom 3D]], [[Isolate Elements]], [[3D Bounding Box]] or [[Color Elements]] to look at it.",
+        "Click [[Start]]. The status bar shows how many clashes are new, still there and resolved since the last run with the same settings, and how long the run took.",
+        "Click a result to see both elements. Use [[Zoom 3D]], [[Isolate Elements]], [[3D Bounding Box]] or [[Color Elements]] to look at it. New clashes have a blue NEW badge, and [[New only]] shows just those.",
         "Press Space or click [[Approve]] for clashes that are fine. Add a note if it helps. [[Hide Approved]] removes them from the list.",
-        "Use [[Export CSV]] for a list in Excel, or [[Save Clashes]] to reopen the results later without running again."
+        "Share the result with [[Export BCF]] or [[Export CSV]], or keep it with [[Save Clashes]]. To keep the setup for next time, type a name in [[Test]] and click Save.",
+        "To cut openings, filter the list to the clashes you want and click [[Place Openings]]."
       ],
       settings: [
         ["Hard Clash", "Elements overlap by at least the tolerance."],
         ["Clearance (Soft)", "Elements come closer than the distance, even without touching."],
+        ["All Linked Models", "In the clashing model list. Checks the primary elements against every loaded link in one run. The lists include categories that only a link has."],
+        ["Test", "Named sets of categories, models, mode, tolerance and scope, saved next to the model in `<Model>.BusyBeeClashTests.json`, so the whole team sees the same tests. They work in English and German Revit."],
+        ["NEW, still there, resolved", "Each run is compared with the previous run that used the same settings in the same view. The N resolved link lists the clashes that are gone. Cancelled runs and runs on selected elements only aren't compared."],
+        ["Export BCF", "Writes the clashes the list shows as a BCF 2.1 file, one topic per clash with a camera view and both elements. Search, the category filter, Hide Approved and New only decide what goes in. Approved clashes are Closed, and exporting again updates the same topics instead of adding copies."],
+        ["Place Openings", "Cuts a rectangular opening for every clash in the list where a duct, pipe, cable tray or conduit passes a wall or floor of the open model. The MEP element can be in a link. The opening is the element's size plus the clearance on each side. Approved clashes are skipped, an opening already there isn't cut twice, new openings note the clash in their Comments, and one Ctrl+Z removes all openings of one click."],
+        ["Opening clearance (mm)", "In the settings (gear icon). The space between the element and the edge of the opening, 50 mm by default."],
         ["Group", "Flat, by primary element, by categories, by level or by system."],
-        ["Only check visible objects", "In the settings (gear icon). Limits both sides to what the active view shows."],
+        ["Only check visible objects", "In the settings. Limits both sides to what the active view shows."],
         ["Selected elements only", "In the settings. Checks only what's selected in Revit."]
       ],
       tips: [
-        "Approvals are saved next to the model as `<Model>.BusyBeeClashStatus.json`, or in your AppData folder for cloud models. Run again later and they're still there.",
+        "Primary elements always come from the active view, so a run in a 3D view and one in a floor plan check different elements. Each view keeps its own new/resolved history.",
+        "Approvals, tests and history are stored next to the model, or in your AppData folder for cloud models. Run again later and they're still there.",
+        "Large models run much faster than before: each element's geometry is read once per run.",
         "Each undo button reverses its own action: Unisolate, Reset Section Box, Reset Colors. Closing the window also removes its isolation."
       ],
-      issues: ["clash-one-link", "clash-no-bcf", "revit-busy"],
-      shots: [{ src: "clash.webp", alt: "Clash Detection showing ducts against floors in the linked architecture model" }]
+      issues: ["openings-limits", "linked-primary", "clash-one-link", "clash-no-bcf", "revit-busy"],
+      shots: [{ src: "clash.webp", alt: "Clash Detection showing ducts against floors in the linked architecture model", old: true }]
     },
 
     "model-health": {
@@ -434,6 +512,18 @@ BB.text.en = {
   },
 
   issues: [
+    { id: "openings-limits", tools: ["clash-detection"], roadmap: "opening-families",
+      title: "Place Openings skips some clashes",
+      body: "Openings are only cut where a straight duct, pipe, cable tray or conduit passes a wall or floor of the open model. Curved walls, curtain walls, sloped elements (between 17° and 72° from horizontal) and other clash types are skipped and counted in the summary. Openings are plain Revit openings, not opening families or sleeves.",
+      fix: "Check the summary after Place Openings and cut the skipped ones by hand." },
+    { id: "linked-primary", tools: ["clash-detection"], roadmap: null,
+      title: "Clashes with a linked primary element can't be selected or coloured",
+      body: "When the primary elements come from a link, Revit doesn't allow selecting or colouring them in the host model.",
+      fix: "Use Zoom 3D, 3D Bounding Box or Isolate Elements to look at them, or export BCF." },
+    { id: "reports-english", tools: ["core"], roadmap: null,
+      title: "Exported reports stay in English",
+      body: "CSV and HTML reports, Revit's own error texts, the names of the three default Quality Control rules and a few fixed list entries such as All Categories, Main Model and All Linked Models stay English, because the tools also store and compare them.",
+      fix: "None needed. Everything else in BusyBee follows the language you pick." },
     { id: "type-param-writes", tools: ["parameter-automation", "level-mapping", "spatial-parameters"], roadmap: "type-writes",
       title: "Type parameters get the value of the last instance",
       body: "If the target is a type parameter, every instance of that type writes to the same value, so the last one wins. For example, if two doors of one type sit in different rooms, the type gets one of the two room numbers.",

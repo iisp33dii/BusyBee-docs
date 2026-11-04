@@ -3,7 +3,7 @@
   "use strict";
 
   var LANGS = ["en", "de"];
-  var PAGES = ["", "start", "tools", "issues", "changelog", "roadmap"];
+  var PAGES = ["", "install", "start", "tools", "issues", "changelog", "roadmap"];
   var main = document.getElementById("main");
   var state = { lang: "en", page: "", slug: "" };
 
@@ -80,7 +80,7 @@
     var t = T().ui;
     document.documentElement.lang = state.lang;
     document.getElementById("skip").textContent = t.skip;
-    var items = [["", t.nav.home], ["start", t.nav.start], ["tools", t.nav.tools], ["issues", t.nav.issues], ["changelog", t.nav.changes], ["roadmap", t.nav.roadmap]];
+    var items = [["", t.nav.home], ["install", t.nav.install], ["start", t.nav.start], ["tools", t.nav.tools], ["issues", t.nav.issues], ["changelog", t.nav.changes], ["roadmap", t.nav.roadmap]];
     document.getElementById("nav").innerHTML = items.map(function (it) {
       var cur = it[0] === state.page ? ' aria-current="page"' : "";
       return '<a href="' + href(it[0]) + '"' + cur + ">" + esc(it[1]) + "</a>";
@@ -159,6 +159,27 @@
       ' <span class="tag">' + esc(toolName(x.tool)) + "</span></span></li>";
   }
 
+  function pageInstall() {
+    var s = T().install;
+    var need = s.need.map(function (n) { return "<li>" + fmt(n) + "</li>"; }).join("");
+    var toc = s.sections.map(function (sec) { return '<a href="' + href("install") + "#install-" + sec.id + '" data-anchor="install-' + sec.id + '">' + esc(sec.h) + "</a>"; })
+      .concat(['<a href="' + href("install") + '#install-help" data-anchor="install-help">' + esc(s.helpTitle) + "</a>",
+               '<a href="' + href("install") + '#install-files" data-anchor="install-files">' + esc(s.filesTitle) + "</a>"]).join(" · ");
+    var sections = s.sections.map(function (sec) {
+      return '<section class="section" id="install-' + sec.id + '"><h2>' + esc(sec.h) + '</h2><ol class="steps">' +
+        sec.steps.map(function (x) { return "<li><h3>" + esc(x.h) + "</h3><p>" + fmt(x.p) + "</p></li>"; }).join("") + "</ol></section>";
+    }).join("");
+    var help = s.help.map(function (h) { return '<div class="issue"><h3>' + esc(h.q) + "</h3><p>" + fmt(h.a) + "</p></div>"; }).join("");
+    var files = s.files.map(function (f) { return "<tr><td><code>" + esc(f[0]) + "</code></td><td>" + esc(f[1]) + "</td></tr>"; }).join("");
+    return '<div class="wrap"><div class="page-head"><h1>' + esc(s.title) + '</h1><p class="lead">' + esc(s.lead) + "</p>" +
+      '<p class="muted">' + esc(T().ui.toc) + ": " + toc + "</p></div>" +
+      '<section class="section" style="border:0"><h2>' + esc(s.needTitle) + '</h2><ul class="notes">' + need + "</ul></section>" +
+      sections +
+      '<section class="section" id="install-help"><h2>' + esc(s.helpTitle) + "</h2>" + help + "</section>" +
+      '<section class="section" id="install-files"><h2>' + esc(s.filesTitle) + '</h2><p class="muted">' + esc(s.filesLead) + "</p>" +
+        '<table class="gloss"><thead><tr><th scope="col">' + esc(s.filesHead[0]) + '</th><th scope="col">' + esc(s.filesHead[1]) + "</th></tr></thead><tbody>" + files + "</tbody></table></section></div>";
+  }
+
   function pageStart() {
     var s = T().start;
     var steps = s.steps.map(function (x) { return "<li><h3>" + esc(x.h) + "</h3><p>" + fmt(x.p) + "</p></li>"; }).join("");
@@ -210,14 +231,15 @@
     if (!d || !m) return '<div class="wrap docs">' + sidebar() + '<div class="article"><p class="empty">' + esc(t.ui.notFound) + "</p></div></div>";
     var idx = BB.tools.indexOf(m), prev = BB.tools[idx - 1], next = BB.tools[idx + 1];
     var shots = (d.shots || []).map(function (s, i) {
-      var cap = s.de ? t.ui.captionDe : t.ui.caption;
+      var cap = (s.old ? t.ui.oldShot + " " : "") + (s.de ? t.ui.captionDe : t.ui.caption);
       return '<figure class="figure"><a href="assets/img/' + s.src + '" data-zoom="assets/img/' + s.src + '"><img src="assets/img/' + s.src + '" alt="' + esc(s.alt) + '" loading="' + (i ? "lazy" : "eager") + '"></a>' +
         "<figcaption>" + esc(s.alt) + ". " + esc(cap) + "</figcaption></figure>";
     });
     var list = function (arr) { return arr && arr.length ? "<ul>" + arr.map(function (x) { return "<li>" + fmt(x) + "</li>"; }).join("") + "</ul>" : ""; };
     var steps = '<ol class="steps">' + d.steps.map(function (x) { return "<li><p style=\"color:var(--text)\">" + fmt(x) + "</p></li>"; }).join("") + "</ol>";
     var defs = d.settings && d.settings.length ? '<dl class="defs">' + d.settings.map(function (x) { return "<div><dt>" + fmt(x[0]) + "</dt><dd>" + fmt(x[1]) + "</dd></div>"; }).join("") + "</dl>" : "";
-    var issues = (d.issues || []).map(function (id) {
+    // Issues fixed in a team release drop off the tool page, like on the Known issues page
+    var issues = (d.issues || []).filter(function (id) { var rm = issueMeta(id).roadmap ? roadmapItem(issueMeta(id).roadmap) : null; return !rm || itemState(rm) !== "released"; }).map(function (id) {
       var it = issueText(id); if (!it) return "";
       return '<li><b>' + esc(it.title) + "</b><span>" + fmt(it.fix) + "</span></li>";
     }).join("");
@@ -247,7 +269,9 @@
     BB.text.en.issues.forEach(function (i) { (i.tools || []).forEach(function (s) { used[s] = 1; }); });
     var chips = ['<button class="chip" type="button" data-f="all" aria-pressed="' + (tool === "all") + '">' + esc(t.ui.rm.filterAll) + "</button>"]
       .concat(Object.keys(used).map(function (s) { return '<button class="chip" type="button" data-f="' + s + '" aria-pressed="' + (tool === s) + '">' + esc(toolName(s)) + "</button>"; })).join("");
-    var rows = t.issues.filter(function (i) { return tool === "all" || (issueMeta(i.id).tools || []).indexOf(tool) > -1; }).map(function (i) {
+    // An issue disappears once the team release that fixes it is out; until then people on the older version still see it
+    var open = t.issues.filter(function (i) { var rm = issueMeta(i.id).roadmap ? roadmapItem(issueMeta(i.id).roadmap) : null; return !rm || itemState(rm) !== "released"; });
+    var rows = open.filter(function (i) { return tool === "all" || (issueMeta(i.id).tools || []).indexOf(tool) > -1; }).map(function (i) {
       var meta = issueMeta(i.id), rm = meta.roadmap ? roadmapItem(meta.roadmap) : null;
       var plan = rm ? '<p class="plan">' + esc(t.ui.planned) + ': <a href="' + href("roadmap") + "#rm-" + rm.id + '" data-rm="' + rm.id + '">' + esc(rm[state.lang] || rm.en) + "</a> " + esc(t.ui.seeRoadmap) + "</p>" : "";
       return '<div class="issue" id="issue-' + i.id + '"><div class="tags">' + (meta.tools || []).map(function (s) {
@@ -343,6 +367,14 @@
     t.start.steps.forEach(function (s) {
       out.push({ title: s.h, sub: t.ui.nav.start, url: href("start"), text: (s.h + " " + plain(s.p)).toLowerCase(), body: plain(s.p) });
     });
+    t.install.sections.forEach(function (sec) {
+      sec.steps.forEach(function (s) {
+        out.push({ title: s.h, sub: t.ui.nav.install, url: href("install") + "#install-" + sec.id, text: (sec.h + " " + s.h + " " + plain(s.p)).toLowerCase(), body: plain(s.p) });
+      });
+    });
+    t.install.help.forEach(function (h) {
+      out.push({ title: h.q, sub: t.ui.nav.install, url: href("install") + "#install-help", text: (h.q + " " + plain(h.a)).toLowerCase(), body: plain(h.a) });
+    });
     index = out; indexLang = state.lang;
   }
   function snippet(body, term) {
@@ -388,11 +420,11 @@
     state.lang = r.lang; state.page = r.page; state.slug = r.slug;
     store("bb-lang", state.lang);
     renderChrome();
-    var html = { "": pageHome, start: pageStart, tools: pageTools, issues: pageIssues, changelog: pageChangelog, roadmap: pageRoadmap }[state.page]();
+    var html = { "": pageHome, install: pageInstall, start: pageStart, tools: pageTools, issues: pageIssues, changelog: pageChangelog, roadmap: pageRoadmap }[state.page]();
     main.innerHTML = html;
 
     var title = state.page === "tools" && state.slug && T().tools[state.slug] ? T().tools[state.slug].name
-      : state.page ? ({ start: T().ui.nav.start, tools: T().ui.nav.tools, issues: T().ui.nav.issues, changelog: T().ui.nav.changes, roadmap: T().ui.nav.roadmap })[state.page] : null;
+      : state.page ? ({ install: T().ui.nav.install, start: T().ui.nav.start, tools: T().ui.nav.tools, issues: T().ui.nav.issues, changelog: T().ui.nav.changes, roadmap: T().ui.nav.roadmap })[state.page] : null;
     document.title = title ? title + " · BusyBee" : "BusyBee for Revit";
 
     document.getElementById("nav").classList.remove("open");

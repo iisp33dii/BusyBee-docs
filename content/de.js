@@ -8,7 +8,7 @@ BB.text = BB.text || {};
 BB.text.de = {
   ui: {
     skip: "Zum Inhalt springen",
-    nav: { home: "Übersicht", start: "Schnellstart", tools: "Werkzeuge", issues: "Bekannte Probleme", changes: "Änderungen", roadmap: "Roadmap" },
+    nav: { home: "Übersicht", install: "Installation", start: "Schnellstart", tools: "Werkzeuge", issues: "Bekannte Probleme", changes: "Änderungen", roadmap: "Roadmap" },
     theme: { toDark: "Dunkles Design", toLight: "Helles Design" },
     langName: "English",
     langSwitch: "Read in English",
@@ -60,7 +60,8 @@ BB.text.de = {
     notFound: "Diese Seite gibt es nicht. Wähl ein Werkzeug aus der Liste.",
     caption: "Screenshot aus Revit 2026 mit BusyBee auf Englisch. Mit der Flagge unten rechts im BusyBee-Bereich schaltest du auf Deutsch um. Klick drauf, um ihn in voller Größe zu sehen.",
     captionDe: "Screenshot aus Revit 2026 mit BusyBee auf Deutsch. Klick drauf, um ihn in voller Größe zu sehen.",
-    close: "Schließen"
+    close: "Schließen",
+    oldShot: "Dieser Screenshot stammt aus Version 1.18. Das Fenster hat inzwischen mehr Optionen, siehe unten."
   },
 
   home: {
@@ -79,18 +80,73 @@ BB.text.de = {
     paneAlt: "Der BusyBee-Bereich in Revit mit aufgeklappten Werkzeuggruppen"
   },
 
+  install: {
+    title: "Installieren und aktualisieren",
+    lead: "BusyBee ist in etwa einer Minute für deinen eigenen Windows-Benutzer installiert. Du brauchst keine Administratorrechte, und ein Installer deckt Revit 2025 und 2026 ab.",
+    needTitle: "Was du brauchst",
+    need: [
+      "Windows mit Revit 2025 oder 2026.",
+      "Die BusyBee-ZIP-Datei, zum Beispiel `BusyBee-1.30.0.zip`. Die aktuelle bekommst du von Sascha.",
+      "Keine Administratorrechte. BusyBee wird in deinen eigenen Benutzerordner installiert und betrifft niemand anderen am PC."
+    ],
+    sections: [
+      { id: "install", h: "Installieren",
+        steps: [
+          { h: "Revit schließen", p: "Schließ alle Revit-Fenster. Solange Revit läuft, bricht der Installer ab und ändert nichts." },
+          { h: "Die ganze ZIP-Datei entpacken", p: "Rechtsklick auf die ZIP-Datei, Alle extrahieren wählen und den entpackten Ordner öffnen. Direkt aus der ZIP-Datei heraus funktioniert der Installer nicht." },
+          { h: "Installer starten", p: "Doppelklick auf `Install BusyBee.cmd`. Ein schwarzes Fenster zeigt, was passiert, und endet mit \"BusyBee … is installed for Revit 2025 and 2026\". Drück eine beliebige Taste, um es zu schließen." },
+          { h: "Revit starten und BusyBee laden", p: "Revit fragt einmal, ob BusyBee geladen werden soll, weil das Add-in nicht signiert ist. Wähl [[Immer laden]]. Öffne dann die Registerkarte BusyBee und klick auf [[BusyBee Manager]]." },
+          { h: "Version prüfen", p: "Die Version steht oben im BusyBee-Bereich neben dem Namen, zum Beispiel v1.30.0." }
+        ] },
+      { id: "update", h: "Auf eine neue Version aktualisieren",
+        steps: [
+          { h: "Revit schließen und die neue ZIP-Datei entpacken", p: "Nimm für jede Version einen neuen Ordner, damit sich alte und neue Dateien nicht mischen." },
+          { h: "Installer aus dem neuen Ordner starten", p: "Doppelklick auf `Install BusyBee.cmd`. Er ersetzt die alte Version; vorher deinstallieren musst du nicht." },
+          { h: "Deine Einstellungen bleiben", p: "Sprache, Anordnung des Bereichs, gespeicherte Kollisionsfreigaben, LOIN-Zuordnungen und der Verlauf von ID auswählen bleiben erhalten. Sie liegen außerhalb des Add-ins." },
+          { h: "Version prüfen", p: "Starte Revit und schau oben in den BusyBee-Bereich. Nutze dieselbe Version wie der Rest deines Projektteams: Einstellungen aus einer neueren Version kann eine ältere nicht immer lesen." }
+        ] },
+      { id: "uninstall", h: "Deinstallieren",
+        steps: [
+          { h: "Revit schließen", p: "Auch die Deinstallation bricht ab und ändert nichts, solange Revit läuft." },
+          { h: "Deinstallation starten", p: "Doppelklick auf `Uninstall BusyBee.cmd` in einem beliebigen entpackten BusyBee-Ordner. Beim nächsten Start von Revit ist die Registerkarte BusyBee weg." },
+          { h: "Auf Wunsch auch die Einstellungen löschen", p: "Deine Einstellungen und Protokolle bleiben erhalten, falls du wieder installierst. Wenn du sie loswerden willst, lösch die beiden BusyBee-Ordner aus der Liste \"Wo BusyBee seine Dateien ablegt\"." }
+        ] }
+    ],
+    helpTitle: "Wenn etwas nicht klappt",
+    help: [
+      { q: "Im Fenster steht \"Please close Revit first\"",
+        a: "Revit läuft noch, manchmal ohne sichtbares Fenster. Schließ es oder beende Revit im Task-Manager und starte den Installer noch einmal." },
+      { q: "Im Fenster steht \"Please extract the whole ZIP first\" oder \"BusyBee.bundle was not found\"",
+        a: "Der Installer wurde direkt aus der ZIP-Datei gestartet, oder es wurden nur einzelne Dateien kopiert. Entpack die ganze ZIP-Datei und starte ihn aus dem entpackten Ordner." },
+      { q: "Windows zeigt vor dem Start eine Warnung",
+        a: "Windows markiert Dateien, die per E-Mail oder aus dem Internet kommen. Prüf, ob die ZIP-Datei von Sascha stammt. Blocken die Firmeneinstellungen den Installer, sag Sascha Bescheid." },
+      { q: "Die Registerkarte BusyBee erscheint nicht in Revit",
+        a: "BusyBee läuft nur in Revit 2025 und 2026. Hat Revit nach dem Laden gefragt und du hast [[Nicht laden]] gewählt, schließ Revit, starte es neu und wähl [[Immer laden]]. Fehlt die Registerkarte dann immer noch, starte den Installer erneut und schick Sascha einen Screenshot des schwarzen Fensters." },
+      { q: "BusyBee zeigt einen Fehler oder verhält sich seltsam",
+        a: "Schick Sascha eine kurze Notiz, was du gemacht hast, und die heutige Protokolldatei aus `%LOCALAPPDATA%\\BusyBee\\logs`." }
+    ],
+    filesTitle: "Wo BusyBee seine Dateien ablegt",
+    filesLead: "Füg einen Pfad in die Adresszeile des Datei-Explorers ein, um ihn zu öffnen.",
+    filesHead: ["Ordner", "Was drin ist"],
+    files: [
+      ["%APPDATA%\\Autodesk\\ApplicationPlugins\\BusyBee.bundle", "Das Add-in selbst, für beide Revit-Versionen. Installieren ersetzt es, Deinstallieren entfernt es."],
+      ["%APPDATA%\\BusyBee", "Deine Einstellungen: Sprache, Anordnung des Bereichs, Kollisionsfreigaben, LOIN-Zuordnungen und der Verlauf von ID auswählen."],
+      ["%LOCALAPPDATA%\\BusyBee\\logs", "Fehlerprotokolle, eine Datei pro Tag, 14 Tage lang aufbewahrt. Schick die heutige Datei mit, wenn du einen Fehler meldest."]
+    ]
+  },
+
   start: {
     title: "Schnellstart",
-    lead: "Deine ersten zehn Minuten mit BusyBee. BusyBee muss in Revit 2025 oder 2026 installiert sein; die aktuelle Version bekommst du von Sascha.",
+    lead: "Deine ersten zehn Minuten mit BusyBee. BusyBee muss in Revit 2025 oder 2026 installiert sein; falls noch nicht, fang mit der Seite Installation an.",
     steps: [
       { h: "BusyBee-Bereich öffnen",
-        p: "Öffne in Revit die Registerkarte BusyBee und klick auf [[BusyBee Manager]]. Der Bereich dockt neben dem Projektbrowser an. Du kannst ihn wie jeden Revit-Bereich verschieben." },
+        p: "Öffne in Revit die Registerkarte BusyBee und klick auf [[BusyBee Manager]]. Der Bereich dockt neben dem Projektbrowser an. Du kannst ihn wie jeden Revit-Bereich verschieben. Jedes Werkzeug hat außerdem eine eigene Schaltfläche auf der Registerkarte BusyBee, du kannst es also auch ohne den Bereich öffnen." },
       { h: "Sprache wählen",
         p: "Mit der Flagge unten rechts im Bereich schaltest du BusyBee zwischen Deutsch und Englisch um. Das gilt sofort und bleibt gespeichert. Deine Revit-Sprache spielt keine Rolle: BusyBee funktioniert mit beiden." },
       { h: "Eine Ansicht mit den richtigen Elementen öffnen",
         p: "Die meisten Werkzeuge arbeiten mit den Elementen der aktiven Ansicht. Öffne vorher eine 3D-Ansicht, einen Grundriss oder Schnitt, der diese Elemente zeigt. Schreibwerkzeuge ändern nichts, wenn die Ansicht keine Modellelemente zeigt." },
       { h: "Werkzeug öffnen und einrichten",
-        p: "Klick auf den Namen eines Werkzeugs, um sein Fenster zu öffnen. Der Pfeil rechts zeigt vorher eine kurze Beschreibung. Die Fenster bleiben offen, während du in Revit weiterarbeitest." },
+        p: "Klick auf den Namen eines Werkzeugs, um sein Fenster zu öffnen. Der Pfeil rechts zeigt vorher eine kurze Beschreibung. Um ein Werkzeug schnell zu finden, tipp einen Teil seines Namens ins Suchfeld oben im Bereich, auf Deutsch oder Englisch. Die Fenster bleiben offen, während du in Revit weiterarbeitest." },
       { h: "Auf Starten klicken",
         p: "Jedes Werkzeug hat unten rechts eine gelbe Schaltfläche [[Starten]]. Lange Läufe zeigen ein Fortschrittsfenster mit [[Abbrechen]]. Jede Änderung ist ein einziger Rückgängig-Schritt in Revit, Strg+Z nimmt also einen ganzen Lauf zurück." },
       { h: "Einrichtung fürs Projekt speichern",
@@ -98,6 +154,8 @@ BB.text.de = {
     ],
     goodToKnow: "Gut zu wissen",
     notes: [
+      "Mit dem Stern neben einem Werkzeug landet es oben im Bereich unter Favoriten. Darunter stehen deine drei zuletzt verwendeten Werkzeuge.",
+      "Jedes Werkzeug kann ein Tastenkürzel bekommen: In Revit unter Ansicht > Benutzeroberfläche > Tastaturbefehle nach BusyBee suchen.",
       "Revit fragt einmal, ob BusyBee geladen werden soll, weil das Add-in nicht signiert ist. Wähl [[Immer laden]].",
       "Während ein Werkzeug läuft, ist Revit selbst beschäftigt. Das Fortschrittsfenster reagiert trotzdem, Abbrechen greift nach dem aktuellen Element.",
       "Probleme? Schick Sascha eine kurze Notiz und die heutige Protokolldatei aus `%LOCALAPPDATA%\\BusyBee\\logs`."
@@ -111,10 +169,11 @@ BB.text.de = {
   tools: {
     "parameter-automation": {
       name: "Parameter-Automatisierung",
-      tagline: "Parameter mit WENN- und SONST-WENN-Regeln füllen, nach Kategorie.",
-      summary: "Liest einen Quellparameter, prüft ihn gegen eine oder mehrere Bedingungen und schreibt einen Wert in einen Zielparameter. Die Regeln sind in Kategoriegruppen organisiert, eine Einrichtung kann also Luftkanäle, Rohre und Formteile gleichzeitig abdecken.",
+      tagline: "Parameter mit WENN- und SONST-WENN-Regeln oder Formeln füllen und jede Änderung vor dem Schreiben prüfen.",
+      summary: "Liest einen Quellparameter, prüft ihn gegen eine oder mehrere Bedingungen und schreibt einen Wert in einen Zielparameter. Der Wert kann fester Text sein oder eine Formel wie `{Ebene}-{Kennzeichen}`. Die Regeln sind in Kategoriegruppen organisiert, eine Einrichtung kann also Luftkanäle, Rohre und Formteile gleichzeitig abdecken. Bevor etwas geschrieben wird, zeigt eine Vorschau jede Änderung.",
       when: [
         "Kommentare, Kennzeichen oder einen Projektparameter aus einem anderen Parameter füllen, etwa aus Ebene oder Systemname.",
+        "Werte aus anderen Parametern zusammensetzen, zum Beispiel Türnummern als `{Ebene}-{Kennzeichen}`.",
         "Kürzel in lesbare Werte übersetzen, zum Beispiel SA_F → Zuluft.",
         "Nur die leeren Werte in einem Modell füllen, das jemand anderes angefangen hat."
       ],
@@ -122,21 +181,26 @@ BB.text.de = {
         "Öffne eine Ansicht mit den Elementen, die du bearbeiten willst.",
         "Wähl unter [[Kategorie]] eine Kategorie und klick auf [[+ Neue Kategoriegruppe]]. Mit [[+ Kategorie hinzufügen]] nimmst du weitere Kategorien in dieselbe Gruppe.",
         "Klick auf [[+ Parameter-Zuordnung]]. Wähl den [[Quellparameter]], der gelesen wird, und den [[Zielparameter]], der geschrieben wird.",
-        "Wähl unter [[Bedingte Regeln]] einen Operator wie [[ist gleich]] oder [[enthält]], gib den gesuchten Wert ein und nach dem Pfeil den Wert, der geschrieben wird.",
+        "Wähl unter [[Bedingte Regeln]] einen Operator wie [[ist gleich]] oder [[enthält]], gib den gesuchten Wert ein und nach dem Pfeil den Wert, der geschrieben wird. Der Wert darf `{Parameter}`-Formeln enthalten.",
         "Mit [[+ Bedingung hinzufügen]] kommen weitere Fälle dazu. Sie werden als SONST-WENN von oben nach unten geprüft; der erste Treffer gilt.",
-        "Klick auf [[Starten]]. Eine Zusammenfassung zeigt, wie viele Werte geändert, unverändert oder übersprungen wurden."
+        "Klick auf [[Starten]]. Noch wird nichts geschrieben: Eine Vorschau listet jedes Element, dessen Wert sich ändern würde, mit dem Wert jetzt und nach dem Schreiben. Ein Doppelklick auf eine Zeile wählt das Element aus und zoomt hin.",
+        "Klick auf [[N Änderung(en) schreiben]], um sie zu schreiben, oder schließ die Vorschau, dann bleibt das Modell unverändert. Eine Zusammenfassung zeigt, was geändert wurde, und ein Strg+Z nimmt den ganzen Lauf zurück."
       ],
       settings: [
         ["Operatoren", "ist gleich, ist ungleich, größer oder kleiner als (auch mit gleich), enthält, beginnt mit, endet mit und deren Gegenteile, hat einen Wert, hat keinen Wert. Größer und kleiner vergleichen Zahlen, auch wenn Revit Einheiten anzeigt."],
-        ["Nur leere Parameter beschreiben", "In den Einstellungen (Zahnrad). Überspringt Elemente, deren Zielparameter schon einen Wert hat."],
-        ["Zahlen und Einheiten", "Werte werden in Projekteinheiten geschrieben, so als würdest du sie in der Eigenschaftenpalette eintippen. 2500, 2500 mm und 2,5 m funktionieren. Ja/Nein-Parameter verstehen Ja, Nein, Yes und No."],
+        ["Formeln", "`{Ebene}-{Kennzeichen}` gibt jedem Element seinen eigenen Wert, etwa EG-101. Jeder Parameter des Elements oder seines Typs geht, mit dem Namen, den Revit anzeigt. `{Ebene}` funktioniert auch in englischem Revit und `{Level}` in deutschem. Für eine geschweifte Klammer schreibst du `{{` oder `}}`. Fehlt einem Element ein Parameter aus der Formel, steht es in der Vorschau als Nicht schreibbar und bleibt unverändert."],
+        ["Zahlen und Einheiten", "Werte werden gelesen wie in der Eigenschaftenpalette: 2500 nutzt die Projekteinheit, 2500 mm, 2,5 m oder 8' 2\" die eingegebene Einheit. Eine unpassende Einheit, etwa kg bei einer Länge, steht als Nicht schreibbar da. Ja/Nein-Parameter verstehen Ja, Nein, Yes und No."],
+        ["Typparameter", "Werden einmal pro Typ geschrieben. Bräuchten die Exemplare eines Typs unterschiedliche Werte, etwa Türen eines Typs auf zwei Ebenen, bleibt der Typ unverändert und steht als Typ übersprungen da."],
+        ["Gleichbleibende Werte zeigen", "In der Vorschau. Werte, die sich nicht ändern würden, sind ausgeblendet, bis du das anhakst."],
+        ["Nur leere Parameter beschreiben", "In den Einstellungen (Zahnrad). Überspringt Elemente, deren Zielparameter schon einen Wert hat. Gilt auch für Typparameter."],
         ["Konfiguration speichern / laden", "Speichert die Regeln als Datei, damit du sie in einem anderen Projekt wiederverwenden kannst."]
       ],
       tips: [
         "Mit dem Kopiersymbol duplizierst du eine Kategoriegruppe als Ausgangspunkt für ähnliche Regeln.",
-        "Werte, die sich nicht umwandeln lassen, etwa Text in einem Zahlenparameter, werden gezählt und gemeldet statt still übersprungen."
+        "Geschrieben wird mit den Regeln, wie sie beim Klick auf Starten waren. Änderst du sie, während die Vorschau offen ist, ändert das nichts am Ergebnis.",
+        "Fährst du mit der Maus über ein Wertefeld, erscheint eine kurze Hilfe zu Formeln."
       ],
-      issues: ["type-param-writes", "english-messages"],
+      issues: ["type-param-writes", "english-messages", "reports-english"],
       shots: [{ src: "param-rules.webp", alt: "Parameter-Automatisierung mit einer WENN- und einer SONST-WENN-Regel für Luftdurchlässe" }]
     },
 
@@ -165,7 +229,8 @@ BB.text.de = {
       ],
       tips: [
         "Ebenen werden mit der Projekthöhe verglichen, ein angehobener Projektbasispunkt ergibt also richtige Ergebnisse.",
-        "Mit „Vollständig enthalten“ findest du Elemente, die über eine Ebene hinausgehen: Sie bekommen keinen Wert."
+        "Mit „Vollständig enthalten“ findest du Elemente, die über eine Ebene hinausgehen: Sie bekommen keinen Wert.",
+        "Typparameter werden einmal pro Typ geschrieben. Liegen seine Exemplare in verschiedenen Bereichen, bleibt der Typ unverändert und wird im Ergebnis genannt."
       ],
       issues: ["type-param-writes"],
       shots: [{ src: "level-mapping.webp", alt: "Ebenen-Zuordnung mit zwei Höhenbereichen für Luftkanäle und Luftdurchlässe" }]
@@ -174,7 +239,7 @@ BB.text.de = {
     "spatial-parameters": {
       name: "Raum- & Achsenparameter",
       tagline: "Den Raum oder die Rasterposition in jedes Element schreiben.",
-      summary: "Die Raum-Zuordnung findet den Raum oder MEP-Raum, in dem ein Element liegt, und schreibt Nummer und Name. Die Raster-Zuordnung findet die nächsten Rasterlinien oder den Schnittpunkt und schreibt sie als Text, etwa C-4.",
+      summary: "Die Raum-Zuordnung findet den Raum oder MEP-Raum, in dem ein Element liegt, und schreibt Nummer und Name, auch aus Räumen in verknüpften Modellen. Die Raster-Zuordnung findet die nächsten Rasterlinien oder den Schnittpunkt und schreibt sie als Text, etwa C-4.",
       when: [
         "Türen, Möbeln, Sanitärobjekten oder TGA-Auslässen Raumnummern für Bauteillisten geben.",
         "Tragwerks- oder TGA-Elementen eine Achsangabe geben."
@@ -195,7 +260,8 @@ BB.text.de = {
       ],
       tips: [
         "Liegt der Mittelpunkt nicht in einem Raum, versucht BusyBee auch die Enden, die Anschlüsse und kleine Versätze.",
-        "Räume werden in der Phase des Elements gesucht."
+        "Räume werden in der Phase des Elements gesucht.",
+        "Liegt ein Element in keinem Raum des geöffneten Modells, sucht BusyBee in allen geladenen Verknüpfungen, in der Phase der Verknüpfung mit demselben Namen wie die der Ansicht. So kann ein TGA-Modell die Raumnummern der Architektur schreiben. Die Zusammenfassung zeigt, wie viele aus Verknüpfungen kamen."
       ],
       issues: ["spatial-linked-rooms", "type-param-writes"],
       shots: [
@@ -235,35 +301,47 @@ BB.text.de = {
 
     "clash-detection": {
       name: "Kollisionsprüfung",
-      tagline: "Harte Kollisionen und Abstandsprobleme finden, direkt in Revit.",
-      summary: "Prüft eine Gruppe von Kategorien gegen eine andere, im Hauptmodell oder gegen ein verknüpftes Modell. Typische Fehlmeldungen werden ignoriert: verbundene Kanal- und Rohrstrecken, Dämmung, gehostete Bauteile, verschachtelte Familien und verbundene Geometrie. Du kannst Kollisionen freigeben, Notizen ergänzen und die Liste exportieren.",
+      tagline: "Harte Kollisionen und Abstandsprobleme finden, zwischen Läufen verfolgen, als BCF exportieren und Durchbrüche setzen.",
+      summary: "Prüft eine Gruppe von Kategorien gegen eine andere: im Hauptmodell, gegen ein verknüpftes Modell, gegen alle Verknüpfungen auf einmal oder eine Verknüpfung gegen eine andere. Typische Fehlmeldungen werden ignoriert: verbundene Kanal- und Rohrstrecken, Dämmung, gehostete Bauteile, verschachtelte Familien und verbundene Geometrie. Du kannst die Einrichtung als Test speichern, siehst, welche Kollisionen seit dem letzten Lauf neu oder gelöst sind, gibst Kollisionen frei, exportierst sie als BCF oder CSV und setzt Durchbrüche, wo Kanäle und Rohre Wände und Decken kreuzen.",
       when: [
         "Kanäle und Rohre vor einer Koordinationsbesprechung gegen Decken und Wände prüfen.",
+        "Das Lüftungsmodell gegen das Tragwerksmodell prüfen, ohne eines der beiden zu öffnen.",
         "Enge Stellen mit einer Abstandsprüfung finden, zum Beispiel 50 mm um Kabeltrassen.",
-        "Festhalten, welche Kollisionen schon besprochen sind, indem du sie freigibst."
+        "Sehen, was sich seit dem Lauf letzte Woche geändert hat, und die offenen Kollisionen als BCF an BIMcollab, Solibri, Navisworks oder Revizto geben.",
+        "Im Architekturmodell die Durchbrüche für die verknüpften Kanäle der TGA setzen."
       ],
       steps: [
-        "Hak unter [[1. Primäre Kategorien]] die Kategorien an, zum Beispiel Luftkanäle und Luftkanalformteile.",
-        "Wähl unter [[2. Kollision mit]] das [[Hauptmodell]] oder ein verknüpftes Modell und hak die Kategorien an, gegen die geprüft wird.",
+        "Willst du eine gespeicherte Einrichtung nutzen, wähl sie oben links unter [[Test]]. Sonst richtest du die Prüfung so ein:",
+        "Wähl unter [[1. Primärkategorien in]], woher die Primärelemente kommen, [[Hauptmodell]] oder eine Verknüpfung, und hak ihre Kategorien an, zum Beispiel Luftkanäle und Luftkanalformteile.",
+        "Wähl unter [[2. Kollision mit]] das Modell, gegen das geprüft wird: [[Hauptmodell]], eine Verknüpfung oder [[All Linked Models]]. Hak dann die Kategorien an, zum Beispiel Geschossdecken und Wände.",
         "Wähl unter [[3. Kollisionsmodus & Toleranz]] [[Harte Kollision]] oder [[Abstand (Weich)]] und trag den Abstand in mm ein.",
-        "Klick auf [[Starten]].",
-        "Ein Klick auf ein Ergebnis wählt beide Elemente aus und zeigt Details. Mit [[3D-Zoom]], [[Elemente isolieren]], [[3D-Schnittbereich]] oder [[Elemente einfärben]] schaust du es dir an.",
+        "Klick auf [[Starten]]. Die Statuszeile zeigt, wie viele Kollisionen seit dem letzten Lauf mit denselben Einstellungen neu, weiterhin da und gelöst sind, und wie lange der Lauf gedauert hat.",
+        "Klick auf ein Ergebnis, um beide Elemente zu sehen. Mit [[3D-Zoom]], [[Elemente isolieren]], [[3D-Schnittbereich]] oder [[Elemente einfärben]] schaust du es dir an. Neue Kollisionen haben ein blaues NEU, und [[Nur neue]] zeigt nur diese.",
         "Drück die Leertaste oder [[Freigeben]] für Kollisionen, die in Ordnung sind. Ergänz bei Bedarf eine Notiz. [[Freigegebene ausblenden]] nimmt sie aus der Liste.",
-        "Mit [[CSV-Export]] bekommst du eine Liste für Excel, mit [[Kollisionen speichern]] öffnest du die Ergebnisse später ohne neuen Lauf."
+        "Teil das Ergebnis mit [[BCF-Export]] oder [[CSV-Export]], oder sichere es mit [[Kollisionen speichern]]. Um die Einrichtung fürs nächste Mal zu behalten, gib unter [[Test]] einen Namen ein und klick auf Speichern.",
+        "Für Durchbrüche filterst du die Liste auf die gewünschten Kollisionen und klickst auf [[Durchbrüche setzen]]."
       ],
       settings: [
         ["Harte Kollision", "Elemente überschneiden sich mindestens um die Toleranz."],
         ["Abstand (Weich)", "Elemente kommen sich näher als der Abstand, auch ohne Berührung."],
+        ["All Linked Models", "In der Liste der Zielmodelle. Prüft die Primärelemente in einem Lauf gegen alle geladenen Verknüpfungen. Die Listen enthalten auch Kategorien, die nur eine Verknüpfung hat."],
+        ["Test", "Benannte Einstellungen aus Kategorien, Modellen, Modus, Toleranz und Prüfbereich, gespeichert neben dem Modell in `<Modell>.BusyBeeClashTests.json`. So sieht das ganze Team dieselben Tests. Sie funktionieren in deutschem und englischem Revit."],
+        ["NEU, weiterhin, gelöst", "Jeder Lauf wird mit dem vorigen Lauf mit denselben Einstellungen in derselben Ansicht verglichen. Der Link N gelöst listet die Kollisionen, die weg sind. Abgebrochene Läufe und Läufe nur auf ausgewählten Elementen werden nicht verglichen."],
+        ["BCF-Export", "Schreibt die angezeigten Kollisionen als BCF-2.1-Datei, ein Thema pro Kollision mit Kameraansicht und beiden Elementen. Suche, Kategoriefilter, Freigegebene ausblenden und Nur neue bestimmen, was hineinkommt. Freigegebene Kollisionen sind geschlossen, und ein erneuter Export aktualisiert dieselben Themen, statt Kopien anzulegen."],
+        ["Durchbrüche setzen", "Setzt für jede Kollision der Liste, bei der ein Luftkanal, Rohr, eine Kabeltrasse oder ein Leerrohr eine Wand oder Decke des geöffneten Modells kreuzt, einen rechteckigen Durchbruch. Das TGA-Element darf in einer Verknüpfung liegen. Der Durchbruch ist so groß wie das Element plus Abstand auf jeder Seite. Freigegebene Kollisionen werden übersprungen, ein vorhandener Durchbruch wird nicht doppelt gesetzt, neue Durchbrüche nennen die Kollision in ihren Kommentaren, und ein Strg+Z entfernt alle Durchbrüche eines Klicks."],
+        ["Durchbruch-Abstand (mm)", "In den Einstellungen (Zahnrad). Der Abstand zwischen Element und Rand des Durchbruchs, standardmäßig 50 mm."],
         ["Gruppierung", "Flach, nach Primärelement, nach Kategorien, nach Ebene oder nach System."],
-        ["Nur sichtbare Objekte prüfen", "In den Einstellungen (Zahnrad). Beschränkt beide Seiten auf das, was die aktive Ansicht zeigt."],
+        ["Nur sichtbare Objekte prüfen", "In den Einstellungen. Beschränkt beide Seiten auf das, was die aktive Ansicht zeigt."],
         ["Nur ausgewählte Elemente", "In den Einstellungen. Prüft nur die Revit-Auswahl."]
       ],
       tips: [
-        "Freigaben werden neben dem Modell als `<Modell>.BusyBeeClashStatus.json` gespeichert, bei Cloud-Modellen in deinem AppData-Ordner. Bei einem späteren Lauf sind sie noch da.",
+        "Die Primärelemente kommen immer aus der aktiven Ansicht. Ein Lauf in einer 3D-Ansicht und einer im Grundriss prüfen also unterschiedliche Elemente, und jede Ansicht hat ihren eigenen Verlauf für neu und gelöst.",
+        "Freigaben, Tests und Verlauf liegen neben dem Modell, bei Cloud-Modellen in deinem AppData-Ordner. Bei einem späteren Lauf sind sie noch da.",
+        "Große Modelle laufen deutlich schneller als früher: Die Geometrie jedes Elements wird nur einmal pro Lauf gelesen.",
         "Jede Rücksetz-Schaltfläche macht ihre eigene Aktion rückgängig: Isolierung aufheben, Schnittbereich zurücksetzen, Farben zurücksetzen. Beim Schließen des Fensters wird die Isolierung ebenfalls aufgehoben."
       ],
-      issues: ["clash-one-link", "clash-no-bcf", "revit-busy"],
-      shots: [{ src: "clash-de.webp", de: true, alt: "Kollisionsprüfung mit Luftkanälen gegen Geschossdecken im verknüpften Architekturmodell" }]
+      issues: ["openings-limits", "linked-primary", "clash-one-link", "clash-no-bcf", "revit-busy"],
+      shots: [{ src: "clash-de.webp", de: true, old: true, alt: "Kollisionsprüfung mit Luftkanälen gegen Geschossdecken im verknüpften Architekturmodell" }]
     },
 
     "model-health": {
@@ -435,6 +513,15 @@ BB.text.de = {
   },
 
   issues: [
+    { id: "openings-limits", title: "Durchbrüche setzen überspringt manche Kollisionen",
+      body: "Durchbrüche werden nur gesetzt, wo ein gerader Luftkanal, ein Rohr, eine Kabeltrasse oder ein Leerrohr eine Wand oder Decke des geöffneten Modells kreuzt. Gekrümmte Wände, Vorhangfassaden, schräge Elemente (zwischen 17° und 72° zur Horizontalen) und andere Kollisionsarten werden übersprungen und in der Zusammenfassung gezählt. Die Durchbrüche sind einfache Revit-Öffnungen, keine Durchbruchsfamilien oder Hülsen.",
+      fix: "Schau nach Durchbrüche setzen in die Zusammenfassung und setz die übersprungenen von Hand." },
+    { id: "linked-primary", title: "Kollisionen mit verknüpftem Primärelement lassen sich nicht auswählen oder einfärben",
+      body: "Kommen die Primärelemente aus einer Verknüpfung, erlaubt Revit nicht, sie im Hostmodell auszuwählen oder einzufärben.",
+      fix: "Nutz 3D-Zoom, 3D-Schnittbereich oder Elemente isolieren, oder exportier BCF." },
+    { id: "reports-english", title: "Exportierte Berichte bleiben englisch",
+      body: "CSV- und HTML-Berichte, Revits eigene Fehlertexte, die Namen der drei Standardregeln der Qualitätskontrolle und einige feste Listeneinträge wie All Categories, Main Model und All Linked Models bleiben englisch, weil die Werkzeuge sie auch speichern und vergleichen.",
+      fix: "Nicht nötig. Alles andere in BusyBee folgt der Sprache, die du wählst." },
     { id: "type-param-writes", title: "Typparameter bekommen den Wert des letzten Exemplars",
       body: "Ist der Zielparameter ein Typparameter, schreibt jedes Exemplar dieses Typs in denselben Wert; das letzte gewinnt. Liegen zum Beispiel zwei Türen eines Typs in verschiedenen Räumen, bekommt der Typ nur eine der beiden Raumnummern.",
       fix: "Schreib elementbezogene Werte in Exemplarparameter. Nimm Typparameter nur für Werte, die für alle Exemplare des Typs gleich sind." },
