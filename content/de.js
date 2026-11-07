@@ -30,10 +30,7 @@ BB.text.de = {
     updated: "Stand der Seite:",
     toc: "Auf dieser Seite",
     eyebrow: { need: "Bevor du anfängst", steps: "Schritt für Schritt", help: "Fehlerbehebung", files: "Nachschlagen", tools: "Der Werkzeugkasten",
-      news: "Neueste Version", next: "Auf der Roadmap", model: "In Aktion", good: "Tipps", glossary: "Nachschlagen" },
-    glossaryFilter: "Begriffe filtern, auf Deutsch oder Englisch",
-    glossaryEmpty: "Kein Begriff passt. Versuch einen Wortteil, zum Beispiel Rohr.",
-    footLinks: "Seiten",
+      news: "Neueste Version", next: "Auf der Roadmap", model: "In Aktion", good: "Tipps" },
     whenToUse: "Wann du es brauchst",
     howTo: "Schritt für Schritt",
     settings: "Optionen erklärt",
@@ -72,7 +69,7 @@ BB.text.de = {
   home: {
     title: "BusyBee für Revit",
     lead: "Unser Revit-Add-in für Kollisionsprüfung, Parameterarbeit und Modellqualität. Es sitzt in einem Bereich neben dem Projektbrowser und läuft in Revit 2025 und 2026, auf Deutsch oder Englisch.",
-    ctaStart: "Mit dem Schnellstart loslegen",
+    ctaStart: "Schnellstart",
     ctaTools: "Werkzeuge ansehen",
     current: "Aktuelle Team-Version",
     toolsTitle: "Was BusyBee kann",
@@ -179,11 +176,7 @@ BB.text.de = {
       "Revit fragt einmal, ob BusyBee geladen werden soll, weil das Add-in nicht signiert ist. Wähl [[Immer laden]].",
       "Während ein Werkzeug läuft, ist Revit selbst beschäftigt. Das Fortschrittsfenster reagiert trotzdem, Abbrechen greift nach dem aktuellen Element.",
       "Probleme? Schick Sascha eine kurze Notiz und die heutige Protokolldatei aus `%LOCALAPPDATA%\\BusyBee\\logs`."
-    ],
-    glossaryTitle: "Revit-Begriffe auf Deutsch und Englisch",
-    glossaryLead: "Die Anleitungen nennen die deutschen Revit-Begriffe. Ist dein Revit auf Englisch, hilft dir diese Liste.",
-    glossaryEn: "Englisches Revit",
-    glossaryDe: "Deutsches Revit"
+    ]
   },
 
   tools: {
@@ -521,25 +514,132 @@ BB.text.de = {
       shots: []
     },
 
-    "small-tools": {
-      name: "Kleine Helfer",
-      tagline: "Helfer mit einem Klick für die tägliche Arbeit in Revit.",
-      summary: "Der Abschnitt Kleine Helfer im Bereich und eine eigene Gruppe in der Multifunktionsleiste enthalten schnelle Helfer, die kein Fenster brauchen. Die beiden Schnitt-Schaltflächen sitzen unten im Bereich.",
-      when: ["Kleine Aufgaben, die du sonst viele Male am Tag von Hand erledigst."],
+    "quick-sections": {
+      name: "Schnellschnitte",
+      tagline: "Rechteck im Grundriss aufziehen, Schnitt bekommen.",
+      summary: "Zieh in einem Grundriss ein Rechteck auf: Du bekommst einen Schnitt an der Kante, an der du angefangen hast, mit Blick in Zugrichtung, so tief wie das Rechteck und so hoch wie der Ansichtsbereich des Grundrisses. [[Schnitt ↔]] verläuft von links nach rechts, [[Schnitt ↕]] von oben nach unten. Jeder hat je einen, `HS - <dein Name>` und `VS - <dein Name>`, und er wird jedes Mal verschoben.",
+      when: [
+        "Ein schneller Blick durch einen Schacht oder eine Zwischendecke.",
+        "Höhen an einer Stelle prüfen, ohne eine neue Ansicht anzulegen."
+      ],
       steps: [
-        "Öffne den Abschnitt Kleine Helfer im BusyBee-Bereich oder nutz die Gruppe Kleine Helfer in der Multifunktionsleiste.",
-        "Klick auf einen Helfer. Fahr vorher mit der Maus darüber, um zu sehen, was er tut."
+        "Öffne einen Grundriss, Deckenplan oder Tragwerksplan.",
+        "Klick unten im BusyBee-Bereich oder in der Gruppe Kleine Helfer der Multifunktionsleiste auf [[Schnitt ↔]] oder [[Schnitt ↕]].",
+        "Klick die erste Ecke dort, wo die Schnittlinie liegen soll, und zieh in die Richtung, in die der Schnitt blicken soll.",
+        "Der Schnitt öffnet sich. Beim nächsten Mal wandert derselbe Schnitt an die neue Stelle."
       ],
-      settings: [
-        ["Wer war das", "Wer das ausgewählte Element erstellt und zuletzt geändert hat und wer es gerade ausgeliehen hat, dazu Bearbeitungsbereich, Phasen, Gruppe und Entwurfsoption. Braucht ein Modell mit Bearbeitungsbereichen."],
-        ["Zuschnitt kopieren", "Überträgt den Zuschneidebereich des offenen Grundrisses auf andere. Anders gedrehte Pläne und Pläne mit Bereichsrahmen werden ausgelassen."],
-        ["Ebenen kopieren", "Kopiert Ebenen aus einem verknüpften Modell: erst das Modell wählen, dann seine Ebenen. Vorhandene Ebenen bleiben, wie sie sind."],
-        ["Farbige Reiter", "Jedes offene Modell bekommt eine eigene Farbe auf seinen Ansichtsreitern. Bleibt an, bis du es ausschaltest."],
-        ["Überschreibungen zurücksetzen", "Entfernt alle Grafiküberschreibungen von Elementen in der aktuellen Ansicht, egal wer sie gesetzt hat. Ein Rückgängig-Schritt."],
-        ["Raumumrisse 3D", "Zeigt Raum- und MEP-Raum-Umrisse in 3D-Ansichten, auch Räume aus verknüpften Modellen. Nur auf dem Bildschirm gezeichnet, im Modell ändert sich nichts."],
-        ["Schnitt ↔ / Schnitt ↕", "Zieh in einem Grundriss ein Rechteck auf: Du bekommst einen Schnitt an der Kante, an der du angefangen hast, mit Blick in Zugrichtung, so tief wie das Rechteck und so hoch wie der Ansichtsbereich. Jeder hat je einen, der immer wieder benutzt wird."]
+      settings: [],
+      tips: ["Dupliziere den Schnitt, wenn du ihn behalten willst: Der nächste Schnellschnitt verschiebt ihn."],
+      issues: [],
+      shots: []
+    },
+
+    "who-did-that": {
+      name: "Wer war das",
+      tagline: "Sehen, wer ein Element erstellt, geändert und ausgeliehen hat.",
+      summary: "Zeigt, wer die ausgewählten Elemente erstellt und zuletzt geändert hat und wer sie gerade ausgeliehen hat, dazu Bearbeitungsbereich, Phasen, Gruppe und Entwurfsoption. Geht nur in Modellen mit Bearbeitungsbereichen, weil Revit die Namen nur dort festhält.",
+      when: [
+        "Ein Element hat sich bewegt und du willst wissen, wen du fragen kannst.",
+        "Du kannst ein Element nicht bearbeiten, weil jemand anderes es ausgeliehen hat."
       ],
-      tips: ["Jeder kleine Helfer hat eine Schaltfläche in der Multifunktionsleiste, also kannst du ihm ein Tastenkürzel geben."],
+      steps: [
+        "Wähl ein oder mehrere Elemente aus, oder gar keins.",
+        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Wer war das]].",
+        "War nichts ausgewählt, klick ein Element an.",
+        "Lies die Namen im Fenster."
+      ],
+      settings: [],
+      tips: ["[[Zuletzt geändert von]] wird beim Synchronisieren aktualisiert. Eine Änderung seit dem letzten Abgleich zeigt also noch den Namen davor."],
+      issues: [],
+      shots: []
+    },
+
+    "copy-crop": {
+      name: "Zuschnitt kopieren",
+      tagline: "Anderen Plänen den Zuschneidebereich dieses Plans geben.",
+      summary: "Überträgt den Zuschneidebereich des offenen Grundrisses auf andere: gleiche Stelle, gleiche Form. Anders gedrehte Pläne und Pläne mit Bereichsrahmen werden ausgelassen und aufgelistet.",
+      when: [
+        "Alle Grundrisse eines Gebäudes sollen denselben Ausschnitt zeigen.",
+        "Neue Pläne sollen den Zuschnitt eines vorhandenen bekommen."
+      ],
+      steps: [
+        "Öffne den Grundriss, dessen Zuschneidebereich du kopieren willst. Ansicht zuschneiden muss an sein.",
+        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Zuschnitt kopieren]].",
+        "Hak die Pläne an, die ihn bekommen sollen, und klick auf [[Zuschnitt übertragen]]."
+      ],
+      settings: [],
+      tips: ["Ein Plan mit Bereichsrahmen wird ausgelassen: Ändere dort stattdessen den Bereichsrahmen."],
+      issues: [],
+      shots: []
+    },
+
+    "copy-levels": {
+      name: "Ebenen kopieren",
+      tagline: "Ebenen aus einem verknüpften Modell kopieren.",
+      summary: "Kopiert Ebenen aus einer geladenen Revit-Verknüpfung in dieses Modell, mit gleichem Namen und gleicher Höhe. Ebenen, die schon da sind, bleiben, wie sie sind.",
+      when: ["Ein TGA-Modell auf den Ebenen der Architektur anfangen."],
+      steps: [
+        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Ebenen kopieren]].",
+        "Wähl das verknüpfte Modell und klick auf [[Ebenen anzeigen]].",
+        "Hak die Ebenen an und klick auf [[Ebenen kopieren]]."
+      ],
+      settings: [],
+      tips: [
+        "Die Kopien werden nicht überwacht. Für Kopieren/Überwachen nimm den Revit-Dialog unter Zusammenarbeit.",
+        "Für die neuen Ebenen werden keine Grundrisse angelegt.",
+        "Eine Ebene wird übersprungen, wenn ihr Name auf einer anderen Höhe vergeben ist oder schon eine Ebene auf ihrer Höhe liegt. Das Fenster sagt, welche."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "coloured-tabs": {
+      name: "Farbige Reiter",
+      tagline: "Jedes offene Modell bekommt seine eigene Reiterfarbe.",
+      summary: "Gibt den Ansichtsreitern jedes offenen Modells oder jeder Familie eine eigene Farbe, sodass du auf einen Blick siehst, zu welchem Modell eine Ansicht gehört. Bleibt an, bis du es ausschaltest.",
+      when: ["Du arbeitest in mehreren Modellen gleichzeitig, zum Beispiel im Architekturmodell und in deinem eigenen."],
+      steps: [
+        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Farbige Reiter]], um sie einzuschalten.",
+        "Öffne oder wechsle Ansichten: Ihre Reiter bekommen die Farbe ihres Modells.",
+        "Klick noch einmal, um sie auszuschalten."
+      ],
+      settings: [],
+      tips: ["Bleiben die Reiter grau, zum Beispiel nach einem Revit-Update, schick das BusyBee-Protokoll."],
+      issues: [],
+      shots: []
+    },
+
+    "reset-overrides": {
+      name: "Überschreibungen zurücksetzen",
+      tagline: "Alle Element-Überschreibungen in der Ansicht entfernen.",
+      summary: "Entfernt alle Farb- und Grafiküberschreibungen einzelner Elemente in der aktuellen Ansicht (Grafiken in Ansicht überschreiben > Nach Element), egal wer sie gesetzt hat. Überschreibungen nach Kategorie und Filter bleiben. Ein Rückgängig-Schritt.",
+      when: ["Eine Ansicht ist voller Farben, die von Hand gesetzt wurden, und du willst sauber anfangen."],
+      steps: [
+        "Öffne einen Grundriss, Schnitt, eine Ansicht oder eine 3D-Ansicht.",
+        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Überschreibungen zurücksetzen]].",
+        "BusyBee sagt, wie viele Elemente zurückgesetzt wurden. Strg+Z holt die Überschreibungen zurück."
+      ],
+      settings: [],
+      tips: [],
+      issues: [],
+      shots: []
+    },
+
+    "room-outlines": {
+      name: "Raumumrisse 3D",
+      tagline: "Räume und MEP-Räume in 3D-Ansichten sehen.",
+      summary: "Zeichnet die Umrisse von Räumen in Gelb und MEP-Räumen in Blau in 3D-Ansichten, auch Räume aus verknüpften Modellen. Sie werden nur auf dem Bildschirm gezeichnet: Im Modell kommt nichts dazu.",
+      when: [
+        "Prüfen, ob die MEP-Räume zu den Räumen der Architektur passen.",
+        "Sehen, in welchem Raum ein Kanal oder ein Gerät liegt."
+      ],
+      steps: [
+        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Raumumrisse 3D]], um sie einzuschalten.",
+        "Öffne eine 3D-Ansicht, um sie zu sehen.",
+        "Klick noch einmal, um sie auszuschalten."
+      ],
+      settings: [],
+      tips: ["Änderungen an Räumen in diesem Modell erscheinen sofort. Für Änderungen in einer Verknüpfung schalt die Umrisse aus und wieder ein."],
       issues: [],
       shots: []
     },

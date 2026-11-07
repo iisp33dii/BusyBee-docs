@@ -28,37 +28,15 @@ BB.tools = [
   { slug: "model-health",         group: "audit",      status: "beta",   revit: ["2025", "2026"], shot: "health-dashboard.webp" },
   { slug: "quality-control",      group: "audit",      status: "beta",   revit: ["2025", "2026"], shot: "qc.webp" },
   { slug: "loin-check",           group: "audit",      status: "beta",   revit: ["2025", "2026"], shot: "loin-dashboard.webp" },
-  // Utilities
-  { slug: "small-tools",          group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
-  { slug: "select-by-id",        group: "utility",    status: "stable", revit: ["2025", "2026"], shot: "select-id.webp" },
+  // Utilities: the panel's bottom buttons, then the one-click small tools
+  { slug: "select-by-id",         group: "utility",    status: "stable", revit: ["2025", "2026"], shot: "select-id.webp" },
   { slug: "inspect-categories",   group: "utility",    status: "stable", revit: ["2025", "2026"], shot: "object-categories.webp" },
+  { slug: "quick-sections",       group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
+  { slug: "who-did-that",         group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
+  { slug: "copy-crop",            group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
+  { slug: "copy-levels",          group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
+  { slug: "coloured-tabs",        group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
+  { slug: "reset-overrides",      group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
+  { slug: "room-outlines",        group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
   { slug: "project-workspace",    group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null }
-];
-
-// Revit terms in both languages. The docs use these so a guide works with either Revit language.
-BB.glossary = [
-  ["Category", "Kategorie"],
-  ["Family", "Familie"],
-  ["Type", "Typ"],
-  ["Instance parameter", "Exemplarparameter"],
-  ["Type parameter", "Typparameter"],
-  ["Shared parameter", "Gemeinsam genutzter Parameter"],
-  ["Level", "Ebene"],
-  ["Grid", "Raster"],
-  ["Room", "Raum"],
-  ["Space", "MEP-Raum"],
-  ["Comments", "Kommentare"],
-  ["Mark", "Kennzeichen"],
-  ["Linked model", "Verknüpftes Modell"],
-  ["Active view", "Aktive Ansicht"],
-  ["Section box", "Schnittbereich"],
-  ["Temporary hide/isolate", "Temporär ausblenden/isolieren"],
-  ["Graphic overrides", "Grafiküberschreibungen"],
-  ["Warnings", "Warnungen"],
-  ["Purge unused", "Nicht verwendete Elemente löschen"],
-  ["In-place family", "Projektfamilie"],
-  ["Ducts", "Luftkanäle"],
-  ["Pipes", "Rohre"],
-  ["Floors", "Geschossdecken"],
-  ["Walls", "Wände"]
 ];

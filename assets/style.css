@@ -271,15 +271,15 @@ p { margin: 0 0 1em; }
 .model-steps li b a:hover { text-decoration: underline; }
 .model-steps li p { margin: 0; color: var(--text-3); font-size: 0.93rem; line-height: 1.5; transition: color 0.4s; }
 .ms-num {
-  width: 28px; height: 32px; display: grid; place-items: center; margin-top: -2px;
-  font: 700 0.9rem/1 var(--font-display); color: var(--text-2); background: var(--bg-3);
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); transition: background 0.4s, color 0.4s;
+  width: 30px; height: 34px; display: grid; place-items: center; margin-top: -3px;
+  font: 700 0.92rem/1 var(--font-display); color: var(--text-3);
+  background: var(--cell-up) center / contain no-repeat; transition: color 0.4s, filter 0.4s, scale 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
 }
 .model-steps li.on { background: var(--bg-2); border-color: var(--line); }
 .model-steps li.on b { color: var(--text); }
 .model-steps li.on b a { color: var(--honey-ink); }
 .model-steps li.on p { color: var(--text-2); }
-.model-steps li.on .ms-num { background: var(--honey); color: var(--on-honey); }
+.model-steps li.on .ms-num { background-image: var(--cell-full); color: var(--cell-num); text-shadow: var(--cell-num-glow); filter: drop-shadow(0 0 8px rgba(242, 177, 52, 0.5)); scale: 1.08; }
 
 .vp {
   position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden;
@@ -412,21 +412,27 @@ p { margin: 0 0 1em; }
 .article li { margin-bottom: 0.45em; }
 .article li::marker { color: var(--text-3); }
 
-/* Numbered steps: glossy honey cells on a line. With .tracked (set by app.js), the cells and line fill
-   as you scroll; the step you're reading glows. */
+/* Numbered steps: honey-rimmed cells with a glowing number, on a line. With .tracked (set by app.js), the
+   cells and line fill as you scroll; the step you're reading glows. The model steps on the home page use the
+   same cells. */
 :root {
-  --cell-full: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='.35' y2='1'%3E%3Cstop offset='0' stop-color='%23ffd978'/%3E%3Cstop offset='.5' stop-color='%23f2b134'/%3E%3Cstop offset='1' stop-color='%23cf8a10'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='url(%23g)' stroke='%23b87a0a' stroke-width='.05'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.74)' fill='none' stroke='%23fff4d6' stroke-opacity='.55' stroke-width='.045'/%3E%3C/svg%3E");
-  --cell-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='%2326201a' stroke='%236b5a3c' stroke-width='.06'/%3E%3C/svg%3E");
+  --cell-full: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='.35' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe08a'/%3E%3Cstop offset='.5' stop-color='%23f2b134'/%3E%3Cstop offset='1' stop-color='%23b87a0a'/%3E%3C/linearGradient%3E%3ClinearGradient id='i' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23302517'/%3E%3Cstop offset='1' stop-color='%23140f0a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='url(%23g)'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.8)' fill='url(%23i)'/%3E%3C/svg%3E");
+  --cell-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='%234b4031'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.8)' fill='%231c1813'/%3E%3C/svg%3E");
+  --cell-num: #ffc75a;
+  --cell-num-glow: 0 0 8px rgba(242, 177, 52, 0.55);
 }
 :root[data-theme="light"] {
-  --cell-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='%23f6efe0' stroke='%23d1b47a' stroke-width='.06'/%3E%3C/svg%3E");
+  --cell-full: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='.35' y2='1'%3E%3Cstop offset='0' stop-color='%23ffd978'/%3E%3Cstop offset='.5' stop-color='%23f2b134'/%3E%3Cstop offset='1' stop-color='%23cf8a10'/%3E%3C/linearGradient%3E%3ClinearGradient id='i' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fffdf7'/%3E%3Cstop offset='1' stop-color='%23f7ebd2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='url(%23g)'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.8)' fill='url(%23i)'/%3E%3C/svg%3E");
+  --cell-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='%23d3c4a7'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.8)' fill='%23fffcf5'/%3E%3C/svg%3E");
+  --cell-num: #8a5800;
+  --cell-num-glow: none;
 }
 .steps { list-style: none; counter-reset: s; padding: 0; margin: 0; }
 .steps li { counter-increment: s; position: relative; padding: 0 0 22px 54px; margin: 0; }
 .steps li::before {
   content: counter(s); position: absolute; left: 0; top: -5px; z-index: 1;
   width: 36px; height: 40px; display: grid; place-items: center; padding-top: 1px;
-  font: 700 1rem/1 var(--font-display); color: var(--on-honey);
+  font: 700 1rem/1 var(--font-display); color: var(--cell-num); text-shadow: var(--cell-num-glow);
   background: var(--cell-full) center / contain no-repeat;
   transition: color 0.4s, filter 0.4s, scale 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
 }
@@ -436,7 +442,7 @@ p { margin: 0 0 1em; }
   transition: background-size 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .steps li:last-child::after { display: none; }
-.steps.tracked li:not(.done):not(.cur)::before { background-image: var(--cell-up); color: var(--text-2); }
+.steps.tracked li:not(.done):not(.cur)::before { background-image: var(--cell-up); color: var(--text-3); text-shadow: none; }
 .steps.tracked li:not(.done)::after { background-size: 100% 0; }
 .steps.tracked li.cur::before { filter: drop-shadow(0 0 10px rgba(242, 177, 52, 0.65)); scale: 1.1; }
 .steps h3 { margin-bottom: 4px; font-size: 1.1rem; }
@@ -452,10 +458,10 @@ p { margin: 0 0 1em; }
 .figure { margin: 8px 0 26px; }
 .figure img {
   border-radius: 10px; border: 1px solid var(--line-2); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 26px 50px -26px rgba(0, 0, 0, 0.7); background: #121212;
-  outline: 2px solid transparent; outline-offset: 5px; transition: outline-color 0.25s, box-shadow 0.35s, translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: 1px solid transparent; outline-offset: 5px; transition: outline-color 0.25s, box-shadow 0.35s, translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .figure a { display: block; cursor: zoom-in; }
-.figure a:hover img, .figure a:focus-visible img { outline-color: var(--honey); translate: 0 -3px; box-shadow: 0 30px 60px -26px rgba(0, 0, 0, 0.8), 0 0 50px -12px rgba(242, 177, 52, 0.3); }
+.figure a:hover img, .figure a:focus-visible img { outline-color: color-mix(in srgb, var(--honey) 45%, transparent); translate: 0 -3px; box-shadow: 0 30px 60px -26px rgba(0, 0, 0, 0.8), 0 0 36px -8px rgba(242, 177, 52, 0.3); }
 .figure a:focus-visible { outline: none; }
 .figure figcaption { font-size: 0.88rem; color: var(--text-3); margin-top: 10px; }
 .figure img { width: auto; image-rendering: auto; }
@@ -505,13 +511,17 @@ p { margin: 0 0 1em; }
 .tool-card {
   display: flex; flex-direction: column; text-decoration: none; color: var(--text); overflow: hidden;
   background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px;
-  outline: 2px solid transparent; outline-offset: 4px;
-  transition: translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), outline-color 0.25s, box-shadow 0.35s, border-color 0.25s;
+  transition: translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s, border-color 0.25s;
 }
 .tool-card:hover, .tool-card:focus-visible {
-  translate: 0 -4px; outline-color: var(--honey); border-color: var(--honey); text-decoration: none;
-  box-shadow: 0 26px 50px -24px rgba(0, 0, 0, 0.75), 0 0 46px -10px rgba(242, 177, 52, 0.3);
+  translate: 0 -4px; border-color: color-mix(in srgb, var(--honey) 55%, var(--line)); text-decoration: none;
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7), 0 0 28px -6px rgba(242, 177, 52, 0.28);
 }
+.tool-card:focus-visible { outline: 2px solid var(--honey); outline-offset: 3px; }
+.tool-group { margin-bottom: 18px; }
+.tool-group > h2 { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; margin: 8px 0 16px; }
+.tool-group > h2 .g-count { margin-left: 2px; font: 600 0.8rem/1 var(--font-body); color: var(--text-3); background: var(--bg-3); border: 1px solid var(--line); border-radius: 999px; padding: 4px 9px; }
+.tool-group .tool-grid { margin-bottom: 30px; }
 .tool-card:hover h3 { color: var(--honey-ink); }
 .tc-shot { position: relative; height: 150px; overflow: hidden; background: #121212; border-bottom: 1px solid var(--line); }
 .tc-shot img { width: 100%; height: 100%; object-fit: cover; object-position: left top; transition: scale 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: left top; }
@@ -704,16 +714,13 @@ details.builds li b { color: var(--text); font-weight: 600; font-variant-numeric
 
 .notes { list-style: none; padding: 0; margin: 0; }
 .notes li { padding: 12px 0 12px 22px; border-top: 1px solid var(--line); position: relative; color: var(--text-2); }
-.notes li::before { content: ""; position: absolute; left: 2px; top: 21px; width: 9px; height: 10px; background: var(--honey); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+.notes li::before { content: ""; position: absolute; left: 2px; top: 21px; width: 9px; height: 10px; background: linear-gradient(160deg, #ffe08a, #f2b134 50%, #b87a0a); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
 
 /* ---------- Footer ---------- */
 .foot { border-top: 1px solid var(--line); padding: 40px 0 36px; color: var(--text-3); font-size: 0.9rem; background: linear-gradient(var(--bg), var(--bg-2)); }
-.foot-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-bottom: 22px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.foot .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px; }
+.foot-id { display: flex; flex-direction: column; gap: 8px; }
 .foot .brand span { display: inline; }
-.foot-nav { display: flex; flex-wrap: wrap; gap: 6px 20px; }
-.foot-nav a { color: var(--text-2); text-decoration: none; font-weight: 500; }
-.foot-nav a:hover { color: var(--honey-ink); }
-.foot-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
 #foot-ver { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .ver-pill {
   display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px 6px 9px; border-radius: 999px; text-decoration: none;
@@ -744,20 +751,25 @@ details.builds li b { color: var(--text); font-weight: 600; font-variant-numeric
 .pp-track a:hover { color: var(--text); border-color: var(--text-3); }
 .pp-track a.on { color: var(--honey-ink); background: var(--honey-wash); border-color: var(--honey); box-shadow: 0 0 18px -6px rgba(242, 177, 52, 0.45); }
 
-/* ---------- Glossary as term pairs ---------- */
-.gloss-search { margin: 4px 0 18px; }
-.gloss-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 10px; }
-.gloss-grid li {
-  display: grid; grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr); align-items: center; gap: 12px; padding: 12px 16px;
-  background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; transition: border-color 0.2s, translate 0.2s;
+/* ---------- Quick start: steps beside the panel, tips as cards below ---------- */
+.start-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 56px; align-items: start; }
+.start-pane { position: sticky; top: 90px; margin: 0; }
+.start-pane img { width: 280px; }
+@media (max-width: 860px) {
+  .start-grid { grid-template-columns: 1fr; gap: 28px; }
+  .start-pane { position: static; }
+  .start-pane img { width: min(280px, 100%); }
 }
-.gloss-grid li[hidden] { display: none; }
-.gloss-grid li:hover { border-color: color-mix(in srgb, var(--honey) 55%, transparent); translate: 0 -1px; }
-.gloss-grid li > span { display: flex; flex-direction: column; font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
-.gloss-grid li > span:last-child { color: var(--honey-ink); }
-.gloss-grid small { font: 500 0.68rem/1.2 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); margin-bottom: 3px; }
-.gloss-grid i { display: grid; place-items: center; color: var(--text-3); }
-.gloss-grid i svg { width: 16px; height: 16px; }
+.tips { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.tips li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+@media (max-width: 700px) { .tips { grid-template-columns: 1fr; } }
+.tips li {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 14px; align-items: start; margin: 0; padding: 18px 18px 18px 16px;
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; transition: border-color 0.25s, translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tips li:hover { border-color: color-mix(in srgb, var(--honey) 45%, var(--line)); translate: 0 -2px; }
+.tips li .hx { margin-top: 1px; filter: drop-shadow(0 2px 8px rgba(242, 177, 52, 0.3)); }
+.tips p { margin: 0; color: var(--text-2); }
 
 /* ---------- Living main button on the home page ---------- */
 @property --ba { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
@@ -776,7 +788,7 @@ details.builds li b { color: var(--text); font-weight: 600; font-variant-numeric
 /* ---------- Cursor spotlight: a soft honey glow follows the mouse over cards (position set by app.js) ---------- */
 :root { --spot: rgba(242, 177, 52, 0.09); }
 :root[data-theme="light"] { --spot: rgba(242, 177, 52, 0.16); }
-.tool-card:hover, .group:hover, .phase-card:hover, .issue:hover, .news > div:hover, .stats:hover, .gloss-grid li:hover {
+.tool-card:hover, .group:hover, .phase-card:hover, .issue:hover, .news > div:hover, .stats:hover, .tips li:hover {
   background-image: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 70%);
 }
 

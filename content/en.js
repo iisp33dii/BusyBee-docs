@@ -30,10 +30,7 @@ BB.text.en = {
     updated: "Site updated for",
     toc: "On this page",
     eyebrow: { need: "Before you start", steps: "Step by step", help: "Troubleshooting", files: "Reference", tools: "The toolbox",
-      news: "Latest release", next: "On the roadmap", model: "In action", good: "Tips", glossary: "Reference" },
-    glossaryFilter: "Filter terms, in English or German",
-    glossaryEmpty: "No term matches. Try part of a word, such as Rohr.",
-    footLinks: "Pages",
+      news: "Latest release", next: "On the roadmap", model: "In action", good: "Tips" },
     whenToUse: "When to use it",
     howTo: "Step by step",
     settings: "Options explained",
@@ -71,7 +68,7 @@ BB.text.en = {
   home: {
     title: "BusyBee for Revit",
     lead: "Our Revit add-in for clash checks, parameter work and model quality. It lives in a panel next to the Project Browser and runs in Revit 2025 and 2026, in English or German.",
-    ctaStart: "Start with the quick start",
+    ctaStart: "Quick start",
     ctaTools: "Browse the tools",
     current: "Current team release",
     toolsTitle: "What BusyBee does",
@@ -178,11 +175,7 @@ BB.text.en = {
       "Revit asks once whether to load BusyBee because the add-in isn't signed. Choose [[Always Load]].",
       "While a tool runs, Revit itself is busy. The progress window still responds, and Cancel takes effect after the current element.",
       "Problems? Send Sascha a short note and today's log file from `%LOCALAPPDATA%\\BusyBee\\logs`."
-    ],
-    glossaryTitle: "Revit terms in English and German",
-    glossaryLead: "The guides use the English Revit names. If your Revit is in German, use this list.",
-    glossaryEn: "English Revit",
-    glossaryDe: "German Revit"
+    ]
   },
 
   tools: {
@@ -520,25 +513,132 @@ BB.text.en = {
       shots: []
     },
 
-    "small-tools": {
-      name: "Small tools",
-      tagline: "One-click helpers for everyday Revit work.",
-      summary: "The Small tools section of the panel and its own ribbon panel hold quick helpers that don't need a window. The two section buttons sit at the bottom of the panel.",
-      when: ["Small jobs you'd otherwise do by hand many times a day."],
+    "quick-sections": {
+      name: "Quick sections",
+      tagline: "Drag a rectangle in a plan and get a section.",
+      summary: "Drag a rectangle in a plan and you get a section along the edge where you started, looking the way you dragged, as deep as the rectangle and as high as the plan's view range. [[Section ↔]] runs left to right, [[Section ↕]] up and down. Each user has one of each, named `HS - <your name>` and `VS - <your name>`, and it is moved every time.",
+      when: [
+        "A quick look through a shaft or a ceiling void.",
+        "Checking heights at one spot without setting up a new view."
+      ],
       steps: [
-        "Open the Small tools section in the BusyBee panel, or use the Small tools panel on the ribbon.",
-        "Click a tool. Hover over it first to see what it does."
+        "Open a floor, ceiling or structural plan.",
+        "Click [[Section ↔]] or [[Section ↕]] at the bottom of the BusyBee panel or on the Small tools ribbon panel.",
+        "Click the first corner where the section line should be, then drag towards where the section should look.",
+        "The section opens. Next time, the same section moves to the new place."
       ],
-      settings: [
-        ["Who did that", "Who created the selected element, who changed it last and who has it borrowed now, plus its workset, phases, group and design option. Needs a workshared model."],
-        ["Copy crop", "Gives other plans the crop region of the open plan. Plans turned differently or cropped by a scope box are left out."],
-        ["Copy levels", "Copies levels from a linked model: pick the model, then its levels. Levels already there stay as they are."],
-        ["Coloured tabs", "Each open model gets its own colour on its view tabs. Stays on until you switch it off."],
-        ["Reset overrides", "Removes all element graphic overrides in the current view, whoever set them. One undo step."],
-        ["Room outlines 3D", "Shows room and space outlines in 3D views, also rooms from linked models. Drawn on screen only, nothing is added to the model."],
-        ["Section ↔ / Section ↕", "Drag a rectangle in a plan: you get a section along the edge where you started, looking the way you dragged, as deep as the rectangle and as high as the view range. Each user has one of each, reused every time."]
+      settings: [],
+      tips: ["Duplicate the section if you want to keep it: the next quick section moves it."],
+      issues: [],
+      shots: []
+    },
+
+    "who-did-that": {
+      name: "Who did that",
+      tagline: "See who created, changed and borrowed an element.",
+      summary: "Shows who created the selected elements, who changed them last and who has them borrowed right now, plus their workset, phases, group and design option. Works in workshared models only, because Revit records these names only there.",
+      when: [
+        "An element moved and you want to know whom to ask.",
+        "You can't edit an element because someone else has it borrowed."
       ],
-      tips: ["Each small tool has a ribbon button, so you can give it a keyboard shortcut."],
+      steps: [
+        "Select one or more elements, or select nothing.",
+        "Click [[Who did that]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "If nothing was selected, click an element.",
+        "Read the names in the window."
+      ],
+      settings: [],
+      tips: ["[[Last changed by]] is updated when someone synchronizes, so a change since the last sync still shows the name before it."],
+      issues: [],
+      shots: []
+    },
+
+    "copy-crop": {
+      name: "Copy crop",
+      tagline: "Give other plans the crop region of this one.",
+      summary: "Copies the crop region of the open plan to other plans: same place, same shape. Plans turned differently and plans cropped by a scope box are left out and listed.",
+      when: [
+        "All floor plans of a building should show the same area.",
+        "A new set of plans should get the crop of an existing one."
+      ],
+      steps: [
+        "Open the plan whose crop region you want to copy. Crop View must be on.",
+        "Click [[Copy crop]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "Tick the plans that should get it and click [[Copy crop]]."
+      ],
+      settings: [],
+      tips: ["A plan cropped by a scope box is left out: change the scope box instead."],
+      issues: [],
+      shots: []
+    },
+
+    "copy-levels": {
+      name: "Copy levels",
+      tagline: "Copy levels from a linked model.",
+      summary: "Copies levels from a loaded Revit link into this model, with the same name and height. Levels that are already there are left as they are.",
+      when: ["Starting an MEP model on the architect's levels."],
+      steps: [
+        "Click [[Copy levels]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "Pick the linked model and click [[Show levels]].",
+        "Tick the levels and click [[Copy levels]]."
+      ],
+      settings: [],
+      tips: [
+        "The copies are not monitored. For Copy/Monitor use Revit's own dialog under Collaborate.",
+        "No plan views are made for the new levels.",
+        "A level is skipped if its name is taken at another height, or another level already sits at its height. The window says which."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "coloured-tabs": {
+      name: "Coloured tabs",
+      tagline: "Each open model gets its own tab colour.",
+      summary: "Gives the view tabs of each open model or family their own colour, so you see at a glance which model a view belongs to. Stays on until you switch it off.",
+      when: ["Working in several models at once, for example the architect's and your own."],
+      steps: [
+        "Click [[Coloured tabs]] in the Small tools section of the BusyBee panel or on the ribbon to switch it on.",
+        "Open or switch views: their tabs take the colour of their model.",
+        "Click it again to switch it off."
+      ],
+      settings: [],
+      tips: ["If the tabs stay grey, for example after a Revit update, send the BusyBee log."],
+      issues: [],
+      shots: []
+    },
+
+    "reset-overrides": {
+      name: "Reset overrides",
+      tagline: "Remove every element override in the view.",
+      summary: "Removes all colour and graphic overrides set on single elements in the current view (Override Graphics in View > By Element), whoever set them. Category and filter overrides stay. One undo step.",
+      when: ["A view is full of colours set by hand and you want a clean start."],
+      steps: [
+        "Open a plan, section, elevation or 3D view.",
+        "Click [[Reset overrides]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "BusyBee says how many elements it reset. Ctrl+Z brings the overrides back."
+      ],
+      settings: [],
+      tips: [],
+      issues: [],
+      shots: []
+    },
+
+    "room-outlines": {
+      name: "Room outlines 3D",
+      tagline: "See rooms and spaces in 3D views.",
+      summary: "Draws the outlines of rooms in yellow and MEP spaces in blue in 3D views, also rooms from linked models. They are drawn on screen only: nothing is added to the model.",
+      when: [
+        "Checking whether the spaces match the architect's rooms.",
+        "Seeing which room a duct or a device sits in."
+      ],
+      steps: [
+        "Click [[Room outlines 3D]] in the Small tools section of the BusyBee panel or on the ribbon to switch them on.",
+        "Open a 3D view to see them.",
+        "Click it again to switch them off."
+      ],
+      settings: [],
+      tips: ["Changes to rooms in this model show straight away. For changes in a link, switch the outlines off and on again."],
       issues: [],
       shots: []
     },

@@ -159,9 +159,6 @@
     document.getElementById("foot-ver").innerHTML = r ? '<a class="ver-pill" href="' + href("changelog") + '">' + hex("released", 14) + esc(t.teamRelease + " " + r.version) + "</a>" +
       '<span class="foot-date">' + esc(t.updated + " " + r.version + ", " + fmtDate(r.date)) + "</span>" : "";
     document.getElementById("foot-brand").setAttribute("href", href(""));
-    var fn = document.getElementById("foot-nav");
-    fn.setAttribute("aria-label", t.footLinks);
-    fn.innerHTML = items.map(function (it) { return '<a href="' + href(it[0]) + '">' + esc(it[1]) + "</a>"; }).join("");
   }
 
   // ---------- pages ----------
@@ -322,24 +319,13 @@
   function pageStart() {
     var s = T().start;
     var steps = s.steps.map(function (x) { return "<li><h3>" + esc(x.h) + "</h3><p>" + fmt(x.p) + "</p></li>"; }).join("");
-    var notes = s.notes.map(function (n) { return "<li>" + fmt(n) + "</li>"; }).join("");
-    var h1 = state.lang === "de" ? s.glossaryDe : s.glossaryEn, h2 = state.lang === "de" ? s.glossaryEn : s.glossaryDe;
-    var rows = BB.glossary.map(function (g) {
-      var a = state.lang === "de" ? g[1] : g[0], b = state.lang === "de" ? g[0] : g[1];
-      return '<li data-terms="' + esc((a + " " + b).toLowerCase()) + '"><span><small>' + esc(h1) + "</small>" + esc(a) + '</span><i aria-hidden="true">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i>' +
-        '<span lang="' + (state.lang === "de" ? "en" : "de") + '"><small>' + esc(h2) + "</small>" + esc(b) + "</span></li>";
-    }).join("");
+    var tips = s.notes.map(function (n) { return '<li class="tip">' + hex("released", 26) + "<p>" + fmt(n) + "</p></li>"; }).join("");
     return '<div class="wrap"><div class="page-head"><h1>' + esc(s.title) + '</h1><p class="lead">' + esc(s.lead) + "</p></div>" +
-      '<div class="split section" style="border:0">' +
-        '<div><ol class="steps">' + steps + "</ol></div>" +
-        '<div><figure class="figure"><img src="assets/img/' + (state.lang === "de" ? "pane-de.webp" : "pane.webp") + '" alt="' + esc(T().home.paneAlt) + '" loading="lazy" style="width:260px" width="418" height="1154"></figure>' +
-        eb("good") + "<h2>" + esc(s.goodToKnow) + '</h2><ul class="notes">' + notes + "</ul></div>" +
+      '<div class="start-grid section" style="border:0">' +
+        "<div>" + eb("steps") + '<ol class="steps">' + steps + "</ol></div>" +
+        '<figure class="figure start-pane"><img src="assets/img/' + (state.lang === "de" ? "pane-de.webp" : "pane.webp") + '" alt="' + esc(T().home.paneAlt) + '" loading="lazy" width="418" height="1154"></figure>' +
       "</div>" +
-      '<section class="section" id="glossary">' + eb("glossary") + "<h2>" + esc(s.glossaryTitle) + '</h2><p class="muted">' + esc(s.glossaryLead) + "</p>" +
-        '<div class="search gloss-search"><label class="visually-hidden" for="gq">' + esc(T().ui.glossaryFilter) + "</label>" + icons.search +
-        '<input id="gq" type="search" autocomplete="off" placeholder="' + esc(T().ui.glossaryFilter) + '"></div>' +
-        '<ul class="gloss-grid" id="gloss-grid">' + rows + '</ul><p class="empty" id="gloss-empty" hidden>' + esc(T().ui.glossaryEmpty) + "</p></section></div>";
+      '<section class="section">' + eb("good") + "<h2>" + esc(s.goodToKnow) + '</h2><ul class="tips">' + tips + "</ul></section></div>";
   }
 
   function sidebar() {
@@ -357,19 +343,25 @@
   function pageTools() {
     var t = T();
     if (state.slug) return pageTool(state.slug);
-    var cards = BB.tools.map(function (x) {
+    var card = function (x) {
       var d = t.tools[x.slug];
       var shot = x.shot ? (state.lang === "de" && x.shot === "clash.webp" ? "clash-de.webp" : x.shot) : null;
       var thumb = shot ? '<div class="tc-shot"><img src="assets/img/' + shot + '" alt="" loading="lazy" decoding="async"></div>'
         : '<div class="tc-shot empty" aria-hidden="true">' + hex("released", 44) + "</div>";
-      return '<a class="tool-card" href="' + href("tools", x.slug) + '">' + thumb + '<div class="tc-body"><div class="row"><h3>' + esc(d.name) + "</h3>" + pill(x.status) + "</div><p>" + esc(d.tagline) + '</p><div class="row"><span class="tag">' + esc(t.ui.groups[x.group]) + "</span></div></div></a>";
+      return '<a class="tool-card" href="' + href("tools", x.slug) + '">' + thumb + '<div class="tc-body"><div class="row"><h3>' + esc(d.name) + "</h3>" + pill(x.status) + "</div><p>" + esc(d.tagline) + "</p></div></a>";
+    };
+    // One section per group, so the utilities don't get lost between the big tools
+    var cards = ["automation", "audit", "utility"].map(function (g) {
+      var list = BB.tools.filter(function (x) { return x.group === g; });
+      return '<section class="tool-group" id="group-' + g + '"><h2>' + hex("released", 20) + "<span>" + esc(t.ui.groups[g]) + '</span><span class="g-count">' + list.length + "</span></h2>" +
+        '<div class="tool-grid">' + list.map(card).join("") + "</div></section>";
     }).join("");
     return '<div class="wrap docs">' + sidebar() + '<div class="article" style="max-width:none">' +
       "<h1>" + esc(t.ui.nav.tools) + "</h1>" +
       '<div class="search" role="search"><label class="visually-hidden" for="q">' + esc(t.ui.search) + "</label>" + icons.search +
       '<input id="q" type="search" autocomplete="off" placeholder="' + esc(t.ui.searchPlaceholder) + '"></div>' +
       '<ul class="results" id="results" aria-live="polite"></ul>' +
-      statusLegend() + '<div class="tool-grid" id="tool-grid">' + cards + "</div></div></div>";
+      statusLegend() + '<div id="tool-grid">' + cards + "</div></div></div>";
   }
 
   function pageTool(slug) {
@@ -554,7 +546,7 @@
   function reveal() {
     if (revealer) revealer.disconnect();
     if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var els = main.querySelectorAll(".section-head, .group, .news > div, .model-grid > *, .tool-card, .phase-card, .release, .issue, .rm-phase, .figure, .steps > li, .defs");
+    var els = main.querySelectorAll(".section-head, .group, .news > div, .model-grid > *, .tool-card, .phase-card, .release, .issue, .rm-phase, .figure, .steps > li, .defs, .tips > li");
     revealer = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
@@ -664,15 +656,6 @@
     }
     var q = document.getElementById("q");
     if (q) q.addEventListener("input", function () { runSearch(q.value); });
-    var gq = document.getElementById("gq");
-    if (gq) gq.addEventListener("input", function () {
-      var words = gq.value.trim().toLowerCase().split(/\s+/).filter(Boolean), shown = 0;
-      document.querySelectorAll("#gloss-grid li").forEach(function (li) {
-        var t = li.getAttribute("data-terms"), hit = words.every(function (w) { return t.indexOf(w) > -1; });
-        li.hidden = !hit; if (hit) shown++;
-      });
-      document.getElementById("gloss-empty").hidden = shown > 0;
-    });
   }
 
   window.addEventListener("hashchange", function () { render(false); });
@@ -754,7 +737,7 @@
   }
 
   // Cursor spotlight: cards remember where the mouse is, and CSS paints a soft glow there
-  var SPOT = ".tool-card, .group, .phase-card, .issue, .news > div, .stats, .gloss-grid li";
+  var SPOT = ".tool-card, .group, .phase-card, .issue, .news > div, .stats, .tips li";
   document.addEventListener("pointermove", function (e) {
     if (e.pointerType !== "mouse" || !e.target.closest) return;
     var c = e.target.closest(SPOT);

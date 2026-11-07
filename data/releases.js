@@ -34,7 +34,7 @@ BB.releases = [
       { type: "new", tool: "tag-tools",
         en: "Tag Tools: align, stack and reset tags, copy their positions to other views, find untagged, overlapping and empty tags, tag what is missing without overlaps, and size tags along pipe and duct runs.",
         de: "Beschriftungswerkzeuge: Beschriftungen ausrichten, stapeln und zurücksetzen, Positionen in andere Ansichten kopieren, unbeschriftete, überlappende und leere finden, Fehlendes ohne Überlappung beschriften und Größen entlang von Rohr- und Kanalsträngen beschriften." },
-      { type: "new", tool: "small-tools",
+      { type: "new", tool: "core",
         en: "Small tools: Who did that, Copy crop, Copy levels from a link, coloured view tabs per model, Reset overrides, room outlines in 3D, and quick sections by dragging a rectangle in a plan.",
         de: "Kleine Helfer: Wer war das, Zuschnitt kopieren, Ebenen aus einer Verknüpfung kopieren, farbige Ansichtsreiter pro Modell, Überschreibungen zurücksetzen, Raumumrisse in 3D und Schnellschnitte durch Aufziehen eines Rechtecks im Grundriss." },
       { type: "new", tool: "model-health",
