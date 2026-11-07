@@ -55,7 +55,61 @@
   function pill(status) {
     return '<span class="pill ' + status + '"><i aria-hidden="true"></i>' + esc(T().ui.status[status]) + "</span>";
   }
-  function hex(cls, extra) { return '<span class="hex ' + cls + '"' + (extra || "") + ' aria-hidden="true"></span>'; }
+  // ---------- honeycomb cells ----------
+  // One cell is a unit hexagon scaled to r. Released cells are solid honey, ready ones glow,
+  // in-progress ones hold a moving honey wave, planned ones are empty.
+  var HEX = "M0-1L.866-.5V.5L0 1-.866.5V-.5Z";
+  var WAVE = "M-4 0Q-3.5-.16-3 0T-2 0T-1 0T0 0T1 0T2 0V1.2H-4Z";
+  function cell(s, r) {
+    return '<g class="cell s-' + s + '" transform="scale(' + r + ')"><path class="c-base" d="' + HEX + '"/>' +
+      (s === "in-progress" ? '<g clip-path="url(#hx-clip)"><path class="c-wave" d="' + WAVE + '"/></g>' : "") +
+      (s === "released" || s === "ready" ? '<path class="c-bevel" d="' + HEX + '" transform="scale(.72)"/>' : "") + "</g>";
+  }
+  function hex(s, size) {
+    size = size || 22;
+    return '<svg class="hx" viewBox="-1.1 -1.1 2.2 2.2" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + cell(s, 1) + "</svg>";
+  }
+  var STATE_RANK = { released: 0, ready: 1, "in-progress": 2, planned: 3 };
+  function phaseIndex(id) { for (var i = 0; i < BB.phases.length; i++) if (BB.phases[i].id === id) return i; return 99; }
+  // A linked cell at (x, y) inside a hive or strip
+  function combCell(it, x, y, r, delay, withTitle) {
+    var s = itemState(it), u = T().ui.rm;
+    var title = withTitle ? "<title>" + esc((it[state.lang] || it.en) + " (" + u[s] + ")") + "</title>" : "";
+    return '<a class="hc" href="#rm-' + it.id + '" data-rm="' + it.id + '" data-ph="' + it.phase + '" data-tip="' + esc(it[state.lang] || it.en) +
+      '" data-state="' + s + '" data-tool="' + esc(toolName(it.tool)) + '" aria-label="' + esc((it[state.lang] || it.en) + ", " + u[s]) + '" transform="translate(' + x.toFixed(1) + " " + y.toFixed(1) + ')">' +
+      title + '<g class="cell-pop" style="--d:' + delay + 'ms">' + cell(s, r) + "</g></a>";
+  }
+  // Every roadmap item as one hexagonal hive, filled from the middle out: released at the heart, planned at the rim
+  function hive(items) {
+    items = items.slice().sort(function (a, b) {
+      return (STATE_RANK[itemState(a)] - STATE_RANK[itemState(b)]) || (phaseIndex(a.phase) - phaseIndex(b.phase));
+    });
+    var n = items.length, R = 0;
+    while (1 + 3 * R * (R + 1) < n) R++;
+    var dirs = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]], pos = [[0, 0]];
+    for (var k = 1; k <= R; k++) {
+      var q = -k, rr = k; // start k steps in direction 4
+      for (var d = 0; d < 6; d++) for (var j = 0; j < k; j++) { pos.push([q, rr]); q += dirs[d][0]; rr += dirs[d][1]; }
+    }
+    var r = 20, gap = 0.9, w = Math.sqrt(3) * r;
+    var half = (R + 0.5) * w + 4, halfH = R * 1.5 * r + r + 4;
+    var cells = pos.map(function (p, i) {
+      var x = w * (p[0] + p[1] / 2), y = 1.5 * r * p[1];
+      if (i < n) return combCell(items[i], x, y, r * gap, 120 + i * 16);
+      return '<g transform="translate(' + x.toFixed(1) + " " + y.toFixed(1) + ')"><g class="cell-pop" style="--d:' + (120 + i * 16) + 'ms">' + cell("ghost", r * gap) + "</g></g>";
+    }).join("");
+    return '<svg class="hive-svg" viewBox="' + (-half) + " " + (-halfH) + " " + half * 2 + " " + halfH * 2 + '" role="group" aria-label="' + esc(T().roadmap.title) + '">' + cells + "</svg>";
+  }
+  // A phase as two interlocking rows of cells
+  function strip(items, start) {
+    var r = 15, w = Math.sqrt(3) * r, cols = Math.ceil(items.length / 2);
+    var cells = items.map(function (it, i) {
+      var row = i % 2, col = Math.floor(i / 2);
+      return combCell(it, w / 2 + 4 + col * w + (row ? w / 2 : 0), r + 4 + row * 1.5 * r, r * 0.92, start + i * 35, true);
+    }).join("");
+    var W = cols * w + w / 2 + 8, H = r * 3.5 + 8;
+    return '<svg class="strip-svg" viewBox="0 0 ' + W.toFixed(1) + " " + H.toFixed(1) + '" width="' + W.toFixed(0) + '" height="' + H.toFixed(0) + '">' + cells + "</svg>";
+  }
   function issueMeta(id) {
     var en = BB.text.en.issues;
     for (var i = 0; i < en.length; i++) if (en[i].id === id) return en[i];
@@ -111,9 +165,10 @@
     var groups = ["automation", "audit", "utility"].map(function (g) {
       var rows = BB.tools.filter(function (x) { return x.group === g; }).map(function (x) {
         var d = t.tools[x.slug];
-        return '<a class="tool-row" href="' + href("tools", x.slug) + '"><span class="tool-name">' + esc(d.name) + pill(x.status) + '</span><span class="tool-tag">' + esc(d.tagline) + "</span></a>";
+        return '<a class="tool-row" href="' + href("tools", x.slug) + '"><span class="tool-name"><span>' + esc(d.name) + "</span>" + pill(x.status) + '</span><span class="tool-tag">' + esc(d.tagline) + "</span></a>";
       }).join("");
-      return '<div class="group"><h3>' + esc(t.ui.groups[g]) + "</h3>" + rows + "</div>";
+      var count = BB.tools.filter(function (x) { return x.group === g; }).length;
+      return '<div class="group"><h3>' + hex("released", 18) + "<span>" + esc(t.ui.groups[g]) + '</span><span class="g-count">' + count + "</span></h3>" + rows + "</div>";
     }).join("");
 
     var hl = r ? r.highlights.slice(0, 5).map(hlItem).join("") : "";
@@ -141,7 +196,7 @@
         '<div class="section-head"><div><h2>' + esc(h.toolsTitle) + "</h2><p>" + esc(h.toolsLead) + "</p></div>" + statusLegend() + "</div>" +
         '<div class="groups">' + groups + "</div>" +
       "</div></section>" +
-      '<section class="section"><div class="wrap split">' +
+      '<section class="section"><div class="wrap split news">' +
         "<div><h2>" + esc(h.whatsNew) + (r ? " " + esc(r.version) : "") + '</h2><ul class="hl-list">' + hl + '</ul><a href="' + href("changelog") + '">' + esc(h.allChanges) + "</a></div>" +
         "<div><h2>" + esc(h.next) + '</h2><p class="muted">' + esc(h.nextLead) + '</p><ul class="next-list">' + next + '</ul><a href="' + href("roadmap") + '">' + esc(h.fullRoadmap) + "</a></div>" +
       "</div></section>";
@@ -292,7 +347,10 @@
     if (state.slug) return pageTool(state.slug);
     var cards = BB.tools.map(function (x) {
       var d = t.tools[x.slug];
-      return '<a class="tool-card" href="' + href("tools", x.slug) + '"><div class="row"><h3>' + esc(d.name) + "</h3>" + pill(x.status) + "</div><p>" + esc(d.tagline) + '</p><div class="row"><span class="tag">' + esc(t.ui.groups[x.group]) + "</span></div></a>";
+      var shot = x.shot ? (state.lang === "de" && x.shot === "clash.webp" ? "clash-de.webp" : x.shot) : null;
+      var thumb = shot ? '<div class="tc-shot"><img src="assets/img/' + shot + '" alt="" loading="lazy" decoding="async"></div>'
+        : '<div class="tc-shot empty" aria-hidden="true">' + hex("released", 44) + "</div>";
+      return '<a class="tool-card" href="' + href("tools", x.slug) + '">' + thumb + '<div class="tc-body"><div class="row"><h3>' + esc(d.name) + "</h3>" + pill(x.status) + "</div><p>" + esc(d.tagline) + '</p><div class="row"><span class="tag">' + esc(t.ui.groups[x.group]) + "</span></div></div></a>";
     }).join("");
     return '<div class="wrap docs">' + sidebar() + '<div class="article" style="max-width:none">' +
       "<h1>" + esc(t.ui.nav.tools) + "</h1>" +
@@ -360,17 +418,17 @@
 
   function pageChangelog() {
     var t = T(), c = t.changes;
-    var rel = releasesSorted().map(function (r) {
+    var rel = releasesSorted().map(function (r, ri) {
       var groups = ["new", "improved", "fixed"].map(function (type) {
         return r.highlights.filter(function (h) { return h.type === type; }).map(hlItem).join("");
       }).join("");
       var builds = (r.builds || []).map(function (b) { return "<li><b>" + esc(b[0]) + "</b>" + esc(b[1]) + "</li>"; }).join("");
-      return '<article class="release" id="v' + esc(r.version) + '"><div class="release-side"><div class="ver">' + esc(r.version) + "</div><time datetime=\"" + esc(r.date) + '">' + esc(fmtDate(r.date)) + "</time></div>" +
+      return '<article class="release' + (ri ? "" : " latest") + '" id="v' + esc(r.version) + '"><div class="release-side"><span class="node">' + hex(ri ? "ready" : "released", ri ? 20 : 26) + '</span><div class="ver">' + esc(r.version) + "</div><time datetime=\"" + esc(r.date) + '">' + esc(fmtDate(r.date)) + "</time></div>" +
         "<div><h2>" + esc(L(r.title)) + '</h2><p class="muted">' + esc(L(r.summary)) + '</p><ul class="hl-list">' + groups + "</ul>" +
         (builds ? '<details class="builds"><summary>' + esc(t.ui.builds) + " (" + r.builds.length + ")</summary><ul>" + builds + "</ul></details>" : "") +
         "</div></article>";
     }).join("");
-    return '<div class="wrap"><div class="page-head"><h1>' + esc(c.title) + '</h1><p class="lead">' + esc(c.lead) + "</p></div>" + rel + "</div>";
+    return '<div class="wrap"><div class="page-head"><h1>' + esc(c.title) + '</h1><p class="lead">' + esc(c.lead) + '</p></div><div class="timeline">' + rel + "</div></div>";
   }
 
   function pageRoadmap() {
@@ -378,19 +436,18 @@
     var counts = { released: 0, ready: 0, "in-progress": 0, planned: 0 };
     BB.roadmap.forEach(function (it) { counts[itemState(it)]++; });
     var stats = ["released", "ready", "in-progress", "planned"].map(function (s) {
-      return '<div class="stat">' + hex(s, ' style="--s:24px"') + "<div><b>" + counts[s] + "</b><span>" + esc(u[s]) + "</span></div></div>";
+      return '<div class="stat">' + hex(s, 28) + '<div><b data-count="' + counts[s] + '">' + counts[s] + "</b><span>" + esc(u[s]) + "</span></div></div>";
     }).join("");
+    var total = BB.roadmap.length, pctAll = total ? Math.round(counts.released / total * 100) : 0;
 
-    var phases = BB.phases.map(function (ph) {
+    var phases = BB.phases.map(function (ph, pi) {
       var items = BB.roadmap.filter(function (it) { return it.phase === ph.id; });
       var rel = items.filter(function (it) { return itemState(it) === "released"; }).length;
       var pct = items.length ? Math.round(rel / items.length * 100) : 0;
-      var comb = items.map(function (it, i) {
-        var s = itemState(it);
-        return '<a href="#rm-' + it.id + '" data-rm="' + it.id + '" title="' + esc((it[state.lang] || it.en) + " (" + u[s] + ")") + '">' + hex(s, ' style="--i:' + i + '"') + '<span class="visually-hidden">' + esc((it[state.lang] || it.en) + ", " + u[s]) + "</span></a>";
-      }).join("");
       var label = /^\d+$/.test(ph.id) ? '<span class="phase-num">Phase ' + ph.id + "</span>" : "";
-      return '<div class="phase-card"><div>' + label + "<h3>" + esc(L(ph)) + "</h3><p>" + esc(L(ph.blurb)) + '</p></div><div class="comb animate">' + comb + '</div><div class="phase-pct"><b>' + pct + "%</b><span>" + rel + "/" + items.length + " " + esc(u.progress) + "</span></div></div>";
+      return '<div class="phase-card' + (pct === 100 ? " full" : "") + '" data-ph="' + ph.id + '"><div>' + label + "<h3>" + esc(L(ph)) + "</h3><p>" + esc(L(ph.blurb)) + "</p></div>" +
+        '<div class="comb">' + strip(items, 200 + pi * 60) + "</div>" +
+        '<div class="phase-pct"><b>' + pct + "%</b><span>" + rel + "/" + items.length + " " + esc(u.progress) + '</span><i class="bar"><i style="width:' + pct + '%"></i></i></div></div>';
     }).join("");
 
     var chips = ["all", "released", "ready", "in-progress", "planned"].map(function (s) {
@@ -412,16 +469,21 @@
         if (s === "released") stateHtml = '<b class="released">' + esc(u.released) + " " + esc(r.version) + "</b>" + esc(fmtDate(r.date));
         else if (s === "ready") stateHtml = "<b>" + esc(u.ready) + "</b>" + esc(u.doneIn) + " " + esc(it.build || "");
         else stateHtml = "<b>" + esc(u[s]) + "</b>";
-        return '<div class="rm-item" id="rm-' + it.id + '">' + hex(s) + "<div><h4>" + esc(it[state.lang] || it.en) + "</h4>" + (it.note ? "<p>" + esc(L(it.note)) + "</p>" : "") +
+        return '<div class="rm-item" id="rm-' + it.id + '">' + hex(s, 22) + "<div><h4>" + esc(it[state.lang] || it.en) + "</h4>" + (it.note ? "<p>" + esc(L(it.note)) + "</p>" : "") +
           '<div class="tags">' + (it.tool === "core" ? '<span class="tag">' + esc(toolName("core")) + "</span>" : '<a class="tag" href="' + href("tools", it.tool) + '">' + esc(toolName(it.tool)) + "</a>") + "</div></div>" +
           '<div class="rm-state">' + stateHtml + "</div></div>";
       }).join("") + "</section>";
     }).join("") || '<p class="empty">—</p>';
 
-    var legend = '<div class="rm-legend">' + ["released", "ready", "in-progress", "planned"].map(function (s) { return "<span>" + hex(s) + esc(u[s]) + "</span>"; }).join("") + "</div>";
+    var legend = '<div class="rm-legend">' + ["released", "ready", "in-progress", "planned"].map(function (s) { return "<span>" + hex(s, 16) + esc(u[s]) + "</span>"; }).join("") + "</div>";
 
-    return '<div class="wrap"><div class="page-head"><h1>' + esc(t.roadmap.title) + '</h1><p class="lead">' + esc(t.roadmap.lead) + "</p></div>" +
-      '<div class="section" style="padding-top:28px"><div class="stats">' + stats + "</div>" +
+    return '<div class="wrap"><div class="page-head rm-head">' +
+        '<div class="rm-head-text"><h1>' + esc(t.roadmap.title) + '</h1><p class="lead">' + esc(t.roadmap.lead) + "</p>" +
+          '<div class="rm-total"><b><span data-count="' + pctAll + '">' + pctAll + "</span>%</b><span>" + counts.released + "/" + total + " " + esc(u.progress) + "</span></div>" +
+          '<div class="stats">' + stats + "</div></div>" +
+        '<div class="hive" id="hive">' + hive(BB.roadmap) + '<div class="hive-tip" id="hive-tip" hidden></div></div>' +
+      "</div>" +
+      '<div class="section" style="padding-top:36px">' +
       '<div class="phases">' + phases + "</div>" + legend +
       '<div class="rm-tools"><div class="filters" style="margin:0" role="group">' + chips + '</div><label>' + esc(u.filterTool) + ' <select id="rm-tool">' + opts + "</select></label></div>" +
       '<div id="rm-list">' + lists + "</div></div></div>";
@@ -474,6 +536,30 @@
     }).join("") : '<li class="empty">' + esc(T().ui.searchEmpty) + "</li>";
   }
 
+  // ---------- scroll reveal ----------
+  // Cards and blocks rise in as they scroll into view. The class comes off afterwards so their own hover transitions apply.
+  var revealer = null;
+  function reveal() {
+    if (revealer) revealer.disconnect();
+    if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var els = main.querySelectorAll(".section-head, .group, .news > div, .model-grid > *, .tool-card, .phase-card, .release, .issue, .rm-phase, .figure, .steps > li, .defs");
+    revealer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        revealer.unobserve(el);
+        el.classList.add("in");
+        setTimeout(function () { el.classList.remove("rv", "in"); el.style.removeProperty("--rv-d"); }, 900);
+      });
+    }, { rootMargin: "0px 0px -6% 0px" });
+    els.forEach(function (el) {
+      var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.style.setProperty("--rv-d", (i % 6) * 60 + "ms");
+      el.classList.add("rv");
+      revealer.observe(el);
+    });
+  }
+
   // ---------- router ----------
   function parse() {
     var parts = location.hash.replace(/^#\/?/, "").split("#")[0].split("/");
@@ -504,6 +590,7 @@
     main.innerHTML = html;
     bindStage();
     bindModel();
+    reveal();
 
     var title = state.page === "tools" && state.slug && T().tools[state.slug] ? T().tools[state.slug].name
       : state.page ? ({ install: T().ui.nav.install, start: T().ui.nav.start, tools: T().ui.nav.tools, issues: T().ui.nav.issues, changelog: T().ui.nav.changes, roadmap: T().ui.nav.roadmap })[state.page] : null;
@@ -574,11 +661,49 @@
   function bindRoadmap() {
     var sel = document.getElementById("rm-tool");
     if (sel) sel.addEventListener("change", function () { state.tool = sel.value; main.innerHTML = pageRoadmap(); bindRoadmap(); });
-    // Only animate the comb on the first view of the page
-    document.querySelectorAll(".comb.animate").forEach(function (c) { if (bindRoadmap.seen) c.classList.remove("animate"); });
+    // The hive fills and the numbers count up only on the first view of the page, not after every filter click
+    if (!bindRoadmap.seen && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".hive, .phases").forEach(function (el) { el.classList.add("animate"); });
+      var nums = document.querySelectorAll(".rm-head [data-count]"), t0 = performance.now();
+      var tick = function (now) {
+        var k = Math.min((now - t0) / 1100, 1), e = 1 - Math.pow(1 - k, 3);
+        nums.forEach(function (n) { n.textContent = Math.round(+n.getAttribute("data-count") * e); });
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
     bindRoadmap.seen = true;
   }
-  document.addEventListener("change", function () {});
+
+  // Hive tooltips, and a phase card lights up its cells in the hive
+  function showTip(a) {
+    var hiveEl = document.getElementById("hive"), tip = document.getElementById("hive-tip");
+    if (!hiveEl || !tip || !hiveEl.contains(a)) return;
+    var u = T().ui.rm, s = a.getAttribute("data-state");
+    tip.innerHTML = '<span class="tip-state ' + s + '">' + hex(s, 13) + esc(u[s]) + "</span><b>" + esc(a.getAttribute("data-tip")) + "</b><span>" + esc(a.getAttribute("data-tool")) + "</span>";
+    tip.hidden = false;
+    var hr = hiveEl.getBoundingClientRect(), cr = a.getBoundingClientRect();
+    var x = cr.left + cr.width / 2 - hr.left, y = cr.top - hr.top;
+    tip.style.left = Math.max(tip.offsetWidth / 2, Math.min(hr.width - tip.offsetWidth / 2, x)) + "px";
+    tip.style.top = y + "px";
+  }
+  function hideTip() { var tip = document.getElementById("hive-tip"); if (tip) tip.hidden = true; }
+  function focusPhase(ph) {
+    var hiveEl = document.getElementById("hive");
+    if (!hiveEl) return;
+    hiveEl.classList.toggle("focusing", !!ph);
+    hiveEl.querySelectorAll(".hc").forEach(function (c) { c.classList.toggle("hl", !!ph && c.getAttribute("data-ph") === ph); });
+  }
+  document.addEventListener("pointerover", function (e) {
+    var a = e.target.closest && e.target.closest(".hive .hc");
+    if (a) showTip(a); else if (e.target.closest && !e.target.closest(".hive-tip")) hideTip();
+    var card = e.target.closest && e.target.closest(".phase-card");
+    focusPhase(card ? card.getAttribute("data-ph") : null);
+  });
+  document.addEventListener("focusin", function (e) {
+    var a = e.target.closest && e.target.closest(".hive .hc");
+    if (a) showTip(a); else hideTip();
+  });
 
   render(false);
   if (state.page === "roadmap") bindRoadmap();

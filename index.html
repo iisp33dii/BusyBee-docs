@@ -18,6 +18,15 @@
 </head>
 <body>
   <a class="skip" href="#main" id="skip">Skip to content</a>
+  <!-- Shared paint for the honeycomb cells -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="hx-honey" x1="0" y1="0" x2="0.35" y2="1">
+        <stop offset="0" stop-color="#ffd978"/><stop offset="0.5" stop-color="#f2b134"/><stop offset="1" stop-color="#cf8a10"/>
+      </linearGradient>
+      <clipPath id="hx-clip"><path d="M0-1L.866-.5V.5L0 1-.866.5V-.5Z"/></clipPath>
+    </defs>
+  </svg>
 
   <header class="top">
     <div class="wrap">
