@@ -204,69 +204,47 @@ BB.text.de = {
       shots: [{ src: "param-rules.webp", alt: "Parameter-Automatisierung mit einer WENN- und einer SONST-WENN-Regel für Luftdurchlässe" }]
     },
 
-    "level-mapping": {
-      name: "Ebenen-Zuordnung",
-      tagline: "Einen Wert schreiben, je nachdem in welchem Höhenbereich ein Element liegt.",
-      summary: "Du legst Höhenbereiche zwischen zwei Ebenen fest und je einen Wert dazu. BusyBee prüft, wo jedes Element liegt, und schreibt den Wert des ersten passenden Bereichs.",
-      when: [
-        "Elemente für Bauteillisten oder Exporte mit Geschoss- oder Zonennamen versehen.",
-        "Einen hohen Schacht oder Steigstrang nach Ebenen aufteilen."
-      ],
-      steps: [
-        "Hak unter [[Zielkategorien]] die Kategorien an. Das Suchfeld filtert die Liste.",
-        "Wähl den [[Zielparameter]], der den Wert bekommt.",
-        "Wähl einen [[Räumlicher Erkennungsmodus]] (siehe unten).",
-        "Klick für jeden Bereich auf [[+ Bereich hinzufügen]]. Leg [[Min. Höhenebene]], [[Max. Höhenebene]] und den [[Parameterwert]] fest.",
-        "Ordne die Bereiche mit den Pfeilen. Weiter oben stehende Bereiche gewinnen, wenn sich Bereiche überlappen.",
-        "Klick auf [[Starten]]. Mit [[Nach Wert färben]] prüfst du das Ergebnis danach in der Ansicht."
-      ],
-      settings: [
-        ["Schwerpunkt (Zentrum)", "Der Mittelpunkt des Elements entscheidet."],
-        ["Unterkante / Oberkante", "Der tiefste oder höchste Punkt entscheidet."],
-        ["Vollständig enthalten", "Das Element muss ganz im Bereich liegen."],
-        ["Schneidet", "Jede Überlappung mit dem Bereich zählt."],
-        ["Nur leere Parameter beschreiben", "In den Einstellungen (Zahnrad)."]
-      ],
-      tips: [
-        "Ebenen werden mit der Projekthöhe verglichen, ein angehobener Projektbasispunkt ergibt also richtige Ergebnisse.",
-        "Mit „Vollständig enthalten“ findest du Elemente, die über eine Ebene hinausgehen: Sie bekommen keinen Wert.",
-        "Typparameter werden einmal pro Typ geschrieben. Liegen seine Exemplare in verschiedenen Bereichen, bleibt der Typ unverändert und wird im Ergebnis genannt."
-      ],
-      issues: ["type-param-writes"],
-      shots: [{ src: "level-mapping.webp", alt: "Ebenen-Zuordnung mit zwei Höhenbereichen für Luftkanäle und Luftdurchlässe" }]
-    },
-
     "spatial-parameters": {
-      name: "Raum- & Achsenparameter",
-      tagline: "Den Raum oder die Rasterposition in jedes Element schreiben.",
-      summary: "Die Raum-Zuordnung findet den Raum oder MEP-Raum, in dem ein Element liegt, und schreibt Nummer und Name, auch aus Räumen in verknüpften Modellen. Die Raster-Zuordnung findet die nächsten Rasterlinien oder den Schnittpunkt und schreibt sie als Text, etwa C-4.",
+      name: "Räume, Raster & Ebenen",
+      tagline: "Den Raum, die Rasterposition oder den Ebenenbereich in jedes Element schreiben.",
+      summary: "Ein Fenster mit drei Reitern. Die Raum-Zuordnung findet den Raum oder MEP-Raum, in dem ein Element liegt, und schreibt Nummer und Name, auch aus Räumen in verknüpften Modellen. Die Raster-Zuordnung findet die nächsten Rasterlinien oder den Schnittpunkt und schreibt sie als Text, etwa C-4. Die Ebenen-Zuordnung schreibt für jeden Bereich zwischen zwei Ebenen einen Wert deiner Wahl. Bevor etwas geschrieben wird, zeigt eine Vorschau jeden alten und neuen Wert.",
       when: [
         "Türen, Möbeln, Sanitärobjekten oder TGA-Auslässen Raumnummern für Bauteillisten geben.",
-        "Tragwerks- oder TGA-Elementen eine Achsangabe geben."
+        "Tragwerks- oder TGA-Elementen eine Achsangabe geben.",
+        "Elemente mit Geschoss- oder Zonennamen versehen oder einen hohen Schacht oder Steigstrang nach Ebenen aufteilen."
       ],
       steps: [
-        "Hak unter [[Zielkategorien]] die Kategorien an.",
-        "Für Räume: Öffne [[Raum-Zuordnung]], wähl ein [[Parameterformat]] und den oder die Zielparameter.",
-        "Wähl den [[Referenzpunkt-Modus]]: Mitte, Unterkante oder Oberkante des Elements.",
-        "Für Raster: Öffne [[Raster-Zuordnung]], wähl den Zielparameter und einen [[Erkennungsmodus]].",
-        "Für Rasterschnittpunkte legst du das Format fest, zum Beispiel `[X-Grid]-[Y-Grid]`.",
-        "Klick auf [[Starten]]."
+        "Hak unter [[Zielkategorien]] die Kategorien an. Sie bleiben angehakt, wenn du den Reiter wechselst.",
+        "Für Räume: Öffne [[Raum-Zuordnung]], wähl ein [[Parameterformat]], den oder die Zielparameter und den [[Referenzpunkt-Modus]]: Mitte, Unterkante oder Oberkante des Elements.",
+        "Für Raster: Öffne [[Raster-Zuordnung]], wähl den Zielparameter und einen [[Erkennungsmodus]]. Für Rasterschnittpunkte legst du das Format fest, zum Beispiel `[X-Grid]-[Y-Grid]`.",
+        "Für Ebenen: Öffne [[Ebenen-Zuordnung]], wähl den [[Zielparameter]] und einen [[Räumlicher Erkennungsmodus]]. Klick für jeden Bereich auf [[+ Bereich hinzufügen]] und leg die beiden Ebenen und den [[Parameterwert]] fest. Weiter oben stehende Bereiche gewinnen bei Überlappung; ordne sie per Ziehen oder mit den Pfeilen.",
+        "Klick auf [[Starten]]. Die Vorschau zeigt jeden Wert, der sich ändern würde, alt und neu. Mit [[Schreiben]] wird geschrieben; schließt du die Vorschau, ändert sich nichts.",
+        "In der Ebenen-Zuordnung färbt [[Nach Wert färben]] das Ergebnis in der Ansicht ein."
       ],
       settings: [
         ["Parameterformat", "Nummer und Name in einem Parameter, nur Nummer, nur Name oder Nummer und Name in zwei getrennten Parametern."],
         ["Rasterschnittpunkt", "Schreibt den nächsten Schnittpunkt zweier Rasterlinien im festgelegten Format."],
         ["Nächstgelegene Rasterlinie", "Schreibt die nächste einzelne Rasterlinie."],
-        ["Nächste Rasterlinie links und unten", "Schreibt die nächste Rasterlinie links und unterhalb, so wie Rasterfelder oft benannt werden."]
+        ["Nächste Rasterlinie links und unten", "Schreibt die nächste Rasterlinie links und unterhalb, so wie Rasterfelder oft benannt werden."],
+        ["Schwerpunkt / Unterkante / Oberkante", "Ebenen-Zuordnung: Der Mittelpunkt, der tiefste oder der höchste Punkt des Elements entscheidet."],
+        ["Vollständig enthalten / Schneidet", "Ebenen-Zuordnung: Das Element muss ganz im Bereich liegen, oder jede Überlappung zählt."],
+        ["Nur leere Parameter beschreiben", "In den Einstellungen (Zahnrad), für alle drei Reiter."],
+        ["Konfig. speichern / laden", "Eine Datei enthält alle drei Reiter, die angehakten Kategorien und den offenen Reiter. Ältere Dateien von Raum- & Achsenparametern oder vom früheren Fenster Ebenen-Zuordnung lassen sich weiter laden."]
       ],
       tips: [
+        "Rohr- und Kanaldämmung bekommt denselben Wert wie ihr Rohr oder Kanal, wenn sie einen Parameter dieses Namens hat.",
         "Liegt der Mittelpunkt nicht in einem Raum, versucht BusyBee auch die Enden, die Anschlüsse und kleine Versätze.",
         "Räume werden in der Phase des Elements gesucht.",
-        "Liegt ein Element in keinem Raum des geöffneten Modells, sucht BusyBee in allen geladenen Verknüpfungen, in der Phase der Verknüpfung mit demselben Namen wie die der Ansicht. So kann ein TGA-Modell die Raumnummern der Architektur schreiben. Die Zusammenfassung zeigt, wie viele aus Verknüpfungen kamen."
+        "Liegt ein Element in keinem Raum des geöffneten Modells, sucht BusyBee in allen geladenen Verknüpfungen, in der Phase der Verknüpfung mit demselben Namen wie die der Ansicht. So kann ein TGA-Modell die Raumnummern der Architektur schreiben. Die Zusammenfassung zeigt, wie viele aus Verknüpfungen kamen.",
+        "Ebenen werden mit der Projekthöhe verglichen, ein angehobener Projektbasispunkt ergibt also richtige Ergebnisse. Mit „Vollständig enthalten“ findest du Elemente, die über eine Ebene hinausgehen: Sie bekommen keinen Wert.",
+        "Typparameter werden einmal pro Typ geschrieben. Brauchen seine Exemplare verschiedene Werte, bleibt der Typ unverändert und wird im Ergebnis genannt.",
+        "Die Ebenen-Zuordnung war früher ein eigenes Fenster mit eigener Schaltfläche; seit 1.38 ist sie der dritte Reiter hier."
       ],
       issues: ["spatial-linked-rooms", "type-param-writes"],
       shots: [
-        { src: "spatial-room.webp", alt: "Raum- & Achsenparameter auf der Registerkarte Raum-Zuordnung" },
-        { src: "spatial-grid.webp", alt: "Raum- & Achsenparameter auf der Registerkarte Raster-Zuordnung mit dem Format [X-Grid]-[Y-Grid]" }
+        { src: "spatial-room.webp", alt: "Räume, Raster & Ebenen auf dem Reiter Raum-Zuordnung" },
+        { src: "spatial-grid.webp", alt: "Räume, Raster & Ebenen auf dem Reiter Raster-Zuordnung mit dem Format [X-Grid]-[Y-Grid]" },
+        { src: "level-mapping.webp", old: true, alt: "Das frühere Fenster Ebenen-Zuordnung mit zwei Höhenbereichen für Luftkanäle und Luftdurchlässe" }
       ]
     },
 
@@ -291,7 +269,7 @@ BB.text.de = {
         ["Auswahl laden", "Übernimmt die aktuelle Revit-Auswahl. Du kannst auch in der Legende starten."],
         ["Farben zurücksetzen", "Stellt die vorherigen Farben jedes Elements wieder her, auch deine manuellen. Nach einem Revit-Neustart hat BusyBee keine Aufzeichnung und fragt, bevor es die Ansicht leert."]
       ],
-      tips: ["Die Ebenen-Zuordnung hat eine eigene Schaltfläche „Nach Wert färben“, die dieselbe Legende öffnet."],
+      tips: ["Der Reiter Ebenen-Zuordnung in Räume, Raster & Ebenen hat eine eigene Schaltfläche „Nach Wert färben“, die dieselbe Legende öffnet."],
       issues: ["color-repeat"],
       shots: [
         { src: "color-by-param.webp", alt: "Farbe nach Parameterwert mit 4.546 geladenen Elementen und Kategorie als Parameter" },
@@ -440,6 +418,110 @@ BB.text.de = {
         { src: "loin-dashboard.webp", alt: "LOIN-Dashboard mit Einhaltung pro Parameter" },
         { src: "loin-config.webp", alt: "LOIN-Konfiguration mit zugeordneten Revit-Parametern" }
       ]
+    },
+
+    "schedules-excel": {
+      name: "Bauteillisten in Excel",
+      tagline: "Bauteillisten nach Excel, dort bearbeiten und mit Vorschau zurück in Revit.",
+      summary: "Exportiert Revit-Bauteillisten als .xlsx-Dateien, auch ohne installiertes Excel. „Bearbeitbar“ liefert eine Zeile pro Element mit seiner Revit-ID, sodass du Werte in Excel ändern und wieder einlesen kannst. „Wie in Revit angezeigt“ behält Gruppierung, Überschriften und Summen für Mengenlisten. Eine Firmenvorlage mit Logo und Kopf kann befüllt werden.",
+      when: [
+        "Jemand füllt Tür- oder Raumdaten in Excel aus.",
+        "Du brauchst Mengen im Firmenlayout für eine Kostenschätzung.",
+        "Du willst viele Werte auf einmal mit Excels Ausfüllen und Suchen korrigieren."
+      ],
+      steps: [
+        "Öffne [[Bauteillisten in Excel]] und hake die Bauteillisten an.",
+        "Wähl [[Bearbeitbar, zum Zurücklesen]] oder [[Wie in Revit angezeigt, für Mengen]].",
+        "Wähl bei Bedarf eine Excel-Vorlage und einen Ordner und klick auf [[… nach Excel exportieren]].",
+        "Ändere Werte in den gelben Spalten. Graue Spalten sind nur zum Lesen. Lass die Überschriften und die Spalte Revit-ID stehen.",
+        "Klick auf [[Aus Excel einlesen…]] und wähl die Dateien. BusyBee zeigt dir zuerst jede Änderung; [[… Änderung(en) schreiben]] schreibt sie in einem Rückgängig-Schritt."
+      ],
+      settings: [
+        ["Bearbeitbar, zum Zurücklesen", "Eine Zeile pro Element mit seiner Revit-ID. Berechnete Werte, Anzahlen und Raumfelder fehlen, weil sie sich nicht zurückschreiben lassen."],
+        ["Wie in Revit angezeigt, für Mengen", "Gruppierung, Überschriften und Summen wie in der Bauteilliste, Zahlen als echte Excel-Zahlen. Lässt sich nicht einlesen."],
+        ["Excel-Vorlage", "Eine .xlsx mit deinem Logo und Kopf. Schreib `{Table}` in die Zelle, in der die Tabelle beginnen soll. `{Project}` und ähnliche Platzhalter werden ausgefüllt."]
+      ],
+      tips: [
+        "Eine Datei aus einem anderen Modell wird beim Einlesen übersprungen, damit ihre IDs keine falschen Elemente treffen.",
+        "Zeilen ohne Revit-ID werden übersprungen: Neue Elemente lassen sich aus Excel nicht anlegen.",
+        "Schließ die Datei in Excel, bevor du sie noch einmal exportierst."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "batch-export": {
+      name: "Stapelexport",
+      tagline: "Pläne als PDF und DWG, 3D-Ansichten als IFC, in einem Durchgang.",
+      summary: "Exportiert die angehakten Pläne als PDF (eins pro Plan oder alle in einem) und DWG und die angehakten 3D-Ansichten als IFC. Die Dateinamen kommen aus einem Muster wie `{SheetNumber}_{SheetName}`, sodass sie jedes Mal gleich heißen.",
+      when: [
+        "Ein Plansatz geht an Bauherrn oder Firma.",
+        "Nur die Pläne des letzten Index sollen raus.",
+        "Ein IFC zur Koordination aus einer vorbereiteten 3D-Ansicht."
+      ],
+      steps: [
+        "Öffne [[Stapelexport]] und hake Pläne an, oder wähl einen Revit-Plansatz oder einen Index, um dessen Pläne anzuhaken.",
+        "Wähl die Formate: [[Ein PDF pro Plan]] oder [[Alle Pläne in einem PDF]], DWG mit einer [[Einstellung]], [[IFC (3D-Ansichten)]].",
+        "Prüf die Dateinamen-Muster und wähl einen Ordner.",
+        "Klick auf [[… Dateien exportieren]]. Dateien, die es schon gibt, werden vor dem Ersetzen aufgelistet."
+      ],
+      settings: [
+        ["Dateinamen", "`{SheetNumber}` `{SheetName}` `{Revision}` `{RevisionDate}` `{Project}` `{ProjectNumber}` `{Date}` `{Model}` `{ViewName}` oder jeder Plan-, Ansichts- oder Projektparameter in geschweiften Klammern. Zeichen, die Windows nicht erlaubt, werden entfernt."],
+        ["Einstellung", "Die im Projekt gespeicherte DWG-Exporteinstellung mit Layern, Farben und Einheiten."],
+        ["Ein Unterordner pro Format", "Legt PDF-, DWG- und IFC-Dateien in eigene Unterordner."]
+      ],
+      tips: ["IFC exportiert, was die 3D-Ansicht zeigt. Blende vorher aus, was nicht raus soll."],
+      issues: [],
+      shots: []
+    },
+
+    "tag-tools": {
+      name: "Beschriftungswerkzeuge",
+      tagline: "Beschriftungen ordnen, Unbeschriftetes finden und Rohr- und Kanalstränge beschriften.",
+      summary: "Links arbeitest du mit den ausgewählten Beschriftungen: ausrichten, verteilen, in einer Spalte mit sauberen Führungslinien stapeln, zurücksetzen, den Typ ändern oder ihre Positionen in andere Ansichten kopieren. Rechts prüfst du die aktive Ansicht auf unbeschriftete Elemente sowie überlappende, leere oder verwaiste Beschriftungen, beschriftest das Unbeschriftete ohne Überlappung und setzt Größenbeschriftungen entlang von Rohr- und Kanalsträngen.",
+      when: [
+        "Einen Plan aufräumen, bevor er rausgeht.",
+        "Sicherstellen, dass jede Tür, jeder Raum oder jedes Gerät beschriftet ist.",
+        "Größenbeschriftungen auf einem ganzen TGA-Plan mit einem Klick."
+      ],
+      steps: [
+        "Öffne [[Beschriftungswerkzeuge]] in einem Grundriss oder Schnitt.",
+        "Wähl Beschriftungen in der Ansicht aus (oder drück eine Schaltfläche und wähl sie dann), und nutz [[Ausrichten]], [[Waagrecht verteilen]], [[Senkrecht verteilen]], [[Beschriftungen stapeln]] oder [[Zurücksetzen]].",
+        "Um eine Anordnung zu übertragen, hak andere Ansichten an und klick auf [[Positionen kopieren]]. Die Beschriftungen derselben Elemente dort bekommen dieselbe Position.",
+        "Rechts hakst du Kategorien an und klickst auf [[Prüfen]]. Mit [[Auswählen]] oder [[Löschen]] arbeitest du mit dem Gefundenen weiter, oder mit [[Unbeschriftete beschriften]].",
+        "Für TGA stell [[Eine Beschriftung alle]] ein und klick auf [[Stränge beschriften]]."
+      ],
+      settings: [
+        ["Beschriftungen stapeln", "Setzt die Beschriftungen in eine Spalte neben das Beschriftete, in derselben Reihenfolge von oben nach unten, mit Führungslinien, die einmal knicken und sich nicht kreuzen. [[Abstand]] und [[Entfernung]] sind Millimeter auf dem gedruckten Plan."],
+        ["Unbeschriftete beschriften", "Nimmt die Beschriftung der jeweiligen Kategorie und setzt sie dorthin, wo sie keine andere überlappt. [[Führungslinie, wenn verschoben]] ergänzt eine Führungslinie, wenn eine Beschriftung ausweichen musste."],
+        ["Stränge beschriften", "Ein Strang läuft durch Bögen und Muffen weiter und endet bei einem Größenwechsel. Eine Beschriftung pro angefangener Länge, kurze Stücke werden übersprungen, und Stränge mit Beschriftung lassen sich überspringen."]
+      ],
+      tips: ["Jede Schaltfläche ist ein Rückgängig-Schritt.", "Verwaiste Beschriftungen gehören meist zu Elementen eines verknüpften Modells, das verschoben oder entladen wurde."],
+      issues: [],
+      shots: []
+    },
+
+    "small-tools": {
+      name: "Kleine Helfer",
+      tagline: "Helfer mit einem Klick für die tägliche Arbeit in Revit.",
+      summary: "Der Abschnitt Kleine Helfer im Bereich und eine eigene Gruppe in der Multifunktionsleiste enthalten schnelle Helfer, die kein Fenster brauchen. Die beiden Schnitt-Schaltflächen sitzen unten im Bereich.",
+      when: ["Kleine Aufgaben, die du sonst viele Male am Tag von Hand erledigst."],
+      steps: [
+        "Öffne den Abschnitt Kleine Helfer im BusyBee-Bereich oder nutz die Gruppe Kleine Helfer in der Multifunktionsleiste.",
+        "Klick auf einen Helfer. Fahr vorher mit der Maus darüber, um zu sehen, was er tut."
+      ],
+      settings: [
+        ["Wer war das", "Wer das ausgewählte Element erstellt und zuletzt geändert hat und wer es gerade ausgeliehen hat, dazu Bearbeitungsbereich, Phasen, Gruppe und Entwurfsoption. Braucht ein Modell mit Bearbeitungsbereichen."],
+        ["Zuschnitt kopieren", "Überträgt den Zuschneidebereich des offenen Grundrisses auf andere. Anders gedrehte Pläne und Pläne mit Bereichsrahmen werden ausgelassen."],
+        ["Ebenen kopieren", "Kopiert Ebenen aus einem verknüpften Modell: erst das Modell wählen, dann seine Ebenen. Vorhandene Ebenen bleiben, wie sie sind."],
+        ["Farbige Reiter", "Jedes offene Modell bekommt eine eigene Farbe auf seinen Ansichtsreitern. Bleibt an, bis du es ausschaltest."],
+        ["Überschreibungen zurücksetzen", "Entfernt alle Grafiküberschreibungen von Elementen in der aktuellen Ansicht, egal wer sie gesetzt hat. Ein Rückgängig-Schritt."],
+        ["Raumumrisse 3D", "Zeigt Raum- und MEP-Raum-Umrisse in 3D-Ansichten, auch Räume aus verknüpften Modellen. Nur auf dem Bildschirm gezeichnet, im Modell ändert sich nichts."],
+        ["Schnitt ↔ / Schnitt ↕", "Zieh in einem Grundriss ein Rechteck auf: Du bekommst einen Schnitt an der Kante, an der du angefangen hast, mit Blick in Zugrichtung, so tief wie das Rechteck und so hoch wie der Ansichtsbereich. Jeder hat je einen, der immer wieder benutzt wird."]
+      ],
+      tips: ["Jeder kleine Helfer hat eine Schaltfläche in der Multifunktionsleiste, also kannst du ihm ein Tastenkürzel geben."],
+      issues: [],
+      shots: []
     },
 
     "select-by-id": {

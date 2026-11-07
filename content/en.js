@@ -203,69 +203,47 @@ BB.text.en = {
       shots: [{ src: "param-rules.webp", alt: "Parameter Automation with an IF and an ELIF rule for air terminals" }]
     },
 
-    "level-mapping": {
-      name: "Level Mapping",
-      tagline: "Write a value based on which level range an element sits in.",
-      summary: "Define elevation ranges between two levels and a value for each. BusyBee checks where each element sits and writes the value of the first range it falls into.",
-      when: [
-        "Tag elements with a storey or zone name for schedules or exports.",
-        "Split a tall shaft or riser into level-based sections."
-      ],
-      steps: [
-        "Tick the categories under [[Target Categories]]. The search box filters the list.",
-        "Choose the [[Target Parameter]] that should receive the value.",
-        "Choose a [[Spatial Matching Mode]] (see below).",
-        "Click [[+ Add Range]] for each range. Set [[Min Elevation Level]], [[Max Elevation Level]] and the [[Parameter Value]].",
-        "Order the ranges with the arrows. Ranges higher in the list win when ranges overlap.",
-        "Click [[Start]]. Click [[Color by Value]] afterwards to check the result in the view."
-      ],
-      settings: [
-        ["Centroid", "The element's centre point decides the range."],
-        ["Bottom / Top", "The lowest or highest point decides."],
-        ["Fully Contained", "The element must sit completely inside the range."],
-        ["Intersects", "Any overlap with the range counts."],
-        ["Only write empty parameters", "In the settings (gear icon)."]
-      ],
-      tips: [
-        "Levels use project elevation, so a raised Project Base Point gives correct results.",
-        "Use Fully Contained to find elements that cross a level: they get no value.",
-        "Type parameters are written once per type. If its instances fall into different ranges, the type is left unchanged and named in the result."
-      ],
-      issues: ["type-param-writes"],
-      shots: [{ src: "level-mapping.webp", alt: "Level Mapping with two elevation ranges for ducts and air terminals" }]
-    },
-
     "spatial-parameters": {
       name: "Spatial Parameters",
-      tagline: "Write the room or the grid position into each element.",
-      summary: "Room Mapping finds the room or space each element sits in and writes its number and name, also from rooms in linked models. Grid Mapping finds the nearest grid lines or intersection and writes them as text, such as C-4.",
+      tagline: "Write the room, the grid position or the level range into each element.",
+      summary: "One window with three tabs. Room Mapping finds the room or space each element sits in and writes its number and name, also from rooms in linked models. Grid Mapping finds the nearest grid lines or intersection and writes them as text, such as C-4. Level Mapping writes a value of your choice for each range between two levels. Before anything is written, a preview shows every old and new value.",
       when: [
         "Add room numbers to doors, furniture, fixtures or MEP terminals for schedules.",
-        "Give structural or MEP elements a grid reference."
+        "Give structural or MEP elements a grid reference.",
+        "Tag elements with a storey or zone name, or split a tall shaft or riser into level-based sections."
       ],
       steps: [
-        "Tick the categories under [[Target Categories]].",
-        "For rooms: open [[Room Mapping]], choose a [[Parameter Format]] and the target parameter or parameters.",
-        "Pick the [[Reference Point Mode]]: Center, Bottom or Top of the element.",
-        "For grids: open [[Grid Mapping]], choose the target parameter and a [[Matching Mode]].",
-        "For grid intersections, set the format, for example `[X-Grid]-[Y-Grid]`.",
-        "Click [[Start]]."
+        "Tick the categories under [[Target Categories]]. They stay ticked when you switch tabs.",
+        "For rooms: open [[Room Mapping]], choose a [[Parameter Format]] and the target parameter or parameters, and the [[Reference Point Mode]]: Center, Bottom or Top of the element.",
+        "For grids: open [[Grid Mapping]], choose the target parameter and a [[Matching Mode]]. For grid intersections, set the format, for example `[X-Grid]-[Y-Grid]`.",
+        "For levels: open [[Level Mapping]], choose the [[Target Parameter]] and a [[Spatial Matching Mode]]. Click [[+ Add Range]] for each range and set the two levels and the [[Parameter Value]]. Ranges higher in the list win when ranges overlap; drag them or use the arrows to order them.",
+        "Click [[Start]]. The preview lists every value that would change, old and new. Click [[Write]] to write them, or close the preview to change nothing.",
+        "On Level Mapping, [[Color by Value]] colours the result in the view."
       ],
       settings: [
         ["Parameter Format", "Number and name in one parameter, number only, name only, or number and name in two separate parameters."],
         ["Grid Intersection", "Writes the nearest crossing of two grid lines, using the format you set."],
         ["Nearest Grid Line", "Writes the closest single grid line."],
-        ["Nearest Grid Line Left and Down", "Writes the next grid line to the left and below, the way grid fields are often named."]
+        ["Nearest Grid Line Left and Down", "Writes the next grid line to the left and below, the way grid fields are often named."],
+        ["Centroid / Bottom / Top", "Level Mapping: the element's centre, lowest or highest point decides the range."],
+        ["Fully Contained / Intersects", "Level Mapping: the element must sit completely inside the range, or any overlap counts."],
+        ["Only write empty parameters", "In the settings (gear icon), for all three tabs."],
+        ["Save / Load Config", "One file holds all three tabs, the ticked categories and the open tab. Older files of Spatial Parameters or of the former Level Mapping window still load."]
       ],
       tips: [
+        "Pipe and duct insulation gets the same value as its pipe or duct, if it has a parameter of that name.",
         "If an element's centre isn't in a room, BusyBee also tries its ends, its connectors and small offsets before giving up.",
         "Rooms are found in the phase of the element.",
-        "If an element is in no room or space of the open model, BusyBee looks in every loaded link, using the link phase with the same name as the view's. So an MEP model can write the architect's room numbers. The summary says how many came from links."
+        "If an element is in no room or space of the open model, BusyBee looks in every loaded link, using the link phase with the same name as the view's. So an MEP model can write the architect's room numbers. The summary says how many came from links.",
+        "Levels use project elevation, so a raised Project Base Point gives correct results. Use Fully Contained to find elements that cross a level: they get no value.",
+        "Type parameters are written once per type. If its instances need different values, the type is left unchanged and named in the result.",
+        "Level Mapping used to be a window and a button of its own; since 1.38 it is the third tab here."
       ],
       issues: ["spatial-linked-rooms", "type-param-writes"],
       shots: [
         { src: "spatial-room.webp", alt: "Spatial Parameters on the Room Mapping tab" },
-        { src: "spatial-grid.webp", alt: "Spatial Parameters on the Grid Mapping tab with the [X-Grid]-[Y-Grid] format" }
+        { src: "spatial-grid.webp", alt: "Spatial Parameters on the Grid Mapping tab with the [X-Grid]-[Y-Grid] format" },
+        { src: "level-mapping.webp", old: true, alt: "The former Level Mapping window with two elevation ranges for ducts and air terminals" }
       ]
     },
 
@@ -290,7 +268,7 @@ BB.text.en = {
         ["Load Selection", "Takes the current Revit selection. You can also start from the legend."],
         ["Reset Overrides", "Restores each element's previous colours, including ones you set by hand. After a Revit restart BusyBee has no record and asks before clearing the view."]
       ],
-      tips: ["The Level Mapping tool has its own Color by Value button that opens the same legend."],
+      tips: ["The Level Mapping tab of Spatial Parameters has its own Color by Value button that opens the same legend."],
       issues: ["color-repeat"],
       shots: [
         { src: "color-by-param.webp", alt: "Color by Parameter with 4,546 elements loaded and Category chosen" },
@@ -441,6 +419,110 @@ BB.text.en = {
       ]
     },
 
+    "schedules-excel": {
+      name: "Schedules in Excel",
+      tagline: "Schedules out to Excel, edited there, and back into Revit with a preview.",
+      summary: "Exports Revit schedules to .xlsx files, without Excel installed. \"Editable\" gives one row per element with its Revit ID, so you can change values in Excel and import them back. \"As shown\" keeps grouping, headings and totals for quantity lists. A company template with your logo and header can be filled in.",
+      when: [
+        "A colleague or client fills in door or room data in Excel.",
+        "You need quantities in the company layout for a cost estimate.",
+        "You want to fix many values at once with Excel's fill and search tools."
+      ],
+      steps: [
+        "Open [[Schedules in Excel]] and tick the schedules.",
+        "Choose [[Editable, to import back]] or [[As shown in Revit, for quantities]].",
+        "Optionally pick an Excel template, choose a folder and click [[Export … to Excel]].",
+        "Change values in the yellow columns. Grey columns are for reading only. Keep the headings and the Revit ID column.",
+        "Click [[Import from Excel…]] and pick the files. BusyBee shows every change first; [[Write … change(s)]] writes them in one undo step."
+      ],
+      settings: [
+        ["Editable, to import back", "One row per element with its Revit ID. Calculated values, counts and room fields are left out because they can't be written back."],
+        ["As shown in Revit, for quantities", "Grouping, headings and totals as in the schedule, with numbers as real Excel numbers. Can't be imported."],
+        ["Excel template", "An .xlsx with your logo and header. Type `{Table}` in the cell where the table should start. `{Project}` and similar placeholders are filled in."]
+      ],
+      tips: [
+        "A file exported from another model is skipped on import, so its IDs can't hit the wrong elements.",
+        "Rows without a Revit ID are skipped: new elements can't be made from Excel.",
+        "Close the file in Excel before you export it again."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "batch-export": {
+      name: "Batch Export",
+      tagline: "Sheets to PDF and DWG, 3D views to IFC, in one go.",
+      summary: "Exports the ticked sheets to PDF (one per sheet or all in one) and DWG, and the ticked 3D views to IFC. File names come from a pattern such as `{SheetNumber}_{SheetName}`, so the files are named the same way every time.",
+      when: [
+        "Sending a plan set to a client or contractor.",
+        "Sending only the sheets of the latest revision.",
+        "An IFC for coordination from a prepared 3D view."
+      ],
+      steps: [
+        "Open [[Batch Export]] and tick sheets, or pick a Revit sheet set or a revision to tick its sheets.",
+        "Choose the formats: [[One PDF per sheet]] or [[All sheets in one PDF]], DWG with a [[Setup]], [[IFC (3D views)]].",
+        "Check the file name patterns and choose a folder.",
+        "Click [[Export … files]]. Files that already exist are listed before they are replaced."
+      ],
+      settings: [
+        ["File names", "`{SheetNumber}` `{SheetName}` `{Revision}` `{RevisionDate}` `{Project}` `{ProjectNumber}` `{Date}` `{Model}` `{ViewName}`, or any sheet, view or project parameter in braces. Characters Windows doesn't allow are removed."],
+        ["Setup", "The DWG export setup saved in the project, with layers, colours and units."],
+        ["A subfolder per format", "Puts PDF, DWG and IFC files in their own subfolders."]
+      ],
+      tips: ["IFC exports what the 3D view shows, so hide what shouldn't go out first."],
+      issues: [],
+      shots: []
+    },
+
+    "tag-tools": {
+      name: "Tag Tools",
+      tagline: "Tidy tags, find untagged elements and tag pipe and duct runs.",
+      summary: "Left side: work on the selected tags. Align, space, stack in a column with tidy leaders, reset, change their type, or copy their positions to other views. Right side: check the active view for untagged, overlapping, empty or orphaned tags, tag the untagged elements without overlaps, and put size tags along pipe and duct runs.",
+      when: [
+        "Tidying a plan before it goes out.",
+        "Making sure every door, room or equipment is tagged.",
+        "Size tags on a whole MEP plan in one click."
+      ],
+      steps: [
+        "Open [[Tag Tools]] in a plan or section.",
+        "Select tags in the view (or press a button and pick them), then use [[Align]], [[Space across]], [[Space up]], [[Stack tags]] or [[Reset]].",
+        "To copy a layout, tick other views and click [[Copy positions]]. The same elements' tags there get the same position.",
+        "On the right, tick categories and click [[Check]]. Use [[Select]] or [[Delete]] on what was found, or [[Tag untagged]].",
+        "For MEP, set [[A tag every]] and click [[Tag runs]]."
+      ],
+      settings: [
+        ["Stack tags", "Puts the tags in one column beside what they tag, in the same up-down order, with leaders that bend once and don't cross. [[Gap]] and [[Distance]] are in millimetres on the printed sheet."],
+        ["Tag untagged", "Uses each category's tag and places it where it overlaps no other tag. [[Leader when moved away]] adds a leader when a tag had to move."],
+        ["Tag runs", "A run continues through elbows and couplings and ends at a size change. One tag per started length, short segments are skipped, and runs that already have a tag can be skipped."]
+      ],
+      tips: ["Every button is one undo step.", "Orphaned tags are usually tags of elements in a linked model that moved or was unloaded."],
+      issues: [],
+      shots: []
+    },
+
+    "small-tools": {
+      name: "Small tools",
+      tagline: "One-click helpers for everyday Revit work.",
+      summary: "The Small tools section of the panel and its own ribbon panel hold quick helpers that don't need a window. The two section buttons sit at the bottom of the panel.",
+      when: ["Small jobs you'd otherwise do by hand many times a day."],
+      steps: [
+        "Open the Small tools section in the BusyBee panel, or use the Small tools panel on the ribbon.",
+        "Click a tool. Hover over it first to see what it does."
+      ],
+      settings: [
+        ["Who did that", "Who created the selected element, who changed it last and who has it borrowed now, plus its workset, phases, group and design option. Needs a workshared model."],
+        ["Copy crop", "Gives other plans the crop region of the open plan. Plans turned differently or cropped by a scope box are left out."],
+        ["Copy levels", "Copies levels from a linked model: pick the model, then its levels. Levels already there stay as they are."],
+        ["Coloured tabs", "Each open model gets its own colour on its view tabs. Stays on until you switch it off."],
+        ["Reset overrides", "Removes all element graphic overrides in the current view, whoever set them. One undo step."],
+        ["Room outlines 3D", "Shows room and space outlines in 3D views, also rooms from linked models. Drawn on screen only, nothing is added to the model."],
+        ["Section ↔ / Section ↕", "Drag a rectangle in a plan: you get a section along the edge where you started, looking the way you dragged, as deep as the rectangle and as high as the view range. Each user has one of each, reused every time."]
+      ],
+      tips: ["Each small tool has a ribbon button, so you can give it a keyboard shortcut."],
+      issues: [],
+      shots: []
+    },
+
     "select-by-id": {
       name: "Select by ID",
       tagline: "Paste element IDs and jump straight to them.",
@@ -524,7 +606,7 @@ BB.text.en = {
       title: "Exported reports stay in English",
       body: "CSV and HTML reports, Revit's own error texts, the names of the three default Quality Control rules and a few fixed list entries such as All Categories, Main Model and All Linked Models stay English, because the tools also store and compare them.",
       fix: "None needed. Everything else in BusyBee follows the language you pick." },
-    { id: "type-param-writes", tools: ["parameter-automation", "level-mapping", "spatial-parameters"], roadmap: "type-writes",
+    { id: "type-param-writes", tools: ["parameter-automation", "spatial-parameters"], roadmap: "type-writes",
       title: "Type parameters get the value of the last instance",
       body: "If the target is a type parameter, every instance of that type writes to the same value, so the last one wins. For example, if two doors of one type sit in different rooms, the type gets one of the two room numbers.",
       fix: "Write per-element values to instance parameters. Use type parameters only for values that are the same for every instance of the type." },

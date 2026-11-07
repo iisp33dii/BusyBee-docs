@@ -119,7 +119,7 @@
     var hl = r ? r.highlights.slice(0, 5).map(hlItem).join("") : "";
 
     var order = { "in-progress": 0, ready: 1, planned: 2 };
-    var next = BB.roadmap.filter(function (it) { return itemState(it) !== "released" && it.phase !== "ideas"; })
+    var next = BB.roadmap.filter(function (it) { return itemState(it) !== "released" && it.phase !== "ideas" && it.phase !== "later"; })
       .sort(function (a, b) { return (order[itemState(a)] - order[itemState(b)]) || (a.phase > b.phase ? 1 : a.phase < b.phase ? -1 : 0); })
       .slice(0, 5).map(function (it) {
         var s = itemState(it);
@@ -313,7 +313,7 @@
         var s = itemState(it);
         return '<a href="#rm-' + it.id + '" data-rm="' + it.id + '" title="' + esc((it[state.lang] || it.en) + " (" + u[s] + ")") + '">' + hex(s, ' style="--i:' + i + '"') + '<span class="visually-hidden">' + esc((it[state.lang] || it.en) + ", " + u[s]) + "</span></a>";
       }).join("");
-      var label = ph.id === "ideas" ? "" : '<span class="phase-num">' + (state.lang === "de" ? "Phase " : "Phase ") + ph.id + "</span>";
+      var label = /^\d+$/.test(ph.id) ? '<span class="phase-num">Phase ' + ph.id + "</span>" : "";
       return '<div class="phase-card"><div>' + label + "<h3>" + esc(L(ph)) + "</h3><p>" + esc(L(ph.blurb)) + '</p></div><div class="comb animate">' + comb + '</div><div class="phase-pct"><b>' + pct + "%</b><span>" + rel + "/" + items.length + " " + esc(u.progress) + "</span></div></div>";
     }).join("");
 
@@ -331,7 +331,7 @@
         return it.phase === ph.id && (filt === "all" || itemState(it) === filt) && (tool === "all" || it.tool === tool);
       });
       if (!items.length) return "";
-      return '<section class="rm-phase"><h3>' + esc(L(ph)) + (ph.id !== "ideas" ? " <small>Phase " + ph.id + "</small>" : "") + "</h3>" + items.map(function (it) {
+      return '<section class="rm-phase"><h3>' + esc(L(ph)) + (/^\d+$/.test(ph.id) ? " <small>Phase " + ph.id + "</small>" : "") + "</h3>" + items.map(function (it) {
         var s = itemState(it), r = it.build ? releaseFor(it.build) : null, stateHtml;
         if (s === "released") stateHtml = '<b class="released">' + esc(u.released) + " " + esc(r.version) + "</b>" + esc(fmtDate(r.date));
         else if (s === "ready") stateHtml = "<b>" + esc(u.ready) + "</b>" + esc(u.doneIn) + " " + esc(it.build || "");
@@ -402,6 +402,8 @@
   function parse() {
     var parts = location.hash.replace(/^#\/?/, "").split("#")[0].split("/");
     var lang = parts[0], page = parts[1] || "", slug = parts[2] || "";
+    // Level Mapping became a tab of Spatial Parameters in 1.38; old links still lead there
+    if (slug === "level-mapping") slug = "spatial-parameters";
     if (LANGS.indexOf(lang) < 0) {
       // Old-style or empty hash: pick a language and keep the rest
       page = lang && PAGES.indexOf(lang) > -1 ? lang : "";

@@ -18,16 +18,19 @@ BB.site = {
 BB.tools = [
   // Automation
   { slug: "parameter-automation", group: "automation", status: "beta",   revit: ["2025", "2026"], shot: "param-rules.webp" },
-  { slug: "level-mapping",        group: "automation", status: "beta",   revit: ["2025", "2026"], shot: "level-mapping.webp" },
   { slug: "spatial-parameters",   group: "automation", status: "stable", revit: ["2025", "2026"], shot: "spatial-room.webp" },
   { slug: "color-by-parameter",   group: "automation", status: "stable", revit: ["2025", "2026"], shot: "color-by-param.webp" },
+  { slug: "schedules-excel",      group: "automation", status: "beta",   revit: ["2025", "2026"], shot: null },
+  { slug: "batch-export",         group: "automation", status: "beta",   revit: ["2025", "2026"], shot: null },
+  { slug: "tag-tools",            group: "automation", status: "beta",   revit: ["2025", "2026"], shot: null },
   // Audit
   { slug: "clash-detection",      group: "audit",      status: "stable", revit: ["2025", "2026"], shot: "clash.webp" },
   { slug: "model-health",         group: "audit",      status: "beta",   revit: ["2025", "2026"], shot: "health-dashboard.webp" },
   { slug: "quality-control",      group: "audit",      status: "beta",   revit: ["2025", "2026"], shot: "qc.webp" },
   { slug: "loin-check",           group: "audit",      status: "beta",   revit: ["2025", "2026"], shot: "loin-dashboard.webp" },
   // Utilities
-  { slug: "select-by-id",         group: "utility",    status: "stable", revit: ["2025", "2026"], shot: "select-id.webp" },
+  { slug: "small-tools",          group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
+  { slug: "select-by-id",        group: "utility",    status: "stable", revit: ["2025", "2026"], shot: "select-id.webp" },
   { slug: "inspect-categories",   group: "utility",    status: "stable", revit: ["2025", "2026"], shot: "object-categories.webp" },
   { slug: "project-workspace",    group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null }
 ];
