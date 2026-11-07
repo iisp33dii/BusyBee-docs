@@ -271,15 +271,17 @@ p { margin: 0 0 1em; }
 .model-steps li b a:hover { text-decoration: underline; }
 .model-steps li p { margin: 0; color: var(--text-3); font-size: 0.93rem; line-height: 1.5; transition: color 0.4s; }
 .ms-num {
-  width: 30px; height: 34px; display: grid; place-items: center; margin-top: -3px;
+  /* Larger than the 30x34 cell, with negative margins, so the glow fits inside (see .steps li::before) */
+  --cell: var(--cell-up); --glow: linear-gradient(transparent, transparent);
+  width: 58px; height: 62px; display: grid; place-items: center; margin: -17px -14px -14px;
   font: 700 0.92rem/1 var(--font-display); color: var(--text-3);
-  background: var(--cell-up) center / contain no-repeat; transition: color 0.4s, filter 0.4s, scale 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+  background: var(--cell) center / 30px 34px no-repeat, var(--glow) center / 100% 100% no-repeat; transition: color 0.4s, scale 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
 }
 .model-steps li.on { background: var(--bg-2); border-color: var(--line); }
 .model-steps li.on b { color: var(--text); }
 .model-steps li.on b a { color: var(--honey-ink); }
 .model-steps li.on p { color: var(--text-2); }
-.model-steps li.on .ms-num { background-image: var(--cell-full); color: var(--cell-num); text-shadow: var(--cell-num-glow); filter: drop-shadow(0 0 8px rgba(242, 177, 52, 0.5)); scale: 1.08; }
+.model-steps li.on .ms-num { --cell: var(--cell-full); --glow: radial-gradient(closest-side, rgba(242, 177, 52, 0.45), rgba(242, 177, 52, 0.14) 60%, transparent); color: var(--cell-num); text-shadow: var(--cell-num-glow); scale: 1.08; }
 
 .vp {
   position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden;
@@ -430,11 +432,14 @@ p { margin: 0 0 1em; }
 .steps { list-style: none; counter-reset: s; padding: 0; margin: 0; }
 .steps li { counter-increment: s; position: relative; padding: 0 0 22px 54px; margin: 0; }
 .steps li::before {
-  content: counter(s); position: absolute; left: 0; top: -5px; z-index: 1;
-  width: 36px; height: 40px; display: grid; place-items: center; padding-top: 1px;
+  /* The box is larger than the 36x40 cell so the glow is painted inside it: a drop-shadow filter gets cut
+     off square on mobile browsers. */
+  --cell: var(--cell-full); --glow: linear-gradient(transparent, transparent);
+  content: counter(s); position: absolute; left: -14px; top: -19px; z-index: 1; pointer-events: none;
+  width: 64px; height: 68px; display: grid; place-items: center; padding-top: 1px;
   font: 700 1rem/1 var(--font-display); color: var(--cell-num); text-shadow: var(--cell-num-glow);
-  background: var(--cell-full) center / contain no-repeat;
-  transition: color 0.4s, filter 0.4s, scale 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+  background: var(--cell) center / 36px 40px no-repeat, var(--glow) center / 100% 100% no-repeat;
+  transition: color 0.4s, scale 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
 }
 .steps li::after {
   content: ""; position: absolute; left: 17px; top: 36px; bottom: 0; width: 2px; border-radius: 2px;
@@ -442,9 +447,9 @@ p { margin: 0 0 1em; }
   transition: background-size 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .steps li:last-child::after { display: none; }
-.steps.tracked li:not(.done):not(.cur)::before { background-image: var(--cell-up); color: var(--text-3); text-shadow: none; }
+.steps.tracked li:not(.done):not(.cur)::before { --cell: var(--cell-up); color: var(--text-3); text-shadow: none; }
 .steps.tracked li:not(.done)::after { background-size: 100% 0; }
-.steps.tracked li.cur::before { filter: drop-shadow(0 0 10px rgba(242, 177, 52, 0.65)); scale: 1.1; }
+.steps.tracked li.cur::before { --glow: radial-gradient(closest-side, rgba(242, 177, 52, 0.5), rgba(242, 177, 52, 0.16) 60%, transparent); scale: 1.1; }
 .steps h3 { margin-bottom: 4px; font-size: 1.1rem; }
 .steps li.cur h3 { color: var(--text); }
 .steps p { margin: 0; color: var(--text-2); }
@@ -573,7 +578,7 @@ p { margin: 0 0 1em; }
 .release:last-child { border-bottom: 0; }
 .release-side { position: sticky; top: 96px; align-self: start; padding-left: 44px; }
 .release-side .node { position: absolute; left: 13px; top: 6px; translate: -50% 0; display: grid; place-items: center; width: 34px; height: 34px; background: var(--bg); }
-.release.latest .node .hx { filter: drop-shadow(0 0 12px rgba(242, 177, 52, 0.6)); }
+.release.latest .node .hx { filter: drop-shadow(0 0 12px rgba(242, 177, 52, 0.6)); padding: 14px; margin: -14px; box-sizing: content-box; }
 .release-side .ver { font: 700 2.4rem/1 var(--font-display); color: var(--text); letter-spacing: -0.01em; }
 .release.latest .ver { color: var(--honey-ink); font-size: 3rem; }
 .release-side time { display: block; color: var(--text-2); margin-top: 8px; }
@@ -768,7 +773,7 @@ details.builds li b { color: var(--text); font-weight: 600; font-variant-numeric
   background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; transition: border-color 0.25s, translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .tips li:hover { border-color: color-mix(in srgb, var(--honey) 45%, var(--line)); translate: 0 -2px; }
-.tips li .hx { margin-top: 1px; filter: drop-shadow(0 2px 8px rgba(242, 177, 52, 0.3)); }
+.tips li .hx { padding: 10px; margin: -9px -10px -10px; box-sizing: content-box; filter: drop-shadow(0 2px 8px rgba(242, 177, 52, 0.3)); }
 .tips p { margin: 0; color: var(--text-2); }
 
 /* ---------- Living main button on the home page ---------- */
