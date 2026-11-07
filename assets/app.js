@@ -156,7 +156,12 @@
     document.getElementById("menu-label").textContent = t.menu;
     document.getElementById("foot-note").textContent = t.footer;
     var r = latest();
-    document.getElementById("foot-ver").textContent = r ? t.updated + " " + t.teamRelease + " " + r.version + ", " + fmtDate(r.date) : "";
+    document.getElementById("foot-ver").innerHTML = r ? '<a class="ver-pill" href="' + href("changelog") + '">' + hex("released", 14) + esc(t.teamRelease + " " + r.version) + "</a>" +
+      '<span class="foot-date">' + esc(t.updated + " " + r.version + ", " + fmtDate(r.date)) + "</span>" : "";
+    document.getElementById("foot-brand").setAttribute("href", href(""));
+    var fn = document.getElementById("foot-nav");
+    fn.setAttribute("aria-label", t.footLinks);
+    fn.innerHTML = items.map(function (it) { return '<a href="' + href(it[0]) + '">' + esc(it[1]) + "</a>"; }).join("");
   }
 
   // ---------- pages ----------
@@ -193,12 +198,12 @@
       "</div></section>" +
       modelSection() +
       '<section class="section"><div class="wrap">' +
-        '<div class="section-head"><div><h2>' + esc(h.toolsTitle) + "</h2><p>" + esc(h.toolsLead) + "</p></div>" + statusLegend() + "</div>" +
+        '<div class="section-head"><div>' + eb("tools") + "<h2>" + esc(h.toolsTitle) + "</h2><p>" + esc(h.toolsLead) + "</p></div>" + statusLegend() + "</div>" +
         '<div class="groups">' + groups + "</div>" +
       "</div></section>" +
       '<section class="section"><div class="wrap split news">' +
-        "<div><h2>" + esc(h.whatsNew) + (r ? " " + esc(r.version) : "") + '</h2><ul class="hl-list">' + hl + '</ul><a href="' + href("changelog") + '">' + esc(h.allChanges) + "</a></div>" +
-        "<div><h2>" + esc(h.next) + '</h2><p class="muted">' + esc(h.nextLead) + '</p><ul class="next-list">' + next + '</ul><a href="' + href("roadmap") + '">' + esc(h.fullRoadmap) + "</a></div>" +
+        "<div>" + eb("news") + "<h2>" + esc(h.whatsNew) + (r ? " " + esc(r.version) : "") + '</h2><ul class="hl-list">' + hl + '</ul><a href="' + href("changelog") + '">' + esc(h.allChanges) + "</a></div>" +
+        "<div>" + eb("next") + "<h2>" + esc(h.next) + '</h2><p class="muted">' + esc(h.nextLead) + '</p><ul class="next-list">' + next + '</ul><a href="' + href("roadmap") + '">' + esc(h.fullRoadmap) + "</a></div>" +
       "</div></section>";
   }
 
@@ -230,7 +235,7 @@
     }).join("");
     var legend = m.legend.map(function (l, i) { return '<li><i style="background:' + MODEL_COLORS[i] + '"></i>' + esc(l) + "</li>"; }).join("");
     return '<section class="section model-sec"><div class="wrap model-grid">' +
-      '<div class="model-copy"><h2>' + esc(m.title) + '</h2><p class="muted">' + esc(m.lead) + '</p><ol class="model-steps">' + steps + "</ol></div>" +
+      '<div class="model-copy">' + eb("model") + "<h2>" + esc(m.title) + '</h2><p class="muted">' + esc(m.lead) + '</p><ol class="model-steps">' + steps + "</ol></div>" +
       '<div class="vp" id="model3d" data-phase="0" role="img" aria-label="' + esc(m.label) + '">' +
         '<div class="vp-hud" aria-hidden="true">' +
           '<span class="vp-view">{3D}</span>' +
@@ -284,6 +289,9 @@
     }).join("") + "</div>";
   }
 
+  // A small honey label above a section heading
+  function eb(key) { var e = T().ui.eyebrow; return e && e[key] ? '<span class="eyebrow">' + esc(e[key]) + "</span>" : ""; }
+
   function hlItem(x) {
     var t = T().ui;
     return '<li><span class="hl-type ' + x.type + '">' + esc(t.highlightType[x.type]) + "</span><span>" + fmt(x[state.lang] || x.en) +
@@ -293,21 +301,21 @@
   function pageInstall() {
     var s = T().install;
     var need = s.need.map(function (n) { return "<li>" + fmt(n) + "</li>"; }).join("");
-    var toc = s.sections.map(function (sec) { return '<a href="' + href("install") + "#install-" + sec.id + '" data-anchor="install-' + sec.id + '">' + esc(sec.h) + "</a>"; })
-      .concat(['<a href="' + href("install") + '#install-help" data-anchor="install-help">' + esc(s.helpTitle) + "</a>",
-               '<a href="' + href("install") + '#install-files" data-anchor="install-files">' + esc(s.filesTitle) + "</a>"]).join(" · ");
+    var targets = [["need", s.needTitle]].concat(s.sections.map(function (sec) { return [sec.id, sec.h]; }), [["help", s.helpTitle], ["files", s.filesTitle]]);
+    var pills = '<nav class="page-pills" id="page-pills" aria-label="' + esc(T().ui.toc) + '"><div class="pp-track">' + targets.map(function (x) {
+      return '<a href="' + href("install") + "#install-" + x[0] + '" data-anchor="install-' + x[0] + '">' + esc(x[1]) + "</a>";
+    }).join("") + "</div></nav>";
     var sections = s.sections.map(function (sec) {
-      return '<section class="section" id="install-' + sec.id + '"><h2>' + esc(sec.h) + '</h2><ol class="steps">' +
+      return '<section class="section" id="install-' + sec.id + '">' + eb("steps") + "<h2>" + esc(sec.h) + '</h2><ol class="steps">' +
         sec.steps.map(function (x) { return "<li><h3>" + esc(x.h) + "</h3><p>" + fmt(x.p) + "</p></li>"; }).join("") + "</ol></section>";
     }).join("");
     var help = s.help.map(function (h) { return '<div class="issue"><h3>' + esc(h.q) + "</h3><p>" + fmt(h.a) + "</p></div>"; }).join("");
     var files = s.files.map(function (f) { return "<tr><td><code>" + esc(f[0]) + "</code></td><td>" + esc(f[1]) + "</td></tr>"; }).join("");
-    return '<div class="wrap"><div class="page-head"><h1>' + esc(s.title) + '</h1><p class="lead">' + esc(s.lead) + "</p>" +
-      '<p class="muted">' + esc(T().ui.toc) + ": " + toc + "</p></div>" +
-      '<section class="section" style="border:0"><h2>' + esc(s.needTitle) + '</h2><ul class="notes">' + need + "</ul></section>" +
+    return '<div class="wrap"><div class="page-head"><h1>' + esc(s.title) + '</h1><p class="lead">' + esc(s.lead) + "</p></div>" + pills +
+      '<section class="section" id="install-need" style="border:0">' + eb("need") + "<h2>" + esc(s.needTitle) + '</h2><ul class="notes">' + need + "</ul></section>" +
       sections +
-      '<section class="section" id="install-help"><h2>' + esc(s.helpTitle) + "</h2>" + help + "</section>" +
-      '<section class="section" id="install-files"><h2>' + esc(s.filesTitle) + '</h2><p class="muted">' + esc(s.filesLead) + "</p>" +
+      '<section class="section" id="install-help">' + eb("help") + "<h2>" + esc(s.helpTitle) + "</h2>" + help + "</section>" +
+      '<section class="section" id="install-files">' + eb("files") + "<h2>" + esc(s.filesTitle) + '</h2><p class="muted">' + esc(s.filesLead) + "</p>" +
         '<table class="gloss"><thead><tr><th scope="col">' + esc(s.filesHead[0]) + '</th><th scope="col">' + esc(s.filesHead[1]) + "</th></tr></thead><tbody>" + files + "</tbody></table></section></div>";
   }
 
@@ -315,19 +323,23 @@
     var s = T().start;
     var steps = s.steps.map(function (x) { return "<li><h3>" + esc(x.h) + "</h3><p>" + fmt(x.p) + "</p></li>"; }).join("");
     var notes = s.notes.map(function (n) { return "<li>" + fmt(n) + "</li>"; }).join("");
+    var h1 = state.lang === "de" ? s.glossaryDe : s.glossaryEn, h2 = state.lang === "de" ? s.glossaryEn : s.glossaryDe;
     var rows = BB.glossary.map(function (g) {
       var a = state.lang === "de" ? g[1] : g[0], b = state.lang === "de" ? g[0] : g[1];
-      return "<tr><td>" + esc(a) + "</td><td>" + esc(b) + "</td></tr>";
+      return '<li data-terms="' + esc((a + " " + b).toLowerCase()) + '"><span><small>' + esc(h1) + "</small>" + esc(a) + '</span><i aria-hidden="true">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i>' +
+        '<span lang="' + (state.lang === "de" ? "en" : "de") + '"><small>' + esc(h2) + "</small>" + esc(b) + "</span></li>";
     }).join("");
-    var h1 = state.lang === "de" ? s.glossaryDe : s.glossaryEn, h2 = state.lang === "de" ? s.glossaryEn : s.glossaryDe;
     return '<div class="wrap"><div class="page-head"><h1>' + esc(s.title) + '</h1><p class="lead">' + esc(s.lead) + "</p></div>" +
       '<div class="split section" style="border:0">' +
         '<div><ol class="steps">' + steps + "</ol></div>" +
         '<div><figure class="figure"><img src="assets/img/' + (state.lang === "de" ? "pane-de.webp" : "pane.webp") + '" alt="' + esc(T().home.paneAlt) + '" loading="lazy" style="width:260px" width="418" height="1154"></figure>' +
-        "<h2>" + esc(s.goodToKnow) + '</h2><ul class="notes">' + notes + "</ul></div>" +
+        eb("good") + "<h2>" + esc(s.goodToKnow) + '</h2><ul class="notes">' + notes + "</ul></div>" +
       "</div>" +
-      '<section class="section" id="glossary"><h2>' + esc(s.glossaryTitle) + '</h2><p class="muted">' + esc(s.glossaryLead) + "</p>" +
-        '<table class="gloss"><thead><tr><th scope="col">' + esc(h1) + '</th><th scope="col">' + esc(h2) + "</th></tr></thead><tbody>" + rows + "</tbody></table></section></div>";
+      '<section class="section" id="glossary">' + eb("glossary") + "<h2>" + esc(s.glossaryTitle) + '</h2><p class="muted">' + esc(s.glossaryLead) + "</p>" +
+        '<div class="search gloss-search"><label class="visually-hidden" for="gq">' + esc(T().ui.glossaryFilter) + "</label>" + icons.search +
+        '<input id="gq" type="search" autocomplete="off" placeholder="' + esc(T().ui.glossaryFilter) + '"></div>' +
+        '<ul class="gloss-grid" id="gloss-grid">' + rows + '</ul><p class="empty" id="gloss-empty" hidden>' + esc(T().ui.glossaryEmpty) + "</p></section></div>";
   }
 
   function sidebar() {
@@ -560,6 +572,51 @@
     });
   }
 
+  // ---------- step progress ----------
+  // In every numbered list, steps above the reading line are done, the one at it glows, the rest wait.
+  var stepFrame = 0;
+  function trackSteps() {
+    stepFrame = 0;
+    var line = window.innerHeight * 0.6;
+    document.querySelectorAll(".steps.tracked").forEach(function (ol) {
+      var lis = ol.children, cur = -1;
+      for (var i = 0; i < lis.length; i++) if (lis[i].getBoundingClientRect().top < line) cur = i;
+      // At the very bottom of the page the last steps can never reach the line, so count them as read
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4 && ol.getBoundingClientRect().bottom < window.innerHeight) cur = lis.length - 1;
+      for (var j = 0; j < lis.length; j++) { lis[j].classList.toggle("done", j < cur); lis[j].classList.toggle("cur", j === cur); }
+    });
+    trackPills();
+  }
+
+  // ---------- sticky page pills ----------
+  // The pill of the section you're reading lights up and scrolls into view inside the bar.
+  function trackPills() {
+    var nav = document.getElementById("page-pills");
+    if (!nav) return;
+    var links = nav.querySelectorAll("a"), on = null;
+    links.forEach(function (a) {
+      var sec = document.getElementById(a.getAttribute("data-anchor"));
+      if (sec && sec.getBoundingClientRect().top < 170) on = a;
+    });
+    nav.classList.toggle("stuck", nav.getBoundingClientRect().top <= 65);
+    links.forEach(function (a) {
+      var was = a.classList.contains("on");
+      a.classList.toggle("on", a === on);
+      if (a === on && !was) {
+        var track = nav.querySelector(".pp-track");
+        track.scrollTo({ left: a.offsetLeft - track.clientWidth / 2 + a.offsetWidth / 2, behavior: "smooth" });
+      }
+    });
+  }
+  function bindPills() { trackPills(); }
+  function bindSteps() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    main.querySelectorAll(".steps").forEach(function (ol) { ol.classList.add("tracked"); });
+    trackSteps();
+  }
+  window.addEventListener("scroll", function () { if (!stepFrame) stepFrame = requestAnimationFrame(trackSteps); }, { passive: true });
+  window.addEventListener("resize", function () { if (!stepFrame) stepFrame = requestAnimationFrame(trackSteps); });
+
   // ---------- router ----------
   function parse() {
     var parts = location.hash.replace(/^#\/?/, "").split("#")[0].split("/");
@@ -591,6 +648,8 @@
     bindStage();
     bindModel();
     reveal();
+    bindSteps();
+    bindPills();
 
     var title = state.page === "tools" && state.slug && T().tools[state.slug] ? T().tools[state.slug].name
       : state.page ? ({ install: T().ui.nav.install, start: T().ui.nav.start, tools: T().ui.nav.tools, issues: T().ui.nav.issues, changelog: T().ui.nav.changes, roadmap: T().ui.nav.roadmap })[state.page] : null;
@@ -605,6 +664,15 @@
     }
     var q = document.getElementById("q");
     if (q) q.addEventListener("input", function () { runSearch(q.value); });
+    var gq = document.getElementById("gq");
+    if (gq) gq.addEventListener("input", function () {
+      var words = gq.value.trim().toLowerCase().split(/\s+/).filter(Boolean), shown = 0;
+      document.querySelectorAll("#gloss-grid li").forEach(function (li) {
+        var t = li.getAttribute("data-terms"), hit = words.every(function (w) { return t.indexOf(w) > -1; });
+        li.hidden = !hit; if (hit) shown++;
+      });
+      document.getElementById("gloss-empty").hidden = shown > 0;
+    });
   }
 
   window.addEventListener("hashchange", function () { render(false); });
@@ -614,8 +682,18 @@
     var z = e.target.closest("[data-zoom]");
     if (z && !e.ctrlKey && !e.metaKey) { e.preventDefault(); openZoom(z.getAttribute("data-zoom"), z.querySelector("img").alt); return; }
     if (e.target.closest(".lightbox")) { closeZoom(); return; }
-    var el = e.target.closest("[data-f],[data-s],[data-rm],#theme,#menu");
+    var el = e.target.closest("[data-f],[data-s],[data-rm],[data-anchor],#theme,#menu");
     if (!el) return;
+    if (el.dataset.anchor && !e.ctrlKey && !e.metaKey) {
+      // Jump within the page without rebuilding it, and keep the address shareable
+      var target = document.getElementById(el.dataset.anchor);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+        history.replaceState(null, "", el.getAttribute("href"));
+      }
+      return;
+    }
     if (el.id === "theme") {
       var light = document.documentElement.dataset.theme !== "light";
       document.documentElement.dataset.theme = light ? "light" : "dark";
@@ -674,6 +752,17 @@
     }
     bindRoadmap.seen = true;
   }
+
+  // Cursor spotlight: cards remember where the mouse is, and CSS paints a soft glow there
+  var SPOT = ".tool-card, .group, .phase-card, .issue, .news > div, .stats, .gloss-grid li";
+  document.addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse" || !e.target.closest) return;
+    var c = e.target.closest(SPOT);
+    if (!c) return;
+    var r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+    c.style.setProperty("--my", (e.clientY - r.top) + "px");
+  }, { passive: true });
 
   // Hive tooltips, and a phase card lights up its cells in the hive
   function showTip(a) {
