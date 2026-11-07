@@ -76,7 +76,22 @@ BB.text.en = {
     next: "Coming next",
     nextLead: "What Sascha is working on, straight from the roadmap.",
     fullRoadmap: "Open the roadmap",
-    paneAlt: "The BusyBee panel in Revit with the tool groups expanded"
+    paneAlt: "The BusyBee panel in Revit with the tool groups expanded",
+    paneLabel: "The BusyBee panel",
+    shotsLabel: "Screenshots of the tools",
+    model: {
+      title: "See it in a model",
+      lead: "A small example ceiling void with ducts, pipes and a cable tray, and what two of the tools do with it.",
+      steps: [
+        { h: "The model", p: "Ducts, pipes and trays from every trade, the way they come out of Revit." },
+        { p: "Each system gets its own color and a legend, so you can read the model at a glance." },
+        { p: "Clashes between trades are found and marked before anything gets built." }
+      ],
+      legend: ["Supply air", "Exhaust air", "Heating", "Cold water", "Cable tray"],
+      clashes: "3 clashes found",
+      hint: "Drag to turn",
+      label: "Animated 3D example of a ceiling void with building services"
+    }
   },
 
   install: {

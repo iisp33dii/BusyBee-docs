@@ -134,8 +134,9 @@
           '<div class="actions"><a class="btn btn-primary" href="' + href("start") + '">' + esc(h.ctaStart) + '</a><a class="btn btn-secondary" href="' + href("tools") + '">' + esc(h.ctaTools) + "</a></div>" +
           (r ? '<div class="release-line"><span>' + esc(h.current) + ' <span class="ver">' + esc(r.version) + '</span></span><span>' + esc(fmtDate(r.date)) + '</span><span><span class="tag">Revit 2025</span> <span class="tag">Revit 2026</span></span></div>' : "") +
         "</div>" +
-        '<div class="pane-shot"><img src="assets/img/' + (state.lang === "de" ? "pane-de.webp" : "pane.webp") + '" alt="' + esc(h.paneAlt) + '" width="418" height="1154"></div>' +
+        heroStage() +
       "</div></section>" +
+      modelSection() +
       '<section class="section"><div class="wrap">' +
         '<div class="section-head"><div><h2>' + esc(h.toolsTitle) + "</h2><p>" + esc(h.toolsLead) + "</p></div>" + statusLegend() + "</div>" +
         '<div class="groups">' + groups + "</div>" +
@@ -144,6 +145,81 @@
         "<div><h2>" + esc(h.whatsNew) + (r ? " " + esc(r.version) : "") + '</h2><ul class="hl-list">' + hl + '</ul><a href="' + href("changelog") + '">' + esc(h.allChanges) + "</a></div>" +
         "<div><h2>" + esc(h.next) + '</h2><p class="muted">' + esc(h.nextLead) + '</p><ul class="next-list">' + next + '</ul><a href="' + href("roadmap") + '">' + esc(h.fullRoadmap) + "</a></div>" +
       "</div></section>";
+  }
+
+  // Layered tool screenshots in the hero. Back to front; each links to its guide.
+  function heroStage() {
+    var t = T(), de = state.lang === "de";
+    var shots = [
+      { cls: "health", img: "health-dashboard.webp", w: 1302, h: 800, link: href("tools", "model-health"), label: toolName("model-health") },
+      { cls: "loin", img: "loin-dashboard.webp", w: 1278, h: 782, link: href("tools", "loin-check"), label: toolName("loin-check") },
+      { cls: "clash", img: de ? "clash-de.webp" : "clash.webp", w: de ? 1248 : 1234, h: de ? 653 : 655, link: href("tools", "clash-detection"), label: toolName("clash-detection") },
+      { cls: "pane", img: de ? "pane-de.webp" : "pane.webp", w: 418, h: 1154, link: href("start"), label: t.home.paneLabel }
+    ];
+    return '<div class="stage" id="stage" role="group" aria-label="' + esc(t.home.shotsLabel) + '">' + shots.map(function (s) {
+      return '<a class="shot ' + s.cls + '" href="' + s.link + '"><img src="assets/img/' + s.img + '" alt="" width="' + s.w + '" height="' + s.h + '" decoding="async">' +
+        '<span class="shot-cap">' + esc(s.label) + "</span></a>";
+    }).join("") + "</div>";
+  }
+
+  // Legend colors for the 3D example. Keep in step with SYS in model3d.js.
+  var MODEL_COLORS = ["#4fa3f7", "#f2b134", "#f0844b", "#4cc59a", "#b48cf0"];
+
+  function modelSection() {
+    var m = T().home.model;
+    var names = [m.steps[0].h, toolName("color-by-parameter"), toolName("clash-detection")];
+    var links = [null, href("tools", "color-by-parameter"), href("tools", "clash-detection")];
+    var steps = m.steps.map(function (s, i) {
+      var head = links[i] ? '<a href="' + links[i] + '">' + esc(names[i]) + "</a>" : esc(names[i]);
+      return '<li data-step="' + i + '"><span class="ms-num" aria-hidden="true">' + (i + 1) + "</span><div><b>" + head + "</b><p>" + esc(s.p) + "</p></div></li>";
+    }).join("");
+    var legend = m.legend.map(function (l, i) { return '<li><i style="background:' + MODEL_COLORS[i] + '"></i>' + esc(l) + "</li>"; }).join("");
+    return '<section class="section model-sec"><div class="wrap model-grid">' +
+      '<div class="model-copy"><h2>' + esc(m.title) + '</h2><p class="muted">' + esc(m.lead) + '</p><ol class="model-steps">' + steps + "</ol></div>" +
+      '<div class="vp" id="model3d" data-phase="0" role="img" aria-label="' + esc(m.label) + '">' +
+        '<div class="vp-hud" aria-hidden="true">' +
+          '<span class="vp-view">{3D}</span>' +
+          '<span class="vp-clash"><i></i>' + esc(m.clashes) + "</span>" +
+          '<ul class="vp-legend">' + legend + "</ul>" +
+          '<span class="vp-hint">' + esc(m.hint) + "</span>" +
+        "</div>" +
+      "</div>" +
+    "</div></section>";
+  }
+
+  var model = null;
+  function bindModel() {
+    if (model) { model.destroy(); model = null; }
+    var vp = document.getElementById("model3d");
+    if (!vp || !window.BBModel) return;
+    var steps = document.querySelectorAll(".model-steps li");
+    model = window.BBModel.mount(vp, {
+      onPhase: function (p) {
+        vp.setAttribute("data-phase", p);
+        for (var i = 0; i < steps.length; i++) steps[i].classList.toggle("on", i === p);
+      }
+    });
+  }
+
+  // The stage leans gently toward the pointer. Skipped for touch and reduced motion.
+  function bindStage() {
+    var stage = document.getElementById("stage");
+    if (!stage || !window.matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) return;
+    var frame = 0;
+    stage.addEventListener("pointermove", function (e) {
+      if (frame) return;
+      frame = requestAnimationFrame(function () {
+        frame = 0;
+        var r = stage.getBoundingClientRect();
+        stage.style.setProperty("--mx", (((e.clientX - r.left) / r.width - 0.5) * 2).toFixed(3));
+        stage.style.setProperty("--my", (((e.clientY - r.top) / r.height - 0.5) * 2).toFixed(3));
+      });
+    });
+    stage.addEventListener("pointerleave", function () {
+      if (frame) { cancelAnimationFrame(frame); frame = 0; }
+      stage.style.setProperty("--mx", "0");
+      stage.style.setProperty("--my", "0");
+    });
   }
 
   function statusLegend() {
@@ -408,7 +484,9 @@
       // Old-style or empty hash: pick a language and keep the rest
       page = lang && PAGES.indexOf(lang) > -1 ? lang : "";
       slug = parts[1] || "";
-      lang = read("bb-lang") || ((navigator.language || "").toLowerCase().indexOf("de") === 0 ? "de" : "en");
+      // The plugin's Help button also sends ?lang= in case the "#" part got lost on the way
+      var asked = (/[?&]lang=([a-z]+)/.exec(location.search) || [])[1];
+      lang = (LANGS.indexOf(asked) > -1 ? asked : "") || read("bb-lang") || ((navigator.language || "").toLowerCase().indexOf("de") === 0 ? "de" : "en");
       history.replaceState(null, "", "#/" + lang + "/" + page + (slug ? "/" + slug : ""));
     }
     if (PAGES.indexOf(page) < 0) page = "";
@@ -424,6 +502,8 @@
     renderChrome();
     var html = { "": pageHome, install: pageInstall, start: pageStart, tools: pageTools, issues: pageIssues, changelog: pageChangelog, roadmap: pageRoadmap }[state.page]();
     main.innerHTML = html;
+    bindStage();
+    bindModel();
 
     var title = state.page === "tools" && state.slug && T().tools[state.slug] ? T().tools[state.slug].name
       : state.page ? ({ install: T().ui.nav.install, start: T().ui.nav.start, tools: T().ui.nav.tools, issues: T().ui.nav.issues, changelog: T().ui.nav.changes, roadmap: T().ui.nav.roadmap })[state.page] : null;

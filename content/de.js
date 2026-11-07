@@ -77,7 +77,22 @@ BB.text.de = {
     next: "Als Nächstes",
     nextLead: "Woran Sascha gerade arbeitet, direkt aus der Roadmap.",
     fullRoadmap: "Roadmap öffnen",
-    paneAlt: "Der BusyBee-Bereich in Revit mit aufgeklappten Werkzeuggruppen"
+    paneAlt: "Der BusyBee-Bereich in Revit mit aufgeklappten Werkzeuggruppen",
+    paneLabel: "Der BusyBee-Bereich",
+    shotsLabel: "Screenshots der Werkzeuge",
+    model: {
+      title: "So sieht es im Modell aus",
+      lead: "Eine kleine Beispiel-Zwischendecke mit Kanälen, Rohren und einer Kabeltrasse, und was zwei der Werkzeuge damit machen.",
+      steps: [
+        { h: "Das Modell", p: "Kanäle, Rohre und Trassen aller Gewerke, so wie sie aus Revit kommen." },
+        { p: "Jedes System bekommt eine eigene Farbe und eine Legende. So liest du das Modell auf einen Blick." },
+        { p: "Kollisionen zwischen den Gewerken werden gefunden und markiert, bevor etwas gebaut wird." }
+      ],
+      legend: ["Zuluft", "Abluft", "Heizung", "Kaltwasser", "Kabeltrasse"],
+      clashes: "3 Kollisionen gefunden",
+      hint: "Zum Drehen ziehen",
+      label: "Animiertes 3D-Beispiel einer Zwischendecke mit Haustechnik"
+    }
   },
 
   install: {
