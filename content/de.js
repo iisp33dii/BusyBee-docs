@@ -21,7 +21,7 @@ BB.text.de = {
     },
     groups: { automation: "Parameter- und Modell-Automatisierung", audit: "Prüfung und Qualitätskontrolle", utility: "Hilfswerkzeuge" },
     revit: "Revit",
-    teamRelease: "Team-Version",
+    teamRelease: "Version",
     released: "Veröffentlicht",
     search: "Dokumentation durchsuchen",
     searchPlaceholder: "Werkzeuge, Schaltflächen, Probleme suchen…",
@@ -52,7 +52,7 @@ BB.text.de = {
       "in-progress": "In Entwicklung",
       planned: "Geplant",
       doneIn: "Fertig in Build",
-      inRelease: "In Team-Version",
+      inRelease: "In Version",
       filterAll: "Alles",
       filterTool: "Werkzeug",
       allTools: "Alle Werkzeuge",
@@ -71,7 +71,7 @@ BB.text.de = {
     lead: "Unser Revit-Add-in für Kollisionsprüfung, Parameterarbeit und Modellqualität. Es sitzt in einem Bereich neben dem Projektbrowser und läuft in Revit 2025 und 2026, auf Deutsch oder Englisch.",
     ctaStart: "Schnellstart",
     ctaTools: "Werkzeuge ansehen",
-    current: "Aktuelle Team-Version",
+    current: "Aktuelle Version",
     toolsTitle: "Was BusyBee kann",
     toolsLead: "Elf Werkzeuge in drei Gruppen. Du öffnest alle aus dem BusyBee-Bereich.",
     whatsNew: "Neu in dieser Version",
@@ -762,7 +762,7 @@ BB.text.de = {
       fix: "Nicht nötig, der Inhalt ist derselbe. Sie werden noch übersetzt." },
     { id: "mixed-versions", title: "Ältere Versionen lesen neue Einstellungen nicht",
       body: "Einstellungen ab BusyBee 1.9 speichern Kategorien und Parameter sprachunabhängig, und das verstehen ältere Versionen nicht.",
-      fix: "Achte darauf, dass alle im Projekt die aktuelle Team-Version nutzen." }
+      fix: "Achte darauf, dass alle im Projekt die aktuelle Version nutzen." }
   ],
 
   changes: {
@@ -772,6 +772,6 @@ BB.text.de = {
 
   roadmap: {
     title: "Roadmap",
-    lead: "Was fertig ist, was gerade entsteht und was als Nächstes kommt. Punkte wandern während der Entwicklung von geplant zu veröffentlicht; veröffentlicht heißt, es ist in einer Team-Version, die du installieren kannst."
+    lead: "Was fertig ist, was gerade entsteht und was als Nächstes kommt. Punkte wandern während der Entwicklung von geplant zu veröffentlicht; veröffentlicht heißt, es ist in einer Version, die du installieren kannst."
   }
 };

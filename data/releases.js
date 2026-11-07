@@ -158,8 +158,8 @@ BB.releases = [
     version: "1.18.0",
     date: "2026-11-03",
     title: {
-      en: "First team release",
-      de: "Erste Team-Version"
+      en: "First release",
+      de: "Erste Version"
     },
     summary: {
       en: "The first version for the whole team. It runs on Revit 2025 and 2026, works the same in English and German Revit, shows progress with a Cancel button on long runs, and fixes the unit and reset problems found in the review.",

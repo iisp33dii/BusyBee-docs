@@ -21,7 +21,7 @@ BB.text.en = {
     },
     groups: { automation: "Parameter and modelling automation", audit: "Audit and quality checks", utility: "Utilities" },
     revit: "Revit",
-    teamRelease: "Team release",
+    teamRelease: "Release",
     released: "Released",
     search: "Search the docs",
     searchPlaceholder: "Search tools, buttons, issues…",
@@ -52,7 +52,7 @@ BB.text.en = {
       "in-progress": "In development",
       planned: "Planned",
       doneIn: "Done in build",
-      inRelease: "In team release",
+      inRelease: "In release",
       filterAll: "Everything",
       filterTool: "Tool",
       allTools: "All tools",
@@ -70,7 +70,7 @@ BB.text.en = {
     lead: "Our Revit add-in for clash checks, parameter work and model quality. It lives in a panel next to the Project Browser and runs in Revit 2025 and 2026, in English or German.",
     ctaStart: "Quick start",
     ctaTools: "Browse the tools",
-    current: "Current team release",
+    current: "Current release",
     toolsTitle: "What BusyBee does",
     toolsLead: "Eleven tools in three groups. Open any of them from the BusyBee panel.",
     whatsNew: "New in this release",
@@ -777,7 +777,7 @@ BB.text.en = {
     { id: "mixed-versions", tools: ["project-workspace"], roadmap: null,
       title: "Older versions can't read newer settings",
       body: "Settings saved with BusyBee 1.9 or newer store categories and parameters in a language-independent way that older versions don't understand.",
-      fix: "Make sure everyone on a project uses the current team release." }
+      fix: "Make sure everyone on a project uses the current release." }
   ],
 
   changes: {
@@ -787,6 +787,6 @@ BB.text.en = {
 
   roadmap: {
     title: "Roadmap",
-    lead: "What's done, what's being built and what's next. Items move from planned to released as development goes on; released means it's in a team release you can install."
+    lead: "What's done, what's being built and what's next. Items move from planned to released as development goes on; released means it's in a release you can install."
   }
 };
