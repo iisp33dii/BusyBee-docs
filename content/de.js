@@ -63,7 +63,8 @@ BB.text.de = {
     caption: "Screenshot aus Revit 2026 mit BusyBee auf Englisch. Mit der Flagge unten rechts im BusyBee-Bereich schaltest du auf Deutsch um. Klick drauf, um ihn in voller Größe zu sehen.",
     captionDe: "Screenshot aus Revit 2026 mit BusyBee auf Deutsch. Klick drauf, um ihn in voller Größe zu sehen.",
     close: "Schließen",
-    oldShot: "Dieser Screenshot stammt aus Version 1.18. Das Fenster hat inzwischen mehr Optionen, siehe unten."
+    oldShot: "Dieser Screenshot stammt aus Version 1.18. Das Fenster hat inzwischen mehr Optionen, siehe unten.",
+    clipCaption: "Kurzer Clip aus Revit 2026 mit dem Beispielprojekt Snowdon Towers. Der gelbe Ring zeigt einen Klick. Klick drauf, um ihn in voller Größe zu sehen."
   },
 
   home: {
@@ -211,10 +212,14 @@ BB.text.de = {
       tips: [
         "Mit dem Kopiersymbol duplizierst du eine Kategoriegruppe als Ausgangspunkt für ähnliche Regeln.",
         "Geschrieben wird mit den Regeln, wie sie beim Klick auf Starten waren. Änderst du sie, während die Vorschau offen ist, ändert das nichts am Ergebnis.",
-        "Fährst du mit der Maus über ein Wertefeld, erscheint eine kurze Hilfe zu Formeln."
+        "Fährst du mit der Maus über ein Wertefeld, erscheint eine kurze Hilfe zu Formeln.",
+        "Willst du viele Werte lieber von Hand ändern, klick unten auf [[Excel…]]: Das öffnet die Registerkarte Parameter von Bauteillisten in Excel."
       ],
       issues: ["type-param-writes", "english-messages", "reports-english"],
-      shots: [{ src: "param-rules.webp", alt: "Parameter-Automatisierung mit einer WENN- und einer SONST-WENN-Regel für Luftdurchlässe" }]
+      shots: [
+        { src: "param-rules.webp", alt: "Parameter-Automatisierung schreibt den Systemtyp in Kommentare: WENN Zuluft ergibt SA-{Level}, SONST WENN Abluft ergibt RA-{Level}" },
+        { src: "param-preview.webp", alt: "Die Vorschau zeigt jeden Luftkanal mit dem Wert, den die Regel schreibt, etwa SA-L3 und RA-L3" }
+      ]
     },
 
     "spatial-parameters": {
@@ -257,7 +262,7 @@ BB.text.de = {
       shots: [
         { src: "spatial-room.webp", alt: "Räume, Raster & Ebenen auf dem Reiter Raum-Zuordnung" },
         { src: "spatial-grid.webp", alt: "Räume, Raster & Ebenen auf dem Reiter Raster-Zuordnung mit dem Format [X-Grid]-[Y-Grid]" },
-        { src: "level-mapping.webp", old: true, alt: "Das frühere Fenster Ebenen-Zuordnung mit zwei Höhenbereichen für Luftkanäle und Luftdurchlässe" }
+        { src: "level-mapping.webp", alt: "Ebenen-Zuordnung mit drei Höhenbereichen, die Garage, Retail und Lobby in Kommentare schreiben" }
       ]
     },
 
@@ -294,8 +299,8 @@ BB.text.de = {
       ],
       issues: ["color-repeat"],
       shots: [
-        { src: "color-by-param.webp", alt: "Farbe nach Parameterwert mit 4.546 geladenen Elementen und Kategorie als Parameter" },
-        { src: "legend.webp", alt: "Farblegende mit Kategorien und Elementanzahl" }
+        { src: "color-by-param.webp", alt: "Luftkanäle und Luftdurchlässe auf L3 nach Systemtyp eingefärbt, mit der Legende im Fenster" },
+        { src: "color-by-param-clip.webp", clip: true, alt: "Ein Parameter färbt die Ansicht sofort ein; Zurücksetzen gibt den Elementen ihr normales Aussehen zurück" }
       ]
     },
 
@@ -317,6 +322,7 @@ BB.text.de = {
         "Wähl unter [[3. Kollisionsmodus & Toleranz]] [[Harte Kollision]] oder [[Abstand (Weich)]] und trag den Abstand in mm ein.",
         "Klick auf [[Starten]]. Die Statuszeile zeigt, wie viele Kollisionen seit dem letzten Lauf mit denselben Einstellungen neu, weiterhin da und gelöst sind, und wie lange der Lauf gedauert hat.",
         "Klick auf ein Ergebnis, um beide Elemente zu sehen. Mit [[3D-Zoom]], [[Elemente isolieren]], [[3D-Schnittbereich]] oder [[Elemente einfärben]] schaust du es dir an. Neue Kollisionen haben ein blaues NEU, und [[Nur neue]] zeigt nur diese.",
+        "Mit [[In Ansicht zeigen]] bekommt jede gelistete Kollision ein rotes Dreieck in der Ansicht. Ein Klick auf ein Dreieck springt zu dieser Kollision in der Liste. Die Dreiecke folgen dir in andere Grundrisse, Schnitte und 3D-Ansichten, bis du auf [[Markierungen aus]] klickst.",
         "Drück die Leertaste oder [[Freigeben]] für Kollisionen, die in Ordnung sind. Ergänz bei Bedarf eine Notiz. [[Freigegebene ausblenden]] nimmt sie aus der Liste.",
         "Teil das Ergebnis mit [[BCF-Export]] oder [[CSV-Export]], oder sichere es mit [[Kollisionen speichern]]. Um die Einrichtung fürs nächste Mal zu behalten, gib unter [[Test]] einen Namen ein und klick auf Speichern.",
         "Für Durchbrüche filterst du die Liste auf die gewünschten Kollisionen und klickst auf [[Durchbrüche setzen]]."
@@ -327,7 +333,9 @@ BB.text.de = {
         ["All Linked Models", "In der Liste der Zielmodelle. Prüft die Primärelemente in einem Lauf gegen alle geladenen Verknüpfungen. Die Listen enthalten auch Kategorien, die nur eine Verknüpfung hat."],
         ["Test", "Benannte Einstellungen aus Kategorien, Modellen, Modus, Toleranz und Prüfbereich, gespeichert neben dem Modell in `<Modell>.BusyBeeClashTests.json`. So sieht das ganze Team dieselben Tests. Sie funktionieren in deutschem und englischem Revit."],
         ["NEU, weiterhin, gelöst", "Jeder Lauf wird mit dem vorigen Lauf mit denselben Einstellungen in derselben Ansicht verglichen. Der Link N gelöst listet die Kollisionen, die weg sind. Abgebrochene Läufe und Läufe nur auf ausgewählten Elementen werden nicht verglichen."],
-        ["BCF-Export", "Schreibt die angezeigten Kollisionen als BCF-2.1-Datei, ein Thema pro Kollision mit Kameraansicht und beiden Elementen. Suche, Kategoriefilter, Freigegebene ausblenden und Nur neue bestimmen, was hineinkommt. Freigegebene Kollisionen sind geschlossen, und ein erneuter Export aktualisiert dieselben Themen, statt Kopien anzulegen."],
+        ["BCF-Export", "Schreibt die angezeigten Kollisionen als BCF-2.1-Datei, ein Thema pro Kollision mit Kameraansicht und beiden Elementen. Suche, Kategoriefilter, Freigegebene ausblenden und Nur neue bestimmen, was hineinkommt. Freigegebene Kollisionen sind geschlossen, und ein erneuter Export aktualisiert dieselben Themen, statt Kopien anzulegen. Im [[BCF-Viewer]] kannst du die Datei prüfen."],
+        ["Bilder im BCF-Export", "In den Einstellungen (Zahnrad), standardmäßig aus. Gibt jeder Kollision im BCF eine Nahaufnahme nur der beiden Elemente, grün und rot mit dünnen Linien, sodass BIMcollab, Solibri und der BCF-Viewer sie zeigen. Etwa eine Sekunde pro Kollision, mit Abbrechen, das die bisherigen Bilder behält. Die Hilfsansichten werden wieder entfernt, und nichts landet in der Rückgängig-Liste."],
+        ["In Ansicht zeigen", "Rote Warndreiecke über allem anderen, in Grundrissen, Schnitten und 3D-Ansichten (nicht perspektivisch). Fahr über eines, um beide Elemente zu sehen, ein Klick wählt die Kollision in der Liste. Beim Verschieben, Zoomen oder Drehen verschwinden sie und kommen wieder, sobald die Ansicht stillsteht. Sie werden nur auf den Bildschirm gezeichnet, im Modell entsteht nichts. Kollisionen, die der Listenfilter ausblendet, bekommen kein Dreieck."],
         ["Durchbrüche setzen", "Setzt für jede Kollision der Liste, bei der ein Luftkanal, Rohr, eine Kabeltrasse oder ein Leerrohr eine Wand oder Decke des geöffneten Modells kreuzt, einen rechteckigen Durchbruch. Das TGA-Element darf in einer Verknüpfung liegen. Der Durchbruch ist so groß wie das Element plus Abstand auf jeder Seite. Freigegebene Kollisionen werden übersprungen, ein vorhandener Durchbruch wird nicht doppelt gesetzt, neue Durchbrüche nennen die Kollision in ihren Kommentaren, und ein Strg+Z entfernt alle Durchbrüche eines Klicks."],
         ["Durchbruch-Abstand (mm)", "In den Einstellungen (Zahnrad). Der Abstand zwischen Element und Rand des Durchbruchs, standardmäßig 50 mm."],
         ["Gruppierung", "Flach, nach Primärelement, nach Kategorien, nach Ebene oder nach System."],
@@ -341,7 +349,10 @@ BB.text.de = {
         "Jede Rücksetz-Schaltfläche macht ihre eigene Aktion rückgängig: Isolierung aufheben, Schnittbereich zurücksetzen, Farben zurücksetzen. Beim Schließen des Fensters wird die Isolierung ebenfalls aufgehoben."
       ],
       issues: ["openings-limits", "linked-primary", "clash-one-link", "clash-no-bcf", "revit-busy"],
-      shots: [{ src: "clash-de.webp", de: true, old: true, alt: "Kollisionsprüfung mit Luftkanälen gegen Geschossdecken im verknüpften Architekturmodell" }]
+      shots: [
+        { src: "clash.webp", alt: "Kollisionsprüfung nach einem Lauf: Luftkanäle gegen Decken und Träger im verknüpften Tragwerksmodell" },
+        { src: "clash-markers.webp", clip: true, alt: "In Ansicht zeigen setzt an jede Kollision ein Dreieck in der 3D-Ansicht; ein Klick darauf wählt die Kollision in der Liste" }
+      ]
     },
 
     "model-health": {
@@ -380,9 +391,11 @@ BB.text.de = {
       ],
       issues: ["health-score-size", "health-low-severity"],
       shots: [
-        { src: "health-dashboard.webp", alt: "Dashboard der Modellgesundheit mit Bewertung, Warnungen, ungenutzten Familien und Ballast" },
+        { src: "health-dashboard.webp", alt: "Dashboard der Modellgesundheit mit Gesamtnote und einer Karte pro Bereich" },
         { src: "health-warnings.webp", alt: "Warnungen nach Typ gruppiert mit Elementanzahl" },
-        { src: "health-families.webp", alt: "Liste ungenutzter Familien mit Bereinigen-Schaltflächen" }
+        { src: "health-families.webp", alt: "Liste ungenutzter Familien mit Bereinigen-Schaltflächen" },
+        { src: "health-views.webp", alt: "Der Reiter Ansichten: Ansichten ohne Plan und ohne Vorlage" },
+        { src: "health-links.webp", alt: "Der Reiter Verknüpfungen mit jedem verknüpften Modell, seinem Status und Pfadtyp" }
       ]
     },
 
@@ -403,6 +416,7 @@ BB.text.de = {
         "Klick auf [[Regel zur Vorlage hinzufügen]]. Hak die Regeln an, die laufen sollen.",
         "Klick auf [[Starten]]. Die Befunde erscheinen rechts, nach Kategorie gruppiert.",
         "Ein Klick auf einen Befund wählt das Element aus, ein Doppelklick zoomt hin. Mit [[Mängel isolieren]] siehst du nur die Fehler.",
+        "Mit [[Excel…]] speicherst du die Befunde als Arbeitsmappe fürs Team oder als eigene Aufgabenliste.",
         "Am Ende klickst du auf [[Hervorhebungen zurücksetzen]]. Die Regeln sicherst du mit „Vorlage speichern“."
       ],
       settings: [
@@ -413,7 +427,8 @@ BB.text.de = {
         ["Nur erlaubte Werte", "Meldet, wenn der Wert nicht in einer Liste steht, getrennt durch Semikolons, etwa `EI30; EI60; EI90`. Groß- und Kleinschreibung zählen nicht."],
         ["Entspricht Regex", "Meldet, wenn der Wert nicht zum Muster passt, etwa `^W-[0-9]{3}$` für W-001."],
         ["Abweichung Exemplar vs. Typ", "Meldet, wenn Exemplar- und Typwert eines Parameters verschieden sind."],
-        ["Ansicht nach QA-Status einfärben", "In den Einstellungen (Zahnrad). Färbt auch fehlerfreie Elemente."]
+        ["Ansicht nach QA-Status einfärben", "In den Einstellungen (Zahnrad). Färbt auch fehlerfreie Elemente."],
+        ["Excel…", "Speichert die letzte Prüfung als .xlsx: ein Blatt Übersicht mit einer Zeile pro Regel (Mängel, Elemente und Summe) und ein Blatt Befunde mit einer Zeile pro Befund (Kategorie, Element-ID, Element, Regel, Parameter, Wert, Problem), mit Filtern und fixierter Kopfzeile. Keine Excel-Lizenz nötig."]
       ],
       tips: [
         "Wähl gezielt Kategorien. Mit „Alle Kategorien“ werden Elemente ohne den Parameter, etwa Modelllinien, als fehlend gemeldet.",
@@ -421,7 +436,7 @@ BB.text.de = {
         "Zurücksetzen stellt die vorherigen Farben wieder her, auch deine eigenen."
       ],
       issues: ["qc-all-categories"],
-      shots: [{ src: "qc.webp", alt: "Qualitätskontrolle mit Regeln, Bewertung und Befunden für Luftkanäle" }]
+      shots: [{ src: "qc-excel.webp", alt: "Qualitätskontrolle nach einem Lauf: 307 Luftkanäle ohne Kommentar, rot in der Ansicht hervorgehoben. Excel… speichert die Befunde" }]
     },
 
     "loin-check": {
@@ -457,34 +472,79 @@ BB.text.de = {
       ]
     },
 
+    "bcf-viewer": {
+      name: "BCF-Viewer",
+      tagline: "BCF-Themen aus jedem Programm öffnen und ihre Elemente im Modell finden.",
+      summary: "Öffnet BCF-Dateien aus BusyBee, Solibri, BIMcollab, Navisworks und anderen Programmen (BCF 2.0, 2.1 und 3.0). Die Elemente jedes Themas werden über ihre IFC-GUID in diesem Modell und in jeder geladenen Verknüpfung gefunden, auch wenn die Basispunkte des anderen Büros abweichen. Du kannst sie auswählen, hinzoomen, isolieren oder in einen 3D-Bereich setzen oder zum Ansichtspunkt des Themas springen: Die Kameras werden automatisch an dein Modell angeglichen.",
+      when: [
+        "Die Koordination schickt dir Themen aus Solibri oder BIMcollab, und du willst sie in Revit beheben.",
+        "Du prüfst ein Kollisions-BCF aus der Kollisionsprüfung, bevor du es weitergibst.",
+        "Du gehst die offenen Themen einer Koordinationsbesprechung nacheinander durch."
+      ],
+      steps: [
+        "Öffne den [[BCF-Viewer]] im Bereich Prüfung des Panels oder in der Multifunktionsleiste.",
+        "Klick auf [[BCF öffnen...]] oder zieh eine `.bcf`- oder `.bcfzip`-Datei auf das Fenster. Die letzte Datei öffnet sich beim nächsten Mal wieder.",
+        "Die Liste zeigt Nummer, Titel, Status, Priorität, Autor und Datum jedes Themas und wie viele seiner Elemente gefunden wurden: grün alle, orange einige, grau keine. Suche und der Filter [[Alle]] / [[Offen]] / [[Geschlossen]] grenzen sie ein.",
+        "Klick auf ein Thema. Rechts erscheinen Bild, Felder, Beschreibung, Elemente und Kommentare, und seine Elemente werden ausgewählt und herangezoomt. Ein Klick auf das Bild zeigt es groß.",
+        "Nutz [[Auswählen]], [[Zoomen]], [[Isolieren]] oder [[3D-Bereich]]. Sie wirken auf die Elemente, die du in der Elementliste gewählt hast, sonst auf alle Elemente der gewählten Themen. [[Ansicht zurücksetzen]] hebt die Isolierung auf und gibt der Ansicht ihren vorherigen Schnittbereich zurück.",
+        "Klick auf [[Zum Ansichtspunkt]] oder doppelklick auf das Thema, um es aus der Kamera des Themas in deiner eigenen 3D-Ansicht `BusyBee BCF - <dein Name>` zu sehen.",
+        "Liegt ein Ansichtspunkt noch daneben, wähl in Revit das richtige Element und klick auf [[Kalibrieren]]. Alle Ansichtspunkte der Datei verschieben sich mit."
+      ],
+      settings: [
+        ["Elemente", "Werden über die IFC-GUID im geöffneten Modell und in jeder geladenen Verknüpfung gefunden, auch in IFC-Verknüpfungen. Ein verknüpftes Element steht mit dem Namen seiner Verknüpfung da, wird in der Verknüpfung ausgewählt, und Isolieren isoliert die Verknüpfung."],
+        ["Koordinaten", "Automatisch probiert internen Ursprung, Projektbasispunkt, Vermessungspunkt und gemeinsame Koordinaten, mit und ohne geografischen Norden, und gleicht die restliche Verschiebung an den Themen an, deren Elemente gefunden wurden. Die Zeile darunter nennt das gewählte System und wie gut es passt, und wird orange, wenn es nur grob passt. Du kannst das System auch selbst wählen."],
+        ["Kalibrieren / Kalibrierung zurücksetzen", "Richtet die Kamera des gewählten Themas auf das ausgewählte Element aus und verschiebt alle Ansichtspunkte der Datei mit. Pro BCF-Datei gemerkt, bis du sie zurücksetzt."],
+        ["Beim Klick auf ein Thema zu den Elementen zoomen", "Standardmäßig an. Nimm den Haken weg, um durch die Themen zu blättern, ohne dass sich die Ansicht bewegt."],
+        ["Suche", "Durchsucht Titel, Beschreibung, Status, Labels, Personen und Kommentare. Statusnamen zählen auf Deutsch und Englisch."]
+      ],
+      tips: [
+        "Zoomen und Isolieren brauchen eine Ansicht, die die Elemente zeigen kann. Von einem Plan oder einer Bauteilliste aus wechselt der Viewer in deine eigene 3D-Ansicht, in einem Modell mit Bearbeitungsbereichen `{3D - Name}`.",
+        "Wechselst du bei offenem Fenster in ein anderes Modell, werden die Elemente dort neu gesucht.",
+        "Der BCF-Export der Kollisionsprüfung mit [[Bilder im BCF-Export]] gibt jedem Thema hier ein Bild."
+      ],
+      issues: [],
+      shots: [{ src: "bcf-viewer.webp", alt: "BCF-Viewer mit einem Kollisions-Issue, seinem Bild und den genannten Elementen" }]
+    },
+
     "schedules-excel": {
       name: "Bauteillisten in Excel",
-      tagline: "Bauteillisten nach Excel, dort bearbeiten und mit Vorschau zurück in Revit.",
-      summary: "Exportiert Revit-Bauteillisten als .xlsx-Dateien, auch ohne installiertes Excel. „Bearbeitbar“ liefert eine Zeile pro Element mit seiner Revit-ID, sodass du Werte in Excel ändern und wieder einlesen kannst. „Wie in Revit angezeigt“ behält Gruppierung, Überschriften und Summen für Mengenlisten. Eine Firmenvorlage mit Logo und Kopf kann befüllt werden.",
+      tagline: "Bauteillisten und Parameter nach Excel, dort bearbeiten und mit Vorschau zurück in Revit.",
+      summary: "Zwei Registerkarten. [[Bauteillisten]] exportiert Revit-Bauteillisten als .xlsx-Dateien. „Bearbeitbar“ liefert eine Zeile pro Element mit seiner Revit-ID, sodass du Werte in Excel ändern und wieder einlesen kannst; „Wie in Revit angezeigt“ behält Gruppierung, Überschriften und Summen für Mengenlisten, auch in deiner Firmenvorlage. [[Parameter]] braucht gar keine Bauteilliste: Wähl die Auswahl, die aktive Ansicht oder das ganze Modell, hak Kategorien und Parameter an und du bekommst eine Arbeitsmappe mit einem Blatt pro Kategorie. Beides liest dieselbe Schaltfläche wieder ein, mit Vorschau. Keine Excel-Lizenz nötig.",
       when: [
         "Jemand füllt Tür- oder Raumdaten in Excel aus.",
         "Du brauchst Mengen im Firmenlayout für eine Kostenschätzung.",
-        "Du willst viele Werte auf einmal mit Excels Ausfüllen und Suchen korrigieren."
+        "Du willst viele Werte auf einmal mit Excels Ausfüllen und Suchen korrigieren.",
+        "Du willst Parameter einiger Kategorien prüfen oder füllen, ohne erst eine Bauteilliste anzulegen."
       ],
       steps: [
-        "Öffne [[Bauteillisten in Excel]] und hake die Bauteillisten an.",
+        "Öffne [[Bauteillisten in Excel]]. Hak auf der Registerkarte [[Bauteillisten]] die Bauteillisten an.",
         "Wähl [[Bearbeitbar, zum Zurücklesen]] oder [[Wie in Revit angezeigt, für Mengen]].",
         "Wähl bei Bedarf eine Excel-Vorlage und einen Ordner und klick auf [[… nach Excel exportieren]].",
+        "Oder öffne die Registerkarte [[Parameter]]: Wähl [[Auswahl]], [[Aktive Ansicht]] oder [[Ganzes Modell]], hak Kategorien und Parameter an und klick auf [[… Elemente nach Excel exportieren]].",
         "Ändere Werte in den gelben Spalten. Graue Spalten sind nur zum Lesen. Lass die Überschriften und die Spalte Revit-ID stehen.",
-        "Klick auf [[Aus Excel einlesen…]] und wähl die Dateien. BusyBee zeigt dir zuerst jede Änderung; [[Änderungen schreiben]] schreibt sie in einem Rückgängig-Schritt."
+        "Klick auf [[Aus Excel einlesen…]] und wähl eine oder mehrere Dateien. BusyBee zeigt dir zuerst jede Änderung; [[Änderungen schreiben]] schreibt sie in einem Rückgängig-Schritt."
       ],
       settings: [
         ["Bearbeitbar, zum Zurücklesen", "Eine Zeile pro Element mit seiner Revit-ID. Berechnete Werte, Anzahlen und Raumfelder fehlen, weil sie sich nicht zurückschreiben lassen."],
         ["Wie in Revit angezeigt, für Mengen", "Gruppierung, Überschriften und Summen wie in der Bauteilliste, Zahlen als echte Excel-Zahlen. Lässt sich nicht einlesen."],
-        ["Excel-Vorlage", "Eine .xlsx mit deinem Logo und Kopf. Schreib `{Table}` in die Zelle, in der die Tabelle beginnen soll. `{Project}` und ähnliche Platzhalter werden ausgefüllt."]
+        ["Excel-Vorlage", "Eine .xlsx mit deinem Logo und Kopf. Schreib `{Table}` in die Zelle, in der die Tabelle beginnen soll. `{Project}`, `{ProjectNumber}`, `{Client}`, `{Schedule}`, `{Date}` und ähnliche Platzhalter werden ausgefüllt."],
+        ["Parameter-Arbeitsmappe", "`<Modell> - Parameters.xlsx`, ein Blatt pro Kategorie mit Familie und Typ, den angehakten Parametern und der Revit-ID. Eine Kategorie ohne einen der angehakten Parameter bekommt kein Blatt. Exemplar- und Typparameter stehen zusammen in der Liste."],
+        ["Einheiten", "Zahlen stehen in den Projekteinheiten, mit der Einheit in der Überschrift, etwa [m]. Trag neue Werte in derselben Einheit ein."],
+        ["Typparameter", "Werden einmal pro Typ geschrieben, wenn alle Zeilen des Typs übereinstimmen. Sonst nennt die Vorschau den Typ als Konflikt und lässt ihn unverändert."]
       ],
       tips: [
-        "Eine Datei aus einem anderen Modell wird beim Einlesen übersprungen, damit ihre IDs keine falschen Elemente treffen.",
+        "Eine Datei aus einem anderen Modell wird beim Einlesen übersprungen, damit ihre IDs keine falschen Elemente treffen. Lokale Kopien eines Zentralmodells zählen als dasselbe Modell.",
         "Zeilen ohne Revit-ID werden übersprungen: Neue Elemente lassen sich aus Excel nicht anlegen.",
+        "Spalten und Zeilen dürfen in Excel verschoben werden. Gelöschte Blätter und Spalten werden gemeldet und nicht angefasst.",
+        "Eine Datei aus englischem Revit lässt sich in deutschem Revit einlesen und umgekehrt.",
+        "Die Parameter-Automatisierung hat unten einen Link [[Excel…]], der die Registerkarte Parameter öffnet.",
         "Schließ die Datei in Excel, bevor du sie noch einmal exportierst."
       ],
       issues: [],
-      shots: []
+      shots: [
+        { src: "schedules-excel.webp", alt: "Der Reiter Bauteillisten mit zwei angehakten Listen für einen bearbeitbaren Export" },
+        { src: "schedules-params.webp", alt: "Der Reiter Parameter: Kategorien und Parameter der aktiven Ansicht kommen in eine Arbeitsmappe" }
+      ]
     },
 
     "batch-export": {
@@ -509,7 +569,7 @@ BB.text.de = {
       ],
       tips: ["IFC exportiert, was die 3D-Ansicht zeigt. Blende vorher aus, was nicht raus soll."],
       issues: [],
-      shots: []
+      shots: [{ src: "batch-export.webp", alt: "Stapelexport mit drei Plänen für PDF und DWG und einer 3D-Ansicht für IFC" }]
     },
 
     "tag-tools": {
@@ -533,9 +593,9 @@ BB.text.de = {
         ["Unbeschriftete beschriften", "Nimmt die Beschriftung der jeweiligen Kategorie und setzt sie dorthin, wo sie keine andere überlappt. [[Führungslinie, wenn verschoben]] ergänzt eine Führungslinie, wenn eine Beschriftung ausweichen musste."],
         ["Stränge beschriften", "Ein Strang läuft durch Bögen und Muffen weiter und endet bei einem Größenwechsel. Eine Beschriftung pro angefangener Länge, kurze Stücke werden übersprungen, und Stränge mit Beschriftung lassen sich überspringen."]
       ],
-      tips: ["Jede Schaltfläche ist ein Rückgängig-Schritt.", "Verwaiste Beschriftungen gehören meist zu Elementen eines verknüpften Modells, das verschoben oder entladen wurde."],
+      tips: ["Jede Schaltfläche ist ein Rückgängig-Schritt.", "Fahr über eine Schaltfläche, um zu sehen, was genau sie verschiebt. Ausrichten bewegt nur die Beschriftungsköpfe, an die äußerste Kante (oder die Mitte) der ausgewählten Beschriftungen; Führungslinien folgen, fixierte Beschriftungen bleiben.","Verwaiste Beschriftungen gehören meist zu Elementen eines verknüpften Modells, das verschoben oder entladen wurde."],
       issues: [],
-      shots: []
+      shots: [{ src: "tag-tools.webp", alt: "Beschriftungen nach Prüfen: 379 unbeschriftete Elemente und 14 überlappende Beschriftungen. Der Tooltip sagt, was Links ausrichten verschiebt" }]
     },
 
     "quick-sections": {
@@ -736,7 +796,10 @@ BB.text.de = {
         "Alle sollten dieselbe BusyBee-Version nutzen. Einstellungen ab Version 1.9 lassen sich in älteren Versionen nicht richtig laden."
       ],
       issues: ["mixed-versions"],
-      shots: [{ src: "pane-de.webp", de: true, alt: "BusyBee-Bereich mit Projekt öffnen und Projekt speichern" }]
+      shots: [
+        { src: "ribbon-de.webp", de: true, alt: "Die Registerkarte BusyBee mit den Gruppen Automatisierung, Prüfung & Qualität, Hilfsmittel und Hilfe" },
+        { src: "pane-de.webp", de: true, alt: "BusyBee-Bereich mit Projekt öffnen und Projekt speichern" }
+      ]
     }
   },
 

@@ -125,7 +125,7 @@ BB.roadmap = [
     en: "Fair score for large models, and trends over time", de: "Faire Bewertung großer Modelle und Verlauf über die Zeit" },
   { id: "qc-rules", phase: "3", tool: "quality-control", status: "done", build: "1.32.0",
     en: "Duplicate, range and allowed-value rules", de: "Regeln für Duplikate, Bereiche und erlaubte Werte" },
-  { id: "qc-excel", phase: "later", tool: "quality-control", status: "planned",
+  { id: "qc-excel", phase: "later", tool: "quality-control", status: "done", build: "1.60.0",
     en: "Excel export of the findings", de: "Excel-Export der Befunde" },
   { id: "opening-families", phase: "later", tool: "clash-detection", status: "planned",
     en: "Opening families and sleeves, also in curved and curtain walls", de: "Durchbruchsfamilien und Hülsen, auch in gekrümmten Wänden und Vorhangfassaden",

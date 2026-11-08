@@ -208,10 +208,10 @@
   function heroStage() {
     var t = T(), de = state.lang === "de";
     var shots = [
-      { cls: "health", img: "health-dashboard.webp", w: 1302, h: 800, link: href("tools", "model-health"), label: toolName("model-health") },
+      { cls: "health", img: "health-dashboard.webp", w: 1287, h: 795, link: href("tools", "model-health"), label: toolName("model-health") },
       { cls: "loin", img: "loin-dashboard.webp", w: 1278, h: 782, link: href("tools", "loin-check"), label: toolName("loin-check") },
-      { cls: "clash", img: de ? "clash-de.webp" : "clash.webp", w: de ? 1248 : 1234, h: de ? 653 : 655, link: href("tools", "clash-detection"), label: toolName("clash-detection") },
-      { cls: "pane", img: de ? "pane-de.webp" : "pane.webp", w: 418, h: 1154, link: href("start"), label: t.home.paneLabel }
+      { cls: "clash", img: "clash.webp", w: 1326, h: 787, link: href("tools", "clash-detection"), label: toolName("clash-detection") },
+      { cls: "pane", img: de ? "pane-de.webp" : "pane.webp", w: 445, h: 1141, link: href("start"), label: t.home.paneLabel }
     ];
     return '<div class="stage" id="stage" role="group" aria-label="' + esc(t.home.shotsLabel) + '">' + shots.map(function (s) {
       return '<a class="shot ' + s.cls + '" href="' + s.link + '"><img src="assets/img/' + s.img + '" alt="" width="' + s.w + '" height="' + s.h + '" decoding="async">' +
@@ -323,7 +323,7 @@
     return '<div class="wrap"><div class="page-head"><h1>' + esc(s.title) + '</h1><p class="lead">' + esc(s.lead) + "</p></div>" +
       '<div class="start-grid section" style="border:0">' +
         "<div>" + eb("steps") + '<ol class="steps">' + steps + "</ol></div>" +
-        '<figure class="figure start-pane"><img src="assets/img/' + (state.lang === "de" ? "pane-de.webp" : "pane.webp") + '" alt="' + esc(T().home.paneAlt) + '" loading="lazy" width="418" height="1154"></figure>' +
+        '<figure class="figure start-pane"><img src="assets/img/' + (state.lang === "de" ? "pane-de.webp" : "pane.webp") + '" alt="' + esc(T().home.paneAlt) + '" loading="lazy" width="445" height="1141"></figure>' +
       "</div>" +
       '<section class="section">' + eb("good") + "<h2>" + esc(s.goodToKnow) + '</h2><ul class="tips">' + tips + "</ul></section></div>";
   }
@@ -369,8 +369,11 @@
     if (!d || !m) return '<div class="wrap docs">' + sidebar() + '<div class="article"><p class="empty">' + esc(t.ui.notFound) + "</p></div></div>";
     var idx = BB.tools.indexOf(m), prev = BB.tools[idx - 1], next = BB.tools[idx + 1];
     var shots = (d.shots || []).map(function (s, i) {
-      var cap = (s.old ? t.ui.oldShot + " " : "") + (s.de ? t.ui.captionDe : t.ui.caption);
-      return '<figure class="figure"><a href="assets/img/' + s.src + '" data-zoom="assets/img/' + s.src + '"><img src="assets/img/' + s.src + '" alt="' + esc(s.alt) + '" loading="' + (i ? "lazy" : "eager") + '"></a>' +
+      var cap = s.clip ? t.ui.clipCaption : (s.old ? t.ui.oldShot + " " : "") + (s.de ? t.ui.captionDe : t.ui.caption);
+      var img = '<img src="assets/img/' + s.src + '" alt="' + esc(s.alt) + '" loading="' + (i ? "lazy" : "eager") + '">';
+      // A clip is an animated webp; people who ask for reduced motion get its still frame
+      if (s.clip) img = '<picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/img/' + s.src.replace(".webp", "-still.webp") + '">' + img + "</picture>";
+      return '<figure class="figure' + (s.clip ? " clip" : "") + '"><a href="assets/img/' + s.src + '" data-zoom="assets/img/' + s.src + '">' + img + "</a>" +
         "<figcaption>" + esc(s.alt) + ". " + esc(cap) + "</figcaption></figure>";
     });
     var list = function (arr) { return arr && arr.length ? "<ul>" + arr.map(function (x) { return "<li>" + fmt(x) + "</li>"; }).join("") + "</ul>" : ""; };

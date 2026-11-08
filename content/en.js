@@ -62,7 +62,8 @@ BB.text.en = {
     notFound: "That page doesn't exist. Pick a tool from the list.",
     caption: "Screenshot from Revit 2026 with BusyBee set to English. Category names appear in the Revit language. Click to see it full size.",
     close: "Close",
-    oldShot: "This screenshot is from version 1.18. The window now has more options, described below."
+    oldShot: "This screenshot is from version 1.18. The window now has more options, described below.",
+    clipCaption: "Short clip from Revit 2026 with the Snowdon Towers sample. The yellow ring marks a click. Click to see it full size."
   },
 
   home: {
@@ -210,10 +211,14 @@ BB.text.en = {
       tips: [
         "Copy a category group with the copy icon to start a similar rule set.",
         "The write uses the rules as they were when you clicked Start, so editing them while the preview is open doesn't change what gets written.",
-        "Hover over a value box for a short help text on formulas."
+        "Hover over a value box for a short help text on formulas.",
+        "To change many values by hand instead, click [[Excel…]] in the footer: it opens the Parameters tab of Schedules in Excel."
       ],
       issues: ["type-param-writes", "english-messages", "reports-english"],
-      shots: [{ src: "param-rules.webp", alt: "Parameter Automation with an IF and an ELIF rule for air terminals" }]
+      shots: [
+        { src: "param-rules.webp", alt: "Parameter Automation writes System Type to Comments: IF Supply Air gives SA-{Level}, ELIF Return Air gives RA-{Level}" },
+        { src: "param-preview.webp", alt: "The preview lists every duct with the value the rule will write, such as SA-L3 and RA-L3" }
+      ]
     },
 
     "spatial-parameters": {
@@ -256,7 +261,7 @@ BB.text.en = {
       shots: [
         { src: "spatial-room.webp", alt: "Spatial Parameters on the Room Mapping tab" },
         { src: "spatial-grid.webp", alt: "Spatial Parameters on the Grid Mapping tab with the [X-Grid]-[Y-Grid] format" },
-        { src: "level-mapping.webp", old: true, alt: "The former Level Mapping window with two elevation ranges for ducts and air terminals" }
+        { src: "level-mapping.webp", alt: "Level Mapping with three elevation ranges that write Garage, Retail and Lobby to Comments" }
       ]
     },
 
@@ -293,8 +298,8 @@ BB.text.en = {
       ],
       issues: ["color-repeat"],
       shots: [
-        { src: "color-by-param.webp", alt: "Color by Parameter with 4,546 elements loaded and Category chosen" },
-        { src: "legend.webp", alt: "Colour legend listing categories with element counts" }
+        { src: "color-by-param.webp", alt: "Ducts and air terminals on L3 coloured by System Type, with the legend in the window" },
+        { src: "color-by-param-clip.webp", clip: true, alt: "Picking a parameter colours the view at once; Reset gives the elements their normal look back" }
       ]
     },
 
@@ -316,6 +321,7 @@ BB.text.en = {
         "Under [[3. Clash Mode & Tolerance]], pick [[Hard Clash]] or [[Clearance (Soft)]] and set the distance in mm.",
         "Click [[Start]]. The status bar shows how many clashes are new, still there and resolved since the last run with the same settings, and how long the run took.",
         "Click a result to see both elements. Use [[Zoom 3D]], [[Isolate Elements]], [[3D Bounding Box]] or [[Color Elements]] to look at it. New clashes have a blue NEW badge, and [[New only]] shows just those.",
+        "Click [[Show in view]] to put a red triangle at every listed clash in the view. Click a triangle to jump to that clash in the list. The triangles follow you into other plans, sections and 3D views until you click [[Hide markers]].",
         "Press Space or click [[Approve]] for clashes that are fine. Add a note if it helps. [[Hide Approved]] removes them from the list.",
         "Share the result with [[Export BCF]] or [[Export CSV]], or keep it with [[Save Clashes]]. To keep the setup for next time, type a name in [[Test]] and click Save.",
         "To cut openings, filter the list to the clashes you want and click [[Place Openings]]."
@@ -326,7 +332,9 @@ BB.text.en = {
         ["All Linked Models", "In the clashing model list. Checks the primary elements against every loaded link in one run. The lists include categories that only a link has."],
         ["Test", "Named sets of categories, models, mode, tolerance and scope, saved next to the model in `<Model>.BusyBeeClashTests.json`, so the whole team sees the same tests. They work in English and German Revit."],
         ["NEW, still there, resolved", "Each run is compared with the previous run that used the same settings in the same view. The N resolved link lists the clashes that are gone. Cancelled runs and runs on selected elements only aren't compared."],
-        ["Export BCF", "Writes the clashes the list shows as a BCF 2.1 file, one topic per clash with a camera view and both elements. Search, the category filter, Hide Approved and New only decide what goes in. Approved clashes are Closed, and exporting again updates the same topics instead of adding copies."],
+        ["Export BCF", "Writes the clashes the list shows as a BCF 2.1 file, one topic per clash with a camera view and both elements. Search, the category filter, Hide Approved and New only decide what goes in. Approved clashes are Closed, and exporting again updates the same topics instead of adding copies. Open the file in the [[BCF Viewer]] to check it."],
+        ["Snapshots in BCF export", "In the settings (gear icon), off by default. Gives every clash in the BCF a close-up picture of just the two elements, in green and red with thin lines, so BIMcollab, Solibri and the BCF Viewer show it. About a second per clash, with a Cancel button that keeps the pictures made so far. The temporary views are removed again and nothing goes into the undo list."],
+        ["Show in view", "Red warning triangles on top of everything, in plans, sections and 3D views (not perspective). Hover one to see both elements, click it to select the clash in the list. They hide while you pan, zoom or orbit and come back as soon as the view stands still. They are drawn on screen only, so nothing is added to the model. Clashes hidden by the list's filter get no triangle."],
         ["Place Openings", "Cuts a rectangular opening for every clash in the list where a duct, pipe, cable tray or conduit passes a wall or floor of the open model. The MEP element can be in a link. The opening is the element's size plus the clearance on each side. Approved clashes are skipped, an opening already there isn't cut twice, new openings note the clash in their Comments, and one Ctrl+Z removes all openings of one click."],
         ["Opening clearance (mm)", "In the settings (gear icon). The space between the element and the edge of the opening, 50 mm by default."],
         ["Group", "Flat, by primary element, by categories, by level or by system."],
@@ -340,7 +348,10 @@ BB.text.en = {
         "Each undo button reverses its own action: Unisolate, Reset Section Box, Reset Colors. Closing the window also removes its isolation."
       ],
       issues: ["openings-limits", "linked-primary", "clash-one-link", "clash-no-bcf", "revit-busy"],
-      shots: [{ src: "clash.webp", alt: "Clash Detection showing ducts against floors in the linked architecture model", old: true }]
+      shots: [
+        { src: "clash.webp", alt: "Clash Detection after a run: ducts against floors and beams in the linked structural model" },
+        { src: "clash-markers.webp", clip: true, alt: "Show in view puts a triangle at each clash in the 3D view; clicking one selects that clash in the list" }
+      ]
     },
 
     "model-health": {
@@ -379,9 +390,11 @@ BB.text.en = {
       ],
       issues: ["health-score-size", "health-low-severity"],
       shots: [
-        { src: "health-dashboard.webp", alt: "Model Health dashboard with score, warnings, unused families and bloat" },
+        { src: "health-dashboard.webp", alt: "Model Health dashboard with the overall grade and a card per area" },
         { src: "health-warnings.webp", alt: "Model Health warnings grouped by type with element counts" },
-        { src: "health-families.webp", alt: "Unused families list with purge buttons" }
+        { src: "health-families.webp", alt: "Unused families list with purge buttons" },
+        { src: "health-views.webp", alt: "The Views tab: views not on sheets and views without a template" },
+        { src: "health-links.webp", alt: "The Links tab with each linked model, its status and its path type" }
       ]
     },
 
@@ -402,6 +415,7 @@ BB.text.en = {
         "Click [[Add Rule to Template]]. Tick the rules you want to run.",
         "Click [[Start]]. Findings appear on the right, grouped by category.",
         "Click a finding to select the element, or double-click to zoom to it. Use [[Isolate Issues]] to see only the failures.",
+        "Click [[Excel…]] to save the findings as a workbook for the team, or for your own to-do list.",
         "Click [[Reset Highlights]] when you're done. Save the rules with [[Save Template]]."
       ],
       settings: [
@@ -412,7 +426,8 @@ BB.text.en = {
         ["Allowed values only", "Fails unless the value is one of a list separated by semicolons, such as `EI30; EI60; EI90`. Case doesn't matter."],
         ["Matches Regex", "Fails unless the value matches a pattern, such as `^W-[0-9]{3}$` for W-001."],
         ["Mismatched Instance vs Type", "Fails when the instance and type values of a parameter differ."],
-        ["Color-code view by QA status", "In the settings (gear icon). Colours passing elements too."]
+        ["Color-code view by QA status", "In the settings (gear icon). Colours passing elements too."],
+        ["Excel…", "Saves the last check as .xlsx: a Summary sheet with one row per rule (issues, elements and a total) and a Findings sheet with one row per finding (category, element ID, element, rule, parameter, value, problem), with filters and a frozen heading. No Excel licence needed."]
       ],
       tips: [
         "Pick specific categories. With All Categories, elements that don't have the parameter at all, such as model lines, are reported as missing.",
@@ -420,7 +435,7 @@ BB.text.en = {
         "Reset restores the colours elements had before, including your own."
       ],
       issues: ["qc-all-categories"],
-      shots: [{ src: "qc.webp", alt: "Quality Control dashboard with rules, compliance score and findings" }]
+      shots: [{ src: "qc-excel.webp", alt: "Quality Control after a run: 307 ducts without a comment, highlighted in red in the view. Excel… saves the findings" }]
     },
 
     "loin-check": {
@@ -456,34 +471,79 @@ BB.text.en = {
       ]
     },
 
+    "bcf-viewer": {
+      name: "BCF Viewer",
+      tagline: "Open BCF issues from any program and find their elements in your model.",
+      summary: "Opens BCF files from BusyBee, Solibri, BIMcollab, Navisworks and other programs (BCF 2.0, 2.1 and 3.0). Each issue's elements are found by their IFC GUID in this model and in every loaded link, so it works even when the other company's base points differ. Select, zoom, isolate or box them, or go to the issue's viewpoint: the cameras are aligned to your model automatically.",
+      when: [
+        "A coordinator sends you issues from Solibri or BIMcollab and you want to fix them in Revit.",
+        "You check a clash BCF from Clash Detection before you hand it on.",
+        "You go through the open issues of a coordination meeting one by one."
+      ],
+      steps: [
+        "Open [[BCF Viewer]] from the Audit section of the panel or the ribbon.",
+        "Click [[Open BCF...]] or drop a `.bcf` or `.bcfzip` file on the window. The last file opens again next time.",
+        "The list shows each issue's number, title, status, priority, author and date, and how many of its elements were found: green all, orange some, grey none. Search and the [[All]] / [[Open]] / [[Closed]] filter narrow it down.",
+        "Click an issue. Its snapshot, fields, description, elements and comments show on the right, and its elements are selected and zoomed to. Click the snapshot to see it large.",
+        "Use [[Select]], [[Zoom]], [[Isolate]] or [[3D box]]. They work on the elements you picked in the element list, or else on all elements of the picked issues. [[Reset view]] ends the isolation and gives back the section box the view had.",
+        "Click [[Go to viewpoint]], or double-click the issue, to see it from the issue's camera in your own 3D view, `BusyBee BCF - <your name>`.",
+        "If a viewpoint is still off, select the right element in Revit and click [[Calibrate]]. Every viewpoint of the file moves with it."
+      ],
+      settings: [
+        ["Elements", "Found by IFC GUID in the open model and every loaded link, including IFC links. A linked element is shown with its link's name, selected inside the link, and isolating it isolates the link."],
+        ["Coordinates", "Automatic tries the internal origin, the project base point, the survey point and shared coordinates, with and without true north, then fits the remaining shift to the issues whose elements were found. The line under it says which frame was chosen and how well it fits, and turns orange when the fit is rough. You can pick the frame by hand."],
+        ["Calibrate / Reset calibration", "Takes the picked issue's camera to look at the selected element and moves all viewpoints of the file with it. Remembered per BCF file until you reset it."],
+        ["Zoom to the elements when an issue is clicked", "On by default. Untick it to browse the issues without moving the view."],
+        ["Search", "Covers title, description, status, labels, people and comments. Status names in English and German both count."]
+      ],
+      tips: [
+        "Zoom and Isolate need a view that can show the elements. From a sheet or a schedule, the viewer switches to your own 3D view, `{3D - name}` in a workshared model.",
+        "Switch to another model with the window open and the elements are found again for that model.",
+        "Clash Detection's BCF export with [[Snapshots in BCF export]] switched on gives every issue a picture here."
+      ],
+      issues: [],
+      shots: [{ src: "bcf-viewer.webp", alt: "BCF Viewer with a clash issue, its snapshot and the elements it names" }]
+    },
+
     "schedules-excel": {
       name: "Schedules in Excel",
-      tagline: "Schedules out to Excel, edited there, and back into Revit with a preview.",
-      summary: "Exports Revit schedules to .xlsx files, without Excel installed. \"Editable\" gives one row per element with its Revit ID, so you can change values in Excel and import them back. \"As shown\" keeps grouping, headings and totals for quantity lists. A company template with your logo and header can be filled in.",
+      tagline: "Schedules and parameters out to Excel, edited there, and back into Revit with a preview.",
+      summary: "Two tabs. [[Schedules]] exports Revit schedules to .xlsx files. \"Editable\" gives one row per element with its Revit ID, so you can change values in Excel and import them back; \"As shown\" keeps grouping, headings and totals for quantity lists, also in your company template. [[Parameters]] needs no schedule at all: pick the selection, the active view or the whole model, tick categories and parameters, and get one workbook with a sheet per category. Both import back through the same button, with a preview first. No Excel licence needed.",
       when: [
         "A colleague or client fills in door or room data in Excel.",
         "You need quantities in the company layout for a cost estimate.",
-        "You want to fix many values at once with Excel's fill and search tools."
+        "You want to fix many values at once with Excel's fill and search tools.",
+        "You want to check or fill parameters of a few categories without building a schedule first."
       ],
       steps: [
-        "Open [[Schedules in Excel]] and tick the schedules.",
+        "Open [[Schedules in Excel]]. On the [[Schedules]] tab, tick the schedules.",
         "Choose [[Editable, to import back]] or [[As shown in Revit, for quantities]].",
         "Optionally pick an Excel template, choose a folder and click [[Export … to Excel]].",
+        "Or open the [[Parameters]] tab: choose [[Selection]], [[Active view]] or [[Whole model]], tick categories and parameters, and click [[Export … elements to Excel]].",
         "Change values in the yellow columns. Grey columns are for reading only. Keep the headings and the Revit ID column.",
-        "Click [[Import from Excel…]] and pick the files. BusyBee shows every change first; [[Write changes]] writes them in one undo step."
+        "Click [[Import from Excel…]] and pick one or more files. BusyBee shows every change first; [[Write changes]] writes them in one undo step."
       ],
       settings: [
         ["Editable, to import back", "One row per element with its Revit ID. Calculated values, counts and room fields are left out because they can't be written back."],
         ["As shown in Revit, for quantities", "Grouping, headings and totals as in the schedule, with numbers as real Excel numbers. Can't be imported."],
-        ["Excel template", "An .xlsx with your logo and header. Type `{Table}` in the cell where the table should start. `{Project}` and similar placeholders are filled in."]
+        ["Excel template", "An .xlsx with your logo and header. Type `{Table}` in the cell where the table should start. `{Project}`, `{ProjectNumber}`, `{Client}`, `{Schedule}`, `{Date}` and similar placeholders are filled in."],
+        ["Parameters workbook", "`<model> - Parameters.xlsx`, one sheet per category with Family and type, the ticked parameters and the Revit ID. A category without any of the ticked parameters gets no sheet. Instance and type parameters are listed together."],
+        ["Units", "Numbers are in the project's units, with the unit in the heading, such as [m]. Type a new value in the same unit."],
+        ["Type parameters", "Written once per type, when all rows of that type agree. If they don't, the preview lists the type as a conflict and leaves it alone."]
       ],
       tips: [
-        "A file exported from another model is skipped on import, so its IDs can't hit the wrong elements.",
+        "A file exported from another model is skipped on import, so its IDs can't hit the wrong elements. Local copies of a central model count as the same model.",
         "Rows without a Revit ID are skipped: new elements can't be made from Excel.",
+        "Columns and rows can be moved in Excel. Deleted sheets and columns are reported and left alone.",
+        "A file exported from English Revit imports in German Revit, and the other way round.",
+        "Parameter Automation has an [[Excel…]] link in its footer that opens the Parameters tab.",
         "Close the file in Excel before you export it again."
       ],
       issues: [],
-      shots: []
+      shots: [
+        { src: "schedules-excel.webp", alt: "The Schedules tab with two schedules ticked for an editable export" },
+        { src: "schedules-params.webp", alt: "The Parameters tab: categories and parameters of the active view go to one workbook" }
+      ]
     },
 
     "batch-export": {
@@ -508,7 +568,7 @@ BB.text.en = {
       ],
       tips: ["IFC exports what the 3D view shows, so hide what shouldn't go out first."],
       issues: [],
-      shots: []
+      shots: [{ src: "batch-export.webp", alt: "Batch Export with three sheets for PDF and DWG and one 3D view for IFC" }]
     },
 
     "tag-tools": {
@@ -532,9 +592,9 @@ BB.text.en = {
         ["Tag untagged", "Uses each category's tag and places it where it overlaps no other tag. [[Leader when moved away]] adds a leader when a tag had to move."],
         ["Tag runs", "A run continues through elbows and couplings and ends at a size change. One tag per started length, short segments are skipped, and runs that already have a tag can be skipped."]
       ],
-      tips: ["Every button is one undo step.", "Orphaned tags are usually tags of elements in a linked model that moved or was unloaded."],
+      tips: ["Every button is one undo step.", "Hover a button to see exactly what it moves. Align only moves the tag heads, to the outermost edge (or the centre) of the selected tags; leaders follow and pinned tags stay.", "Orphaned tags are usually tags of elements in a linked model that moved or was unloaded."],
       issues: [],
-      shots: []
+      shots: [{ src: "tag-tools.webp", alt: "Tag Tools after Check: 379 untagged elements and 14 overlapping tags. The tooltip says what Align Left moves" }]
     },
 
     "quick-sections": {

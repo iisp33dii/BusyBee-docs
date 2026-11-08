@@ -14,6 +14,58 @@ window.BB = window.BB || {};
 
 BB.releases = [
   {
+    version: "1.60.0",
+    date: "2026-11-09",
+    title: {
+      en: "BCF Viewer, clash markers and parameters in Excel",
+      de: "BCF-Viewer, Kollisionsmarkierungen und Parameter in Excel"
+    },
+    summary: {
+      en: "A new BCF Viewer opens issues from Solibri, BIMcollab and other programs and finds their elements in your model and its links. Clash Detection marks its clashes in the view and can put a picture of each clash into the BCF. Schedules in Excel gained a Parameters tab that needs no schedule, and Quality Control saves its findings to Excel. Plus themed dialogs, more German texts and a faster pane.",
+      de: "Ein neuer BCF-Viewer öffnet Themen aus Solibri, BIMcollab und anderen Programmen und findet ihre Elemente im Modell und in seinen Verknüpfungen. Die Kollisionsprüfung markiert ihre Kollisionen in der Ansicht und kann jeder Kollision im BCF ein Bild mitgeben. Bauteillisten in Excel hat eine Registerkarte Parameter, die keine Bauteilliste braucht, und die Qualitätskontrolle speichert ihre Befunde in Excel. Dazu Dialoge im BusyBee-Design, mehr deutsche Texte und ein schnelleres Panel."
+    },
+    highlights: [
+      { type: "new", tool: "bcf-viewer",
+        en: "BCF Viewer: open BCF 2.0, 2.1 and 3.0 files, find each issue's elements by IFC GUID in the model and its links, select, zoom, isolate or box them, and go to the issue's viewpoint, aligned to your model automatically. Calibrate on one element when another office's coordinates are far off.",
+        de: "BCF-Viewer: BCF-2.0-, 2.1- und 3.0-Dateien öffnen, die Elemente jedes Themas per IFC-GUID im Modell und seinen Verknüpfungen finden, auswählen, hinzoomen, isolieren oder in einen 3D-Bereich setzen und zum Ansichtspunkt springen, automatisch an dein Modell angeglichen. Liegen die Koordinaten eines anderen Büros weit daneben, kalibrierst du an einem Element." },
+      { type: "new", tool: "clash-detection",
+        en: "Show in view: red triangles at every listed clash in plans, sections and 3D views, on top of everything. Click one to find the clash in the list. They follow you into other views until you hide them.",
+        de: "In Ansicht zeigen: rote Dreiecke an jeder gelisteten Kollision in Grundrissen, Schnitten und 3D-Ansichten, über allem anderen. Ein Klick findet die Kollision in der Liste. Sie folgen dir in andere Ansichten, bis du sie ausblendest." },
+      { type: "new", tool: "clash-detection",
+        en: "Snapshots in the BCF export, if you switch them on: a close-up of each clash with just its two elements in green and red, for BIMcollab, Solibri and the BCF Viewer.",
+        de: "Bilder im BCF-Export, wenn du sie einschaltest: eine Nahaufnahme jeder Kollision mit nur ihren beiden Elementen in Grün und Rot, für BIMcollab, Solibri und den BCF-Viewer." },
+      { type: "new", tool: "schedules-excel",
+        en: "Parameters in Excel: export the parameters of the selection, the view or the whole model, one sheet per category, change them in Excel and import them back with a preview. Parameter Automation has an Excel… link to it.",
+        de: "Parameter in Excel: die Parameter der Auswahl, der Ansicht oder des ganzen Modells exportieren, ein Blatt pro Kategorie, in Excel ändern und mit Vorschau zurücklesen. Die Parameter-Automatisierung hat einen Link Excel… dorthin." },
+      { type: "new", tool: "quality-control",
+        en: "Quality Control saves its findings to Excel: a summary per rule and one row per finding, with filters.",
+        de: "Die Qualitätskontrolle speichert ihre Befunde in Excel: eine Übersicht pro Regel und eine Zeile pro Befund, mit Filtern." },
+      { type: "improved", tool: "tag-tools",
+        en: "Every Tag Tools button explains in its tooltip what it moves and where.",
+        de: "Jede Schaltfläche der Beschriftungswerkzeuge erklärt in ihrem Tooltip, was sie wohin verschiebt." },
+      { type: "improved", tool: "core",
+        en: "Every confirmation uses the BusyBee dialog in light and dark, the remaining English texts are German too, the theme button simply switches between light and dark, and the pane reacts to the first click. Small tools are now called Utilities.",
+        de: "Jede Rückfrage nutzt den BusyBee-Dialog in Hell und Dunkel, die restlichen englischen Texte gibt es auch auf Deutsch, die Design-Schaltfläche wechselt einfach zwischen Hell und Dunkel, und das Panel reagiert auf den ersten Klick. Die kleinen Helfer heißen jetzt Hilfsmittel." },
+      { type: "fixed", tool: "core",
+        en: "The pane follows the selection right away, Coloured tabs stop looking when a Revit update moves the tabs, and BusyBee lets go of all its Revit events when Revit closes.",
+        de: "Das Panel folgt der Auswahl sofort, Farbige Reiter hören auf zu suchen, wenn ein Revit-Update die Reiter verschiebt, und BusyBee meldet sich beim Schließen von Revit von allen Revit-Ereignissen ab." }
+    ],
+    builds: [
+      ["1.60.0", "Quality Control in Excel, clearer Tag Tools"],
+      ["1.56.5", "Clash markers in every view"],
+      ["1.56.4", "Show in view on German systems, thin snapshot lines"],
+      ["1.56.2", "Clash markers on top and clickable"],
+      ["1.56.0", "Clash markers in the view, closer snapshots"],
+      ["1.55.0", "Clash BCF export with snapshots"],
+      ["1.54.3", "BCF Viewer reads more files"],
+      ["1.54.2", "Theme button: light or dark"],
+      ["1.54.1", "Pane clicks, Utilities"],
+      ["1.54.0", "BCF Viewer"],
+      ["1.53.0", "Parameters in Excel"],
+      ["1.52.0", "Themed dialogs and translated leftovers"]
+    ]
+  },
+  {
     version: "1.51.0",
     date: "2026-11-07",
     title: {
