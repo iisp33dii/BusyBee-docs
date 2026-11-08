@@ -262,26 +262,35 @@ BB.text.en = {
 
     "color-by-parameter": {
       name: "Color by Parameter",
-      tagline: "Colour elements by value, with a live legend.",
-      summary: "Groups the selected elements by the value of one parameter and gives each value its own colour in the active view. A legend window lists every value with its count and lets you isolate or select by value.",
+      tagline: "Colour the selection or the whole view by a parameter, with the legend in the same window.",
+      summary: "Gives every value of one parameter its own colour in the active view, for the selected elements or for everything the view shows. Numbers can be grouped into ranges and run from blue (low) to red (high). The legend sits in the same window: it lists every value with its count, selects and isolates by value, and lets you pick your own colours. Save a colouring as a preset, or turn the legend into Revit view filters that stay in the project.",
       when: [
         "See at a glance which elements share a system, a phase or a fire rating.",
-        "Spot gaps: empty values get their own colour too.",
-        "Show velocity or size bands with colour ranges."
+        "Spot gaps: empty values and elements without the parameter get their own row.",
+        "Show velocity, size or area bands with ranges.",
+        "Keep a colouring in the project for drawings and colleagues, as view filters."
       ],
       steps: [
-        "Select elements in Revit, then click [[Load Selection]].",
+        "Under [[Color]], choose [[Selection]] or [[Whole view]]. The window reads the selection or the view when it opens; [[↻]] reads it again. For the whole view, tick categories to narrow it down.",
         "Choose a [[Parameter]]. Tick [[Show all parameters (unshared)]] to see more than the common ones.",
-        "For number bands, tick [[Color Ranges]] and enter the [[Boundaries]].",
-        "Click [[Start]]. The legend opens.",
-        "In the legend, click a value (Ctrl or Shift for several) and use [[Isolate]] or [[Deisolate]].",
-        "Click [[Reset Overrides]] to bring back the colours the view had before."
+        "For a number parameter, choose [[One color per value]] or [[Ranges]]: a number of equal steps, or [[Own limits]] such as `2,5; 5; 10` in the units Revit shows.",
+        "Click [[Color]]. The settings fold into one line and the legend fills the window. Click the line ([[Change]]) to change them.",
+        "In the legend, click rows to select their elements (Ctrl or Shift for several) and use [[Isolate]] or [[Deisolate]]. Click a swatch to give a value your own colour.",
+        "To keep the colouring, type a name under [[Preset]] and click [[Save]], or click [[Create view filters]].",
+        "Click [[Reset]] to give the elements the look they had before."
       ],
       settings: [
-        ["Load Selection", "Takes the current Revit selection. You can also start from the legend."],
-        ["Reset Overrides", "Restores each element's previous colours, including ones you set by hand. After a Revit restart BusyBee has no record and asks before clearing the view."]
+        ["Colours", "Text values get clearly different colours, and the same value gets the same colour next time. Numbers run from blue to red. A colour you pick yourself is marked ✎; [[Automatic color]] sets it back."],
+        ["Legend order", "Low to high or A to Z, then (empty), then (no such parameter) for elements that don't have it."],
+        ["Preset", "Keeps the parameter, the grouping and every colour under a name. Pick it later to colour the current scope the same way. The same name replaces the old preset."],
+        ["Create view filters", "Makes a Revit view filter for each legend row, with its colour, and adds them to the view. They are named `BusyBee - <parameter> - <value>`, follow later changes of the values and can be edited in Visibility/Graphics → Filters. Running it again updates them."],
+        ["Reset", "Restores each element's previous colours, including ones you set by hand. After a Revit restart BusyBee has no record and asks before clearing the view."]
       ],
-      tips: ["The Level Mapping tab of Spatial Parameters has its own Color by Value button that opens the same legend."],
+      tips: [
+        "If the view has a view template that controls filters, add the filters to the template instead, or untick Filters there.",
+        "Some categories can't be filtered by every parameter. Those elements keep their element colour, and BusyBee says how many.",
+        "The Level Mapping tab of Spatial Parameters has a Color by Value button that opens this window with its legend."
+      ],
       issues: ["color-repeat"],
       shots: [
         { src: "color-by-param.webp", alt: "Color by Parameter with 4,546 elements loaded and Category chosen" },
@@ -336,28 +345,37 @@ BB.text.en = {
 
     "model-health": {
       name: "Model Health Check",
-      tagline: "Score the model and clean up warnings, unused families and bloat.",
-      summary: "Scans the whole project and gives it a score from 0 to 100. Three tabs let you go through the warnings, purge unused families and types, and remove CAD imports, in-place families and unplaced rooms.",
+      tagline: "Score the model, fix common warnings, and clean up families, views and links.",
+      summary: "Scans the whole project and gives it a score from 0 to 100 that is fair to large models, with a trend since the last scan. Tabs take you through the warnings, with one-click fixes for common ones, unused families and types, CAD imports, in-place families and unplaced rooms, views and templates that nobody uses, and links and coordinates.",
       when: [
         "Before handing over a model or uploading it to a shared environment.",
-        "When a model feels slow or the file keeps growing."
+        "When a model feels slow or the file keeps growing.",
+        "To tidy views, sheets and templates before issuing drawings.",
+        "To check that links are pinned, on their own worksets and placed by shared coordinates."
       ],
       steps: [
         "Open the tool. The scan starts on its own; [[Run Audit]] scans again.",
-        "On [[Dashboard]], read the score and the four totals. Click [[Inspect Warnings]] or [[Purge Manager]] to jump to the details.",
-        "On [[Warnings]], filter by Critical, Medium or Low. Open a group to see the elements and select, zoom, isolate or box them.",
+        "On [[Dashboard]], read the score, the change since the last scan and the four totals. Hover over the score to see what each area took off. [[Inspect Warnings]] and [[Purge Manager]] jump to the details.",
+        "On [[Warnings]], filter by Critical, Medium or Low. Open a group to see the elements and select, zoom, isolate or box them. Groups BusyBee can fix have a yellow button in their header.",
         "On [[Unused & Families]], keep [[Unused Only]], tick what you want to remove and click [[Purge Selected]].",
-        "On [[Model Cleanliness]], delete imported CAD, find in-place families and purge unplaced rooms.",
+        "On [[Model Cleanliness]], delete imported CAD, open linked DWGs in AutoCAD, find in-place families and purge unplaced rooms.",
+        "On [[Views]], click [[Check views]]. Tick what you don't need and click [[Delete ticked]], or give views without a template one with [[Assign template]].",
+        "On [[Links]], click [[Check links]]. Tick links and use [[Pin]], [[Reload]], [[Own workset]] or [[Overlay]] to fix them.",
         "Share the result with [[Export HTML Report]], [[Export CSV Summary]] or [[Copy Summary]]."
       ],
       settings: [
-        ["Score", "Starts at 100. Each warning costs points (1.5 critical, 0.75 medium, 0.2 low), each imported CAD 4, each in-place family 2.5, each unplaced room 1, plus a penalty when more than 30% of families are unused."],
+        ["Score", "Problems are weighed against the size of the model: warnings and in-place families per 1,000 model elements, unplaced rooms as a share of all rooms, unused families above 30 %, and each imported CAD file. Each area can only take off so much. Grades: A+ from 90, A from 80, B from 70, C from 50, D from 35."],
+        ["Trend", "Every scan is kept next to the model in `<Model>.BusyBeeHealthHistory.json`, so the team shares it. The score card shows the change since the previous scan and a small line of the last scores."],
+        ["Warning fixes", "[[Delete copies]] for identical instances in the same place, [[Unjoin]] for elements joined but not touching, [[Move tags into rooms]] for room tags outside their room, and [[Make unique]] for duplicate marks and room numbers, with a preview of the new values. Each fix asks first and lists what it left alone."],
+        ["Views", "Finds views not on a sheet, unused view templates and filters, views without a template, copy names such as \"… Copy 1\", empty sheets, and names that fit none of your patterns, such as `EG*; OG*; Schnitt *`."],
+        ["Links", "Shows the project base point, survey point and true north, and finds links whose file is missing or not loaded, not pinned, without their own workset, not placed by shared coordinates, far from the origin, placed twice or attached instead of overlaid. It also notices when the coordinates moved since [[Remember coordinates]]."],
         ["Severity", "Based on Revit's warning type, not its text, so it's the same in English and German Revit."],
         ["Include System Family Types", "Also lists unused wall, floor and other system types."]
       ],
       tips: [
-        "Purge and delete always ask first, and each is one undo step.",
-        "Linked CAD is fine and isn't counted. Only imported CAD is."
+        "Purges, deletes and fixes always ask first, and each is one undo step. The model is scanned again afterwards.",
+        "Linked CAD is fine and isn't counted. Only imported CAD is.",
+        "A scan within 5 minutes of the previous one replaces it, so the scan after a purge doesn't add a point to the trend."
       ],
       issues: ["health-score-size", "health-low-severity"],
       shots: [
@@ -370,14 +388,16 @@ BB.text.en = {
     "quality-control": {
       name: "Quality Control",
       tagline: "Check parameters against your rules and highlight what fails.",
-      summary: "Build a template of rules, such as door marks must be filled or sheet numbers must match a pattern. BusyBee checks the elements in the active view, scores compliance, colours the failures and lists them so you can fix them one by one.",
+      summary: "Build a template of rules, such as door marks must be filled and unique, heights must lie in a range, or fire ratings must be one of a list. BusyBee checks the elements in the active view, scores compliance, colours the failures and lists them so you can fix them one by one.",
       when: [
         "Before issuing drawings: are all marks, numbers and fire ratings filled?",
+        "Find duplicate door or room numbers.",
+        "Check sizes against limits, or values against an allowed list.",
         "Check naming against an office standard with a pattern."
       ],
       steps: [
         "Click [[+ Configure New Rule]]. Give it a [[Rule Name]] and pick the categories.",
-        "Choose the [[Target Parameter Name]] and an [[Evaluation Condition]].",
+        "Choose the [[Target Parameter Name]] and an [[Evaluation Condition]]. For a pattern, a range or a list of allowed values, fill in the box that appears.",
         "Pick a highlight colour and keep [[Highlight failures in view]] ticked.",
         "Click [[Add Rule to Template]]. Tick the rules you want to run.",
         "Click [[Start]]. Findings appear on the right, grouped by category.",
@@ -387,12 +407,16 @@ BB.text.en = {
       settings: [
         ["Value required (flag if empty)", "Fails when the parameter is empty."],
         ["Must be empty (flag if filled)", "Fails when the parameter has a value."],
+        ["Unique value (flag duplicates)", "Fails when another checked element has the same value, such as two doors with the same number. Case and spaces don't matter. Each finding says how many elements share the value."],
+        ["Number in range", "Fails when the value is outside a range written as `2000..2500`, in the units Revit shows. Leave one side open for only a lower or upper limit: `2000..` or `..2500`."],
+        ["Allowed values only", "Fails unless the value is one of a list separated by semicolons, such as `EI30; EI60; EI90`. Case doesn't matter."],
         ["Matches Regex", "Fails unless the value matches a pattern, such as `^W-[0-9]{3}$` for W-001."],
         ["Mismatched Instance vs Type", "Fails when the instance and type values of a parameter differ."],
         ["Color-code view by QA status", "In the settings (gear icon). Colours passing elements too."]
       ],
       tips: [
         "Pick specific categories. With All Categories, elements that don't have the parameter at all, such as model lines, are reported as missing.",
+        "Unique value, Number in range and Allowed values only skip empty values. Add a Value required rule to catch those.",
         "Reset restores the colours elements had before, including your own."
       ],
       issues: ["qc-all-categories"],
@@ -770,9 +794,9 @@ BB.text.en = {
       body: "Room Mapping only finds rooms and spaces in the model you have open. In MEP models the rooms usually sit in the linked architecture model.",
       fix: "Use MEP spaces in your own model, or wait for linked room support." },
     { id: "color-repeat", tools: ["color-by-parameter"], roadmap: null,
-      title: "Colours repeat after ten values",
-      body: "The palette has ten colours. With more distinct values, colours are reused, and the result isn't saved as a view filter.",
-      fix: "Use the legend to isolate one value at a time when there are many values." },
+      title: "Colours repeat after twenty text values",
+      body: "Text values get twenty distinct colours. With more values, colours are reused.",
+      fix: "Click a swatch in the legend to give the values that matter their own colour, or isolate one value at a time." },
     { id: "select-id-links", tools: ["select-by-id"], roadmap: null,
       title: "Only element IDs from the open model",
       body: "Select by ID doesn't find elements in linked models or by UniqueId.",

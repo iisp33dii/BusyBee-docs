@@ -263,26 +263,35 @@ BB.text.de = {
 
     "color-by-parameter": {
       name: "Farbe nach Parameterwert",
-      tagline: "Elemente nach Wert einfärben, mit Live-Legende.",
-      summary: "Gruppiert die ausgewählten Elemente nach dem Wert eines Parameters und gibt jedem Wert eine eigene Farbe in der aktiven Ansicht. Ein Legendenfenster listet jeden Wert mit Anzahl, und du kannst Elemente nach Wert isolieren oder auswählen.",
+      tagline: "Auswahl oder ganze Ansicht nach einem Parameter einfärben, mit der Legende im selben Fenster.",
+      summary: "Gibt jedem Wert eines Parameters eine eigene Farbe in der aktiven Ansicht, für die ausgewählten Elemente oder für alles, was die Ansicht zeigt. Zahlen lassen sich in Bereiche gruppieren und laufen von Blau (niedrig) bis Rot (hoch). Die Legende sitzt im selben Fenster: Sie listet jeden Wert mit Anzahl, wählt und isoliert nach Wert, und du kannst eigene Farben wählen. Speichere eine Einfärbung als Vorlage oder mach aus der Legende Revit-Ansichtsfilter, die im Projekt bleiben.",
       when: [
         "Auf einen Blick sehen, welche Elemente ein System, eine Phase oder eine Feuerwiderstandsklasse teilen.",
-        "Lücken finden: Leere Werte bekommen auch eine eigene Farbe.",
-        "Geschwindigkeits- oder Größenbereiche mit Farbbereichen zeigen."
+        "Lücken finden: Leere Werte und Elemente ohne den Parameter bekommen eine eigene Zeile.",
+        "Geschwindigkeits-, Größen- oder Flächenbereiche zeigen.",
+        "Eine Einfärbung als Ansichtsfilter im Projekt behalten, für Pläne und Kollegen."
       ],
       steps: [
-        "Wähl Elemente in Revit aus und klick auf [[Auswahl laden]].",
-        "Wähl einen [[Parameter]]. Mit [[Alle Parameter anzeigen]] siehst du mehr als die gemeinsamen.",
-        "Für Zahlenbereiche hakst du [[Farbbereiche]] an und gibst die [[Grenzen]] ein.",
-        "Klick auf [[Starten]]. Die Legende öffnet sich.",
-        "Klick in der Legende auf einen Wert (Strg oder Umschalt für mehrere) und nutz [[Isolieren]] oder [[Isolierung aufheben]].",
-        "Mit [[Farben zurücksetzen]] kommen die Farben zurück, die die Ansicht vorher hatte."
+        "Unter [[Einfärben]] wählst du [[Auswahl]] oder [[Ganze Ansicht]]. Das Fenster liest die Auswahl oder die Ansicht beim Öffnen, [[↻]] liest sie neu. Für die ganze Ansicht grenzt du mit den Kategorien ein.",
+        "Wähl einen [[Parameter]]. Mit [[Alle Parameter anzeigen (auch nicht gemeinsam genutzte)]] siehst du mehr als die gemeinsamen.",
+        "Für einen Zahlenparameter wählst du [[Eine Farbe je Wert]] oder [[Bereiche]]: eine Anzahl gleicher Stufen oder [[Eigene Grenzen]] wie `2,5; 5; 10`, in den Einheiten, die Revit zeigt.",
+        "Klick auf [[Einfärben]]. Die Einstellungen klappen zu einer Zeile zusammen, und die Legende füllt das Fenster. Ein Klick auf die Zeile ([[Ändern]]) öffnet sie wieder.",
+        "Klick in der Legende auf Zeilen, um ihre Elemente auszuwählen (Strg oder Umschalt für mehrere), und nutz [[Isolieren]] oder [[Isolierung aufheben]]. Ein Klick auf ein Farbfeld gibt dem Wert eine eigene Farbe.",
+        "Um die Einfärbung zu behalten, gib unter [[Vorlage]] einen Namen ein und klick auf [[Speichern]], oder klick auf [[Als Ansichtsfilter anlegen]].",
+        "Mit [[Zurücksetzen]] bekommen die Elemente ihr vorheriges Aussehen zurück."
       ],
       settings: [
-        ["Auswahl laden", "Übernimmt die aktuelle Revit-Auswahl. Du kannst auch in der Legende starten."],
-        ["Farben zurücksetzen", "Stellt die vorherigen Farben jedes Elements wieder her, auch deine manuellen. Nach einem Revit-Neustart hat BusyBee keine Aufzeichnung und fragt, bevor es die Ansicht leert."]
+        ["Farben", "Textwerte bekommen deutlich verschiedene Farben, und derselbe Wert bekommt beim nächsten Mal dieselbe Farbe. Zahlen laufen von Blau nach Rot. Eine selbst gewählte Farbe ist mit ✎ markiert, [[Automatische Farbe]] setzt sie zurück."],
+        ["Reihenfolge der Legende", "Von niedrig nach hoch oder von A bis Z, dann (leer), dann (Parameter fehlt) für Elemente ohne den Parameter."],
+        ["Vorlage", "Behält Parameter, Gruppierung und jede Farbe unter einem Namen. Wählst du sie später, wird der aktuelle Umfang genauso eingefärbt. Derselbe Name ersetzt die alte Vorlage."],
+        ["Als Ansichtsfilter anlegen", "Legt für jede Zeile der Legende einen Revit-Ansichtsfilter mit ihrer Farbe an und fügt ihn der Ansicht hinzu. Die Filter heißen `BusyBee - <Parameter> - <Wert>`, folgen späteren Wertänderungen und lassen sich unter Sichtbarkeit/Grafiken → Filter bearbeiten. Ein erneuter Lauf aktualisiert sie."],
+        ["Zurücksetzen", "Stellt die vorherigen Farben jedes Elements wieder her, auch deine manuellen. Nach einem Revit-Neustart hat BusyBee keine Aufzeichnung und fragt, bevor es die Ansicht leert."]
       ],
-      tips: ["Der Reiter Ebenen-Zuordnung in Räume, Raster & Ebenen hat eine eigene Schaltfläche „Nach Wert färben“, die dieselbe Legende öffnet."],
+      tips: [
+        "Steuert eine Ansichtsvorlage die Filter der Ansicht, füg die Filter dort hinzu oder nimm den Haken bei Filter in der Vorlage raus.",
+        "Manche Kategorien lassen sich nicht nach jedem Parameter filtern. Diese Elemente behalten ihre Elementfarbe, und BusyBee sagt, wie viele es sind.",
+        "Der Reiter Ebenen-Zuordnung in Räume, Raster & Ebenen hat eine Schaltfläche „Nach Wert färben“, die dieses Fenster mit seiner Legende öffnet."
+      ],
       issues: ["color-repeat"],
       shots: [
         { src: "color-by-param.webp", alt: "Farbe nach Parameterwert mit 4.546 geladenen Elementen und Kategorie als Parameter" },
@@ -337,28 +346,37 @@ BB.text.de = {
 
     "model-health": {
       name: "Modellgesundheit",
-      tagline: "Das Modell bewerten und Warnungen, ungenutzte Familien und Ballast bereinigen.",
-      summary: "Durchsucht das ganze Projekt und vergibt eine Bewertung von 0 bis 100. Drei Registerkarten führen dich durch die Warnungen, bereinigen ungenutzte Familien und Typen und entfernen CAD-Importe, Projektfamilien und nicht platzierte Räume.",
+      tagline: "Das Modell bewerten, häufige Warnungen beheben und Familien, Ansichten und Verknüpfungen aufräumen.",
+      summary: "Durchsucht das ganze Projekt und vergibt eine Bewertung von 0 bis 100, die auch großen Modellen gerecht wird, mit dem Verlauf seit der letzten Prüfung. Registerkarten führen dich durch die Warnungen, mit Korrekturen per Klick für häufige, durch ungenutzte Familien und Typen, CAD-Importe, Projektfamilien und nicht platzierte Räume, durch Ansichten und Vorlagen, die niemand nutzt, und durch Verknüpfungen und Koordinaten.",
       when: [
         "Bevor du ein Modell übergibst oder in eine gemeinsame Umgebung hochlädst.",
-        "Wenn ein Modell langsam wirkt oder die Datei immer größer wird."
+        "Wenn ein Modell langsam wirkt oder die Datei immer größer wird.",
+        "Um Ansichten, Pläne und Vorlagen vor dem Planversand aufzuräumen.",
+        "Um zu prüfen, ob Verknüpfungen fixiert sind, einen eigenen Bearbeitungsbereich haben und über gemeinsame Koordinaten sitzen."
       ],
       steps: [
         "Öffne das Werkzeug. Die Prüfung startet von selbst; [[Audit starten]] prüft erneut.",
-        "Auf [[Dashboard]] siehst du die Bewertung und vier Summen. [[Warnungen prüfen]] und [[Bereinigungs-Manager]] springen zu den Details.",
-        "Auf [[Warnungen]] filterst du nach Kritisch, Mittel oder Niedrig. Klapp eine Gruppe auf, um die Elemente auszuwählen, hinzuzoomen, zu isolieren oder in einen Schnittbereich zu setzen.",
+        "Auf [[Dashboard]] siehst du die Bewertung, die Änderung seit der letzten Prüfung und vier Summen. Fahr mit der Maus über die Bewertung, um zu sehen, was jeder Bereich abgezogen hat. [[Warnungen prüfen]] und [[Bereinigungs-Manager]] springen zu den Details.",
+        "Auf [[Warnungen]] filterst du nach Kritisch, Mittel oder Niedrig. Klapp eine Gruppe auf, um die Elemente auszuwählen, hinzuzoomen, zu isolieren oder in einen Schnittbereich zu setzen. Gruppen, die BusyBee beheben kann, haben eine gelbe Schaltfläche im Kopf.",
         "Auf [[Ungenutzte & Familien]] lässt du [[Nur ungenutzte]] aktiv, hakst an, was weg soll, und klickst auf [[Ausgewählte bereinigen]].",
-        "Auf [[Modell-Sauberkeit]] löschst du importierte CAD-Dateien, findest Projektfamilien und entfernst nicht platzierte Räume.",
+        "Auf [[Modell-Sauberkeit]] löschst du importierte CAD-Dateien, öffnest verknüpfte DWGs in AutoCAD, findest Projektfamilien und entfernst nicht platzierte Räume.",
+        "Auf [[Ansichten]] klickst du auf [[Ansichten prüfen]]. Hak an, was du nicht brauchst, und klick auf [[Angehakte löschen]], oder gib Ansichten ohne Vorlage mit [[Vorlage zuweisen]] eine.",
+        "Auf [[Verknüpfungen]] klickst du auf [[Verknüpfungen prüfen]]. Hak Verknüpfungen an und behebe sie mit [[Fixieren]], [[Neu laden]], [[Eigener Bearbeitungsbereich]] oder [[Überlagern]].",
         "Teil das Ergebnis mit [[HTML-Bericht exportieren]], [[CSV-Übersicht exportieren]] oder [[Zusammenfassung kopieren]]."
       ],
       settings: [
-        ["Bewertung", "Startet bei 100. Jede Warnung kostet Punkte (1,5 kritisch, 0,75 mittel, 0,2 niedrig), jeder CAD-Import 4, jede Projektfamilie 2,5, jeder nicht platzierte Raum 1, dazu ein Abzug, wenn mehr als 30 % der Familien ungenutzt sind."],
+        ["Bewertung", "Probleme werden an der Größe des Modells gemessen: Warnungen und Projektfamilien je 1.000 Modellelemente, nicht platzierte Räume als Anteil aller Räume, ungenutzte Familien über 30 % und jede importierte CAD-Datei. Jeder Bereich kann nur begrenzt abziehen. Noten: A+ ab 90, A ab 80, B ab 70, C ab 50, D ab 35."],
+        ["Verlauf", "Jede Prüfung wird neben dem Modell in `<Modell>.BusyBeeHealthHistory.json` gespeichert, sodass das Team ihn teilt. Die Karte zeigt die Änderung seit der vorigen Prüfung und eine kleine Linie der letzten Bewertungen."],
+        ["Korrekturen", "[[Kopien löschen]] für identische Exemplare an derselben Stelle, [[Verbindung lösen]] für verbundene Elemente, die sich nicht berühren, [[Beschriftungen in Räume schieben]] für Raumbeschriftungen außerhalb ihres Raums und [[Eindeutig machen]] für doppelte Kennzeichen und Raumnummern, mit Vorschau der neuen Werte. Jede Korrektur fragt vorher und nennt, was sie ausgelassen hat."],
+        ["Ansichten", "Findet Ansichten auf keinem Plan, unbenutzte Ansichtsvorlagen und Filter, Ansichten ohne Vorlage, Kopie-Namen wie „… Kopie 1“, leere Pläne und Namen, die zu keinem deiner Muster passen, etwa `EG*; OG*; Schnitt *`."],
+        ["Verknüpfungen", "Zeigt Projektbasispunkt, Vermessungspunkt und geografischen Norden und findet Verknüpfungen, deren Datei fehlt oder nicht geladen ist, die nicht fixiert sind, keinen eigenen Bearbeitungsbereich haben, nicht über gemeinsame Koordinaten sitzen, weit vom Ursprung liegen, doppelt platziert oder zugeordnet statt überlagert sind. Es merkt auch, wenn sich die Koordinaten seit [[Koordinaten merken]] verschoben haben."],
         ["Schweregrad", "Kommt vom Warnungstyp in Revit, nicht vom Text, ist also in deutschem und englischem Revit gleich."],
         ["Systemfamilien-Typen einbeziehen", "Listet auch ungenutzte Wand-, Decken- und andere Systemtypen."]
       ],
       tips: [
-        "Bereinigen und Löschen fragen immer vorher nach und sind jeweils ein Rückgängig-Schritt.",
-        "Verknüpfte CAD-Dateien sind unproblematisch und zählen nicht. Nur importierte CAD-Dateien zählen."
+        "Bereinigen, Löschen und Korrekturen fragen immer vorher nach und sind jeweils ein Rückgängig-Schritt. Danach wird das Modell neu geprüft.",
+        "Verknüpfte CAD-Dateien sind unproblematisch und zählen nicht. Nur importierte CAD-Dateien zählen.",
+        "Eine Prüfung innerhalb von 5 Minuten nach der vorigen ersetzt sie, sodass die Prüfung nach dem Bereinigen keinen eigenen Punkt im Verlauf bekommt."
       ],
       issues: ["health-score-size", "health-low-severity"],
       shots: [
@@ -371,14 +389,16 @@ BB.text.de = {
     "quality-control": {
       name: "Qualitätskontrolle",
       tagline: "Parameter gegen deine Regeln prüfen und Fehler hervorheben.",
-      summary: "Du baust eine Vorlage aus Regeln, etwa „Türkennzeichen müssen gefüllt sein“ oder „Plannummern müssen einem Muster folgen“. BusyBee prüft die Elemente der aktiven Ansicht, bewertet die Einhaltung, färbt Fehler ein und listet sie, damit du sie abarbeiten kannst.",
+      summary: "Du baust eine Vorlage aus Regeln, etwa „Türkennzeichen müssen gefüllt und eindeutig sein“, „Höhen müssen in einem Bereich liegen“ oder „Feuerwiderstand muss einer aus einer Liste sein“. BusyBee prüft die Elemente der aktiven Ansicht, bewertet die Einhaltung, färbt Fehler ein und listet sie, damit du sie abarbeiten kannst.",
       when: [
         "Vor dem Planversand: Sind alle Kennzeichen, Nummern und Feuerwiderstandsklassen gefüllt?",
+        "Doppelte Tür- oder Raumnummern finden.",
+        "Größen gegen Grenzen prüfen oder Werte gegen eine Liste erlaubter Werte.",
         "Benennungen per Muster gegen den Bürostandard prüfen."
       ],
       steps: [
         "Klick auf [[+ Neue Regel konfigurieren]]. Gib einen [[Regelname]] ein und wähl die Kategorien.",
-        "Wähl den [[Zielparameter-Name]] und eine [[Prüfbedingung]].",
+        "Wähl den [[Zielparameter-Name]] und eine [[Prüfbedingung]]. Für ein Muster, einen Bereich oder eine Liste erlaubter Werte füllst du das Feld aus, das dann erscheint.",
         "Wähl eine Hervorhebungsfarbe und lass [[Fehler in Ansicht hervorheben]] aktiv.",
         "Klick auf [[Regel zur Vorlage hinzufügen]]. Hak die Regeln an, die laufen sollen.",
         "Klick auf [[Starten]]. Die Befunde erscheinen rechts, nach Kategorie gruppiert.",
@@ -388,12 +408,16 @@ BB.text.de = {
       settings: [
         ["Wert erforderlich (melden, wenn leer)", "Meldet, wenn der Parameter leer ist."],
         ["Muss leer sein (melden, wenn befüllt)", "Meldet, wenn der Parameter einen Wert hat."],
+        ["Eindeutiger Wert (Duplikate melden)", "Meldet, wenn ein anderes geprüftes Element denselben Wert hat, etwa zwei Türen mit derselben Nummer. Groß- und Kleinschreibung und Leerzeichen zählen nicht. Jeder Befund nennt, wie viele Elemente den Wert teilen."],
+        ["Zahl im Bereich", "Meldet, wenn der Wert außerhalb eines Bereichs wie `2000..2500` liegt, in den Einheiten, die Revit zeigt. Lass eine Seite offen für nur eine Unter- oder Obergrenze: `2000..` oder `..2500`."],
+        ["Nur erlaubte Werte", "Meldet, wenn der Wert nicht in einer Liste steht, getrennt durch Semikolons, etwa `EI30; EI60; EI90`. Groß- und Kleinschreibung zählen nicht."],
         ["Entspricht Regex", "Meldet, wenn der Wert nicht zum Muster passt, etwa `^W-[0-9]{3}$` für W-001."],
         ["Abweichung Exemplar vs. Typ", "Meldet, wenn Exemplar- und Typwert eines Parameters verschieden sind."],
         ["Ansicht nach QA-Status einfärben", "In den Einstellungen (Zahnrad). Färbt auch fehlerfreie Elemente."]
       ],
       tips: [
         "Wähl gezielt Kategorien. Mit „Alle Kategorien“ werden Elemente ohne den Parameter, etwa Modelllinien, als fehlend gemeldet.",
+        "Eindeutiger Wert, Zahl im Bereich und Nur erlaubte Werte überspringen leere Werte. Für die nimmst du zusätzlich eine Regel „Wert erforderlich“.",
         "Zurücksetzen stellt die vorherigen Farben wieder her, auch deine eigenen."
       ],
       issues: ["qc-all-categories"],
@@ -758,9 +782,9 @@ BB.text.de = {
     { id: "spatial-linked-rooms", title: "Räume in verknüpften Modellen werden nicht gefunden",
       body: "Die Raum-Zuordnung findet nur Räume und MEP-Räume im geöffneten Modell. In TGA-Modellen liegen die Räume meist im verknüpften Architekturmodell.",
       fix: "Nutz MEP-Räume im eigenen Modell oder warte auf die Unterstützung verknüpfter Räume." },
-    { id: "color-repeat", title: "Farben wiederholen sich nach zehn Werten",
-      body: "Die Palette hat zehn Farben. Bei mehr Werten werden Farben wiederverwendet, und das Ergebnis wird nicht als Ansichtsfilter gespeichert.",
-      fix: "Isolier bei vielen Werten über die Legende einen Wert nach dem anderen." },
+    { id: "color-repeat", title: "Farben wiederholen sich nach zwanzig Textwerten",
+      body: "Für Textwerte gibt es zwanzig verschiedene Farben. Bei mehr Werten werden Farben wiederverwendet.",
+      fix: "Klick in der Legende auf ein Farbfeld, um wichtigen Werten eine eigene Farbe zu geben, oder isolier einen Wert nach dem anderen." },
     { id: "select-id-links", title: "Nur Element-IDs aus dem geöffneten Modell",
       body: "„ID auswählen“ findet keine Elemente in verknüpften Modellen und keine UniqueIds.",
       fix: "Öffne das verknüpfte Modell selbst, um seine IDs nachzuschlagen." },
