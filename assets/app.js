@@ -332,7 +332,7 @@
     var t = T();
     var open = window.matchMedia("(min-width: 901px)").matches || !state.slug ? " open" : "";
     var cur = state.slug && t.tools[state.slug] ? t.tools[state.slug].name : t.ui.nav.tools;
-    return '<aside class="sidebar" aria-label="' + esc(t.ui.nav.tools) + '"><details class="side-details"' + open + '><summary>' + esc(t.ui.nav.tools) + ": <b>" + esc(cur) + "</b></summary>" + ["automation", "audit", "utility"].map(function (g) {
+    return '<aside class="sidebar" aria-label="' + esc(t.ui.nav.tools) + '"><details class="side-details"' + open + '><summary>' + esc(t.ui.nav.tools) + ": <b>" + esc(cur) + "</b></summary>" + ["basics", "automation", "audit", "utility"].map(function (g) {
       return "<h4>" + esc(t.ui.groups[g]) + '</h4><div class="sidebar-list">' + BB.tools.filter(function (x) { return x.group === g; }).map(function (x) {
         var cur = state.slug === x.slug ? ' aria-current="page"' : "";
         return '<a href="' + href("tools", x.slug) + '"' + cur + "><span>" + esc(t.tools[x.slug].name) + '</span><span class="dot ' + x.status + '" title="' + esc(t.ui.status[x.status]) + '"></span></a>';
@@ -345,13 +345,13 @@
     if (state.slug) return pageTool(state.slug);
     var card = function (x) {
       var d = t.tools[x.slug];
-      var shot = x.shot ? (state.lang === "de" && x.shot === "clash.webp" ? "clash-de.webp" : x.shot) : null;
+      var shot = x.shot ? (state.lang === "de" && (x.shot === "clash.webp" || x.shot === "pane.webp") ? x.shot.replace(".webp", "-de.webp") : x.shot) : null;
       var thumb = shot ? '<div class="tc-shot"><img src="assets/img/' + shot + '" alt="" loading="lazy" decoding="async"></div>'
         : '<div class="tc-shot empty" aria-hidden="true">' + hex("released", 44) + "</div>";
       return '<a class="tool-card" href="' + href("tools", x.slug) + '">' + thumb + '<div class="tc-body"><div class="row"><h3>' + esc(d.name) + "</h3>" + pill(x.status) + "</div><p>" + esc(d.tagline) + "</p></div></a>";
     };
     // One section per group, so the utilities don't get lost between the big tools
-    var cards = ["automation", "audit", "utility"].map(function (g) {
+    var cards = ["basics", "automation", "audit", "utility"].map(function (g) {
       var list = BB.tools.filter(function (x) { return x.group === g; });
       return '<section class="tool-group" id="group-' + g + '"><h2>' + hex("released", 20) + "<span>" + esc(t.ui.groups[g]) + '</span><span class="g-count">' + list.length + "</span></h2>" +
         '<div class="tool-grid">' + list.map(card).join("") + "</div></section>";

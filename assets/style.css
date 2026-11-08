@@ -280,7 +280,7 @@ p { margin: 0 0 1em; }
 .model-steps li.on b { color: var(--text); }
 .model-steps li.on b a { color: var(--honey-ink); }
 .model-steps li.on p { color: var(--text-2); }
-.model-steps li.on .ms-num { --cell: var(--cell-full); --glow: radial-gradient(closest-side, rgba(242, 177, 52, 0.45), rgba(242, 177, 52, 0.14) 60%, transparent); color: var(--cell-num); text-shadow: var(--cell-num-glow); scale: 1.08; }
+.model-steps li.on .ms-num { --cell: var(--cell-full); --glow: radial-gradient(closest-side, rgba(242, 177, 52, 0.24), rgba(242, 177, 52, 0.07) 60%, transparent); color: var(--cell-num); text-shadow: var(--cell-num-glow); scale: 1.04; }
 
 .vp {
   position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden;
@@ -420,7 +420,7 @@ p { margin: 0 0 1em; }
   --cell-full: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='.35' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe08a'/%3E%3Cstop offset='.5' stop-color='%23f2b134'/%3E%3Cstop offset='1' stop-color='%23b87a0a'/%3E%3C/linearGradient%3E%3ClinearGradient id='i' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23302517'/%3E%3Cstop offset='1' stop-color='%23140f0a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='url(%23g)'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.8)' fill='url(%23i)'/%3E%3C/svg%3E");
   --cell-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='%234b4031'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.8)' fill='%231c1813'/%3E%3C/svg%3E");
   --cell-num: #ffc75a;
-  --cell-num-glow: 0 0 8px rgba(242, 177, 52, 0.55);
+  --cell-num-glow: 0 0 6px rgba(242, 177, 52, 0.35);
 }
 :root[data-theme="light"] {
   --cell-full: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.1 -1.1 2.2 2.2'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='.35' y2='1'%3E%3Cstop offset='0' stop-color='%23ffd978'/%3E%3Cstop offset='.5' stop-color='%23f2b134'/%3E%3Cstop offset='1' stop-color='%23cf8a10'/%3E%3C/linearGradient%3E%3ClinearGradient id='i' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fffdf7'/%3E%3Cstop offset='1' stop-color='%23f7ebd2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' fill='url(%23g)'/%3E%3Cpath d='M0-1L.866-.5V.5L0 1-.866.5V-.5Z' transform='scale(.8)' fill='url(%23i)'/%3E%3C/svg%3E");
@@ -448,7 +448,7 @@ p { margin: 0 0 1em; }
 .steps li:last-child::after { display: none; }
 .steps.tracked li:not(.done):not(.cur)::before { --cell: var(--cell-up); color: var(--text-3); text-shadow: none; }
 .steps.tracked li:not(.done)::after { background-size: 100% 0; }
-.steps.tracked li.cur::before { --glow: radial-gradient(closest-side, rgba(242, 177, 52, 0.5), rgba(242, 177, 52, 0.16) 60%, transparent); scale: 1.1; }
+.steps.tracked li.cur::before { --glow: radial-gradient(closest-side, rgba(242, 177, 52, 0.28), rgba(242, 177, 52, 0.08) 60%, transparent); scale: 1.06; }
 .steps h3 { margin-bottom: 4px; font-size: 1.1rem; }
 .steps li.cur h3 { color: var(--text); }
 .steps p { margin: 0; color: var(--text-2); }

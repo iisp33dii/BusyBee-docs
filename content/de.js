@@ -19,7 +19,7 @@ BB.text.de = {
       beta: "Funktioniert, aber prüf die Ergebnisse und melde, was dir auffällt.",
       experimental: "Probier es erst an einer Modellkopie aus."
     },
-    groups: { automation: "Parameter- und Modell-Automatisierung", audit: "Prüfung und Qualitätskontrolle", utility: "Hilfswerkzeuge" },
+    groups: { basics: "Grundlagen", automation: "Parameter- und Modell-Automatisierung", audit: "Prüfung und Qualitätskontrolle", utility: "Hilfsmittel" },
     revit: "Revit",
     teamRelease: "Version",
     released: "Veröffentlicht",
@@ -197,7 +197,7 @@ BB.text.de = {
         "Wähl unter [[Bedingte Regeln]] einen Operator wie [[ist gleich]] oder [[enthält]], gib den gesuchten Wert ein und nach dem Pfeil den Wert, der geschrieben wird. Der Wert darf `{Parameter}`-Formeln enthalten.",
         "Mit [[+ Bedingung hinzufügen]] kommen weitere Fälle dazu. Sie werden als SONST-WENN von oben nach unten geprüft; der erste Treffer gilt.",
         "Klick auf [[Starten]]. Noch wird nichts geschrieben: Eine Vorschau listet jedes Element, dessen Wert sich ändern würde, mit dem Wert jetzt und nach dem Schreiben. Ein Doppelklick auf eine Zeile wählt das Element aus und zoomt hin.",
-        "Klick auf [[N Änderung(en) schreiben]], um sie zu schreiben, oder schließ die Vorschau, dann bleibt das Modell unverändert. Eine Zusammenfassung zeigt, was geändert wurde, und ein Strg+Z nimmt den ganzen Lauf zurück."
+        "Klick auf [[Änderungen schreiben]], um sie zu schreiben, oder schließ die Vorschau, dann bleibt das Modell unverändert. Eine Zusammenfassung zeigt, was geändert wurde, und ein Strg+Z nimmt den ganzen Lauf zurück."
       ],
       settings: [
         ["Operatoren", "ist gleich, ist ungleich, größer oder kleiner als (auch mit gleich), enthält, beginnt mit, endet mit und deren Gegenteile, hat einen Wert, hat keinen Wert. Größer und kleiner vergleichen Zahlen, auch wenn Revit Einheiten anzeigt."],
@@ -447,7 +447,7 @@ BB.text.de = {
         "Wähl [[Bearbeitbar, zum Zurücklesen]] oder [[Wie in Revit angezeigt, für Mengen]].",
         "Wähl bei Bedarf eine Excel-Vorlage und einen Ordner und klick auf [[… nach Excel exportieren]].",
         "Ändere Werte in den gelben Spalten. Graue Spalten sind nur zum Lesen. Lass die Überschriften und die Spalte Revit-ID stehen.",
-        "Klick auf [[Aus Excel einlesen…]] und wähl die Dateien. BusyBee zeigt dir zuerst jede Änderung; [[… Änderung(en) schreiben]] schreibt sie in einem Rückgängig-Schritt."
+        "Klick auf [[Aus Excel einlesen…]] und wähl die Dateien. BusyBee zeigt dir zuerst jede Änderung; [[Änderungen schreiben]] schreibt sie in einem Rückgängig-Schritt."
       ],
       settings: [
         ["Bearbeitbar, zum Zurücklesen", "Eine Zeile pro Element mit seiner Revit-ID. Berechnete Werte, Anzahlen und Raumfelder fehlen, weil sie sich nicht zurückschreiben lassen."],
@@ -524,7 +524,7 @@ BB.text.de = {
       ],
       steps: [
         "Öffne einen Grundriss, Deckenplan oder Tragwerksplan.",
-        "Klick unten im BusyBee-Bereich oder in der Gruppe Kleine Helfer der Multifunktionsleiste auf [[Schnitt ↔]] oder [[Schnitt ↕]].",
+        "Klick unten im BusyBee-Bereich oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Schnitt ↔]] oder [[Schnitt ↕]].",
         "Klick die erste Ecke dort, wo die Schnittlinie liegen soll, und zieh in die Richtung, in die der Schnitt blicken soll.",
         "Der Schnitt öffnet sich. Beim nächsten Mal wandert derselbe Schnitt an die neue Stelle."
       ],
@@ -544,7 +544,7 @@ BB.text.de = {
       ],
       steps: [
         "Wähl ein oder mehrere Elemente aus, oder gar keins.",
-        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Wer war das]].",
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Wer war das]].",
         "War nichts ausgewählt, klick ein Element an.",
         "Lies die Namen im Fenster."
       ],
@@ -564,7 +564,7 @@ BB.text.de = {
       ],
       steps: [
         "Öffne den Grundriss, dessen Zuschneidebereich du kopieren willst. Ansicht zuschneiden muss an sein.",
-        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Zuschnitt kopieren]].",
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Zuschnitt kopieren]].",
         "Hak die Pläne an, die ihn bekommen sollen, und klick auf [[Zuschnitt übertragen]]."
       ],
       settings: [],
@@ -579,7 +579,7 @@ BB.text.de = {
       summary: "Kopiert Ebenen aus einer geladenen Revit-Verknüpfung in dieses Modell, mit gleichem Namen und gleicher Höhe. Ebenen, die schon da sind, bleiben, wie sie sind.",
       when: ["Ein TGA-Modell auf den Ebenen der Architektur anfangen."],
       steps: [
-        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Ebenen kopieren]].",
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Ebenen kopieren]].",
         "Wähl das verknüpfte Modell und klick auf [[Ebenen anzeigen]].",
         "Hak die Ebenen an und klick auf [[Ebenen kopieren]]."
       ],
@@ -599,7 +599,7 @@ BB.text.de = {
       summary: "Gibt den Ansichtsreitern jedes offenen Modells oder jeder Familie eine eigene Farbe, sodass du auf einen Blick siehst, zu welchem Modell eine Ansicht gehört. Bleibt an, bis du es ausschaltest.",
       when: ["Du arbeitest in mehreren Modellen gleichzeitig, zum Beispiel im Architekturmodell und in deinem eigenen."],
       steps: [
-        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Farbige Reiter]], um sie einzuschalten.",
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Farbige Reiter]], um sie einzuschalten.",
         "Öffne oder wechsle Ansichten: Ihre Reiter bekommen die Farbe ihres Modells.",
         "Klick noch einmal, um sie auszuschalten."
       ],
@@ -616,7 +616,7 @@ BB.text.de = {
       when: ["Eine Ansicht ist voller Farben, die von Hand gesetzt wurden, und du willst sauber anfangen."],
       steps: [
         "Öffne einen Grundriss, Schnitt, eine Ansicht oder eine 3D-Ansicht.",
-        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Überschreibungen zurücksetzen]].",
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Überschreibungen zurücksetzen]].",
         "BusyBee sagt, wie viele Elemente zurückgesetzt wurden. Strg+Z holt die Überschreibungen zurück."
       ],
       settings: [],
@@ -634,7 +634,7 @@ BB.text.de = {
         "Sehen, in welchem Raum ein Kanal oder ein Gerät liegt."
       ],
       steps: [
-        "Klick im Abschnitt Kleine Helfer des BusyBee-Bereichs oder in der Multifunktionsleiste auf [[Raumumrisse 3D]], um sie einzuschalten.",
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Raumumrisse 3D]], um sie einzuschalten.",
         "Öffne eine 3D-Ansicht, um sie zu sehen.",
         "Klick noch einmal, um sie auszuschalten."
       ],
@@ -686,20 +686,27 @@ BB.text.de = {
     },
 
     "project-workspace": {
-      name: "Projekt-Arbeitsbereich",
-      tagline: "Die Einrichtung aller Werkzeuge für ein Projekt speichern und wieder öffnen.",
-      summary: "Speichert die Einstellungen aller offenen BusyBee-Werkzeuge in einem Ordner, etwa Regeln, Höhenbereiche, Kollisionskategorien und LOIN-Zuordnungen. Öffnest du den Ordner später oder gibst ihn weiter, sind die Werkzeuge gleich eingerichtet.",
+      name: "Multifunktionsleiste und Projekt-Arbeitsbereich",
+      tagline: "Wo BusyBee in Revit sitzt und wie du die Einrichtung eines Projekts behältst.",
+      summary: "BusyBee hat eine eigene Registerkarte in Revit. [[BusyBee Manager]] öffnet den Bereich mit allen Werkzeugen. Die Gruppen Automatisierung, Prüfung & Qualität und Hilfsmittel in der Multifunktionsleiste haben für jedes Werkzeug eine Schaltfläche, sodass du es auch ohne den Bereich starten kannst. Der Projekt-Arbeitsbereich speichert die Einstellungen aller offenen Werkzeuge in einem Ordner, etwa Regeln, Höhenbereiche, Kollisionskategorien und LOIN-Zuordnungen. Öffnest du den Ordner später oder gibst ihn weiter, sind die Werkzeuge gleich eingerichtet.",
       when: [
+        "Du willst ein Werkzeug schnell starten oder ihm ein Tastenkürzel geben.",
         "Du hast Regeln für ein Projekt eingerichtet und willst sie nächste Woche wieder nutzen.",
         "Jemand übernimmt das Projekt und soll mit denselben Einstellungen arbeiten."
       ],
       steps: [
-        "Öffne und richte die Werkzeuge ein, die du behalten willst.",
+        "Öffne in Revit die Registerkarte BusyBee. Klick auf [[BusyBee Manager]] für den Bereich oder auf die Schaltfläche eines Werkzeugs, um es direkt zu öffnen.",
+        "Um die Einrichtung eines Projekts zu behalten, öffne und richte die Werkzeuge ein, die du behalten willst.",
         "Klick im Bereich auf [[Projekt speichern]] und wähl einen Ordner, zum Beispiel neben dem Modell.",
         "Beim nächsten Mal klickst du auf [[Projekt öffnen]] und wählst denselben Ordner. BusyBee zeigt dir, welche Einstellungen geladen wurden."
       ],
-      settings: [],
+      settings: [
+        ["BusyBee Manager", "Öffnet den Bereich. Er dockt wie jeder Revit-Bereich neben dem Projektbrowser an."],
+        ["Automatisierung, Prüfung & Qualität, Hilfsmittel", "Eine Schaltfläche pro Werkzeug, gruppiert wie im Bereich."],
+        ["Hilfe", "Öffnet diese Website."]
+      ],
       tips: [
+        "Jedes Werkzeug kann ein Tastenkürzel bekommen: In Revit unter Ansicht > Benutzeroberfläche > Tastaturbefehle nach BusyBee suchen.",
         "Jedes Werkzeug hat zusätzlich eigene Schaltflächen zum Speichern und Laden der Konfiguration.",
         "Einstellungen funktionieren sprachübergreifend: in englischem Revit speichern, in deutschem öffnen.",
         "Alle sollten dieselbe BusyBee-Version nutzen. Einstellungen ab Version 1.9 lassen sich in älteren Versionen nicht richtig laden."

@@ -16,6 +16,8 @@ BB.site = {
 };
 
 BB.tools = [
+  // Basics: the BusyBee tab, the panel and project setups
+  { slug: "project-workspace",    group: "basics",     status: "stable", revit: ["2025", "2026"], shot: "pane.webp" },
   // Automation
   { slug: "parameter-automation", group: "automation", status: "beta",   revit: ["2025", "2026"], shot: "param-rules.webp" },
   { slug: "spatial-parameters",   group: "automation", status: "stable", revit: ["2025", "2026"], shot: "spatial-room.webp" },
@@ -37,6 +39,5 @@ BB.tools = [
   { slug: "copy-levels",          group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
   { slug: "coloured-tabs",        group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
   { slug: "reset-overrides",      group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
-  { slug: "room-outlines",        group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null },
-  { slug: "project-workspace",    group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null }
+  { slug: "room-outlines",        group: "utility",    status: "stable", revit: ["2025", "2026"], shot: null }
 ];

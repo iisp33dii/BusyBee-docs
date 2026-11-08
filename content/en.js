@@ -19,7 +19,7 @@ BB.text.en = {
       beta: "Works, but check the results and report anything odd.",
       experimental: "Try it on a copy of the model first."
     },
-    groups: { automation: "Parameter and modelling automation", audit: "Audit and quality checks", utility: "Utilities" },
+    groups: { basics: "Basics", automation: "Parameter and modelling automation", audit: "Audit and quality checks", utility: "Utilities" },
     revit: "Revit",
     teamRelease: "Release",
     released: "Released",
@@ -196,7 +196,7 @@ BB.text.en = {
         "Under [[Conditional Rules]], pick an operator such as [[equals]] or [[contains]], type the value to look for, and type the value to write after the arrow. The value to write can contain `{Parameter}` formulas.",
         "Click [[+ Add Condition]] for more cases. They're checked from top to bottom as ELIF, and the first match wins.",
         "Click [[Start]]. Nothing is written yet: a preview lists every element whose value would change, with its value now and after writing. Double-click a row to select and zoom to the element.",
-        "Click [[Write N changes]] to write them, or close the preview to leave the model untouched. A summary shows what was changed, and one Ctrl+Z undoes the whole run."
+        "Click [[Write changes]] to write them, or close the preview to leave the model untouched. A summary shows what was changed, and one Ctrl+Z undoes the whole run."
       ],
       settings: [
         ["Operators", "equals, does not equal, greater or less than (with or equal), contains, starts with, ends with and their opposites, has value, has no value. Greater and less than compare numbers, also when Revit shows units."],
@@ -446,7 +446,7 @@ BB.text.en = {
         "Choose [[Editable, to import back]] or [[As shown in Revit, for quantities]].",
         "Optionally pick an Excel template, choose a folder and click [[Export … to Excel]].",
         "Change values in the yellow columns. Grey columns are for reading only. Keep the headings and the Revit ID column.",
-        "Click [[Import from Excel…]] and pick the files. BusyBee shows every change first; [[Write … change(s)]] writes them in one undo step."
+        "Click [[Import from Excel…]] and pick the files. BusyBee shows every change first; [[Write changes]] writes them in one undo step."
       ],
       settings: [
         ["Editable, to import back", "One row per element with its Revit ID. Calculated values, counts and room fields are left out because they can't be written back."],
@@ -523,7 +523,7 @@ BB.text.en = {
       ],
       steps: [
         "Open a floor, ceiling or structural plan.",
-        "Click [[Section ↔]] or [[Section ↕]] at the bottom of the BusyBee panel or on the Small tools ribbon panel.",
+        "Click [[Section ↔]] or [[Section ↕]] at the bottom of the BusyBee panel or on the Utilities ribbon panel.",
         "Click the first corner where the section line should be, then drag towards where the section should look.",
         "The section opens. Next time, the same section moves to the new place."
       ],
@@ -543,7 +543,7 @@ BB.text.en = {
       ],
       steps: [
         "Select one or more elements, or select nothing.",
-        "Click [[Who did that]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "Click [[Who did that]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel.",
         "If nothing was selected, click an element.",
         "Read the names in the window."
       ],
@@ -563,7 +563,7 @@ BB.text.en = {
       ],
       steps: [
         "Open the plan whose crop region you want to copy. Crop View must be on.",
-        "Click [[Copy crop]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "Click [[Copy crop]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel.",
         "Tick the plans that should get it and click [[Copy crop]]."
       ],
       settings: [],
@@ -578,7 +578,7 @@ BB.text.en = {
       summary: "Copies levels from a loaded Revit link into this model, with the same name and height. Levels that are already there are left as they are.",
       when: ["Starting an MEP model on the architect's levels."],
       steps: [
-        "Click [[Copy levels]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "Click [[Copy levels]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel.",
         "Pick the linked model and click [[Show levels]].",
         "Tick the levels and click [[Copy levels]]."
       ],
@@ -598,7 +598,7 @@ BB.text.en = {
       summary: "Gives the view tabs of each open model or family their own colour, so you see at a glance which model a view belongs to. Stays on until you switch it off.",
       when: ["Working in several models at once, for example the architect's and your own."],
       steps: [
-        "Click [[Coloured tabs]] in the Small tools section of the BusyBee panel or on the ribbon to switch it on.",
+        "Click [[Coloured tabs]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel to switch it on.",
         "Open or switch views: their tabs take the colour of their model.",
         "Click it again to switch it off."
       ],
@@ -615,7 +615,7 @@ BB.text.en = {
       when: ["A view is full of colours set by hand and you want a clean start."],
       steps: [
         "Open a plan, section, elevation or 3D view.",
-        "Click [[Reset overrides]] in the Small tools section of the BusyBee panel or on the ribbon.",
+        "Click [[Reset overrides]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel.",
         "BusyBee says how many elements it reset. Ctrl+Z brings the overrides back."
       ],
       settings: [],
@@ -633,7 +633,7 @@ BB.text.en = {
         "Seeing which room a duct or a device sits in."
       ],
       steps: [
-        "Click [[Room outlines 3D]] in the Small tools section of the BusyBee panel or on the ribbon to switch them on.",
+        "Click [[Room outlines 3D]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel to switch them on.",
         "Open a 3D view to see them.",
         "Click it again to switch them off."
       ],
@@ -685,20 +685,27 @@ BB.text.en = {
     },
 
     "project-workspace": {
-      name: "Project workspace",
-      tagline: "Save the setup of all tools for a project, and open it again.",
-      summary: "Stores the settings of every open BusyBee tool in one folder, such as rules, ranges, clash categories and LOIN mappings. Open the folder later, or give it to a colleague, and the tools are set up the same way.",
+      name: "Ribbon and project workspace",
+      tagline: "Where BusyBee sits in Revit, and how to keep a project's setup.",
+      summary: "BusyBee has its own tab in Revit. [[BusyBee Manager]] opens the panel with every tool. The ribbon panels Automation, Audit & Quality and Utilities have a button for each tool, so you can start one without the panel. The project workspace stores the settings of every open tool in one folder, such as rules, ranges, clash categories and LOIN mappings. Open the folder later, or give it to a colleague, and the tools are set up the same way.",
       when: [
+        "You want to start a tool quickly or give it a keyboard shortcut.",
         "You set up rules for a project and want to reuse them next week.",
         "A colleague takes over and should work with the same settings."
       ],
       steps: [
-        "Open and set up the tools you want to keep.",
+        "Open the BusyBee tab in Revit. Click [[BusyBee Manager]] for the panel, or a tool's button to open that tool straight away.",
+        "To keep a project's setup, open and set up the tools you want to keep.",
         "Click [[Save Project]] in the panel and choose a folder, for example next to the model.",
         "Next time, click [[Open Project]] and pick the same folder. BusyBee lists which tool settings it loaded."
       ],
-      settings: [],
+      settings: [
+        ["BusyBee Manager", "Opens the panel. It docks next to the Project Browser like any Revit panel."],
+        ["Automation, Audit & Quality, Utilities", "A button for each tool, grouped the same way as in the panel."],
+        ["Help", "Opens this website."]
+      ],
       tips: [
+        "Give any tool a keyboard shortcut: in Revit, open View > User Interface > Keyboard Shortcuts and search for BusyBee.",
         "Each tool also has its own Save Config and Load Config.",
         "Settings work across Revit languages: save in English Revit, open in German Revit.",
         "Everyone should use the same BusyBee version. Settings saved by 1.9 or newer don't load correctly in older versions."
