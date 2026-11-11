@@ -345,8 +345,11 @@
     if (state.slug) return pageTool(state.slug);
     var card = function (x) {
       var d = t.tools[x.slug];
-      var shot = x.shot ? (state.lang === "de" && (x.shot === "clash.webp" || x.shot === "pane.webp") ? x.shot.replace(".webp", "-de.webp") : x.shot) : null;
-      var thumb = shot ? '<div class="tc-shot"><img src="assets/img/' + shot + '" alt="" loading="lazy" decoding="async"></div>'
+      // Only the panel has a German shot (clash-de went away in 1.60)
+      var shot = x.shot ? (state.lang === "de" && x.shot === "pane.webp" ? "pane-de.webp" : x.shot) : null;
+      // A tool with only a clip shows the clip's result frame
+      var thumb = x.clip ? '<div class="tc-shot"><video src="assets/clip/' + x.clip + '" muted playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video></div>'
+        : shot ? '<div class="tc-shot"><img src="assets/img/' + shot + '" alt="" loading="lazy" decoding="async"></div>'
         : '<div class="tc-shot empty" aria-hidden="true">' + hex("released", 44) + "</div>";
       return '<a class="tool-card" href="' + href("tools", x.slug) + '">' + thumb + '<div class="tc-body"><div class="row"><h3>' + esc(d.name) + "</h3>" + pill(x.status) + "</div><p>" + esc(d.tagline) + "</p></div></a>";
     };
@@ -369,6 +372,16 @@
     if (!d || !m) return '<div class="wrap docs">' + sidebar() + '<div class="article"><p class="empty">' + esc(t.ui.notFound) + "</p></div></div>";
     var idx = BB.tools.indexOf(m), prev = BB.tools[idx - 1], next = BB.tools[idx + 1];
     var shots = (d.shots || []).map(function (s, i) {
+      // A screen recording (mp4 in assets/clip): loops silently; with reduced motion it stands on its
+      // result frame (s.still, in seconds) and plays only when asked
+      if (s.video) {
+        var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var src = "assets/clip/" + s.video;
+        var vid = '<video src="' + src + (still ? "#t=" + (s.still || 0) : "") + '" muted loop playsinline preload="' + (i ? "metadata" : "auto") + '"' +
+          (still ? " controls" : " autoplay") + ' aria-label="' + esc(s.alt) + '"></video>';
+        return '<figure class="figure clip"><a href="' + src + '" data-zoom="' + src + '" data-alt="' + esc(s.alt) + '">' + vid + "</a>" +
+          "<figcaption>" + esc(s.alt) + ". " + esc(t.ui.videoCaption) + "</figcaption></figure>";
+      }
       var cap = s.clip ? t.ui.clipCaption : (s.old ? t.ui.oldShot + " " : "") + (s.de ? t.ui.captionDe : t.ui.caption);
       var img = '<img src="assets/img/' + s.src + '" alt="' + esc(s.alt) + '" loading="' + (i ? "lazy" : "eager") + '">';
       // A clip is an animated webp; people who ask for reduced motion get its still frame
@@ -666,7 +679,7 @@
   // Delegated clicks for filters, in-page roadmap links and controls
   document.addEventListener("click", function (e) {
     var z = e.target.closest("[data-zoom]");
-    if (z && !e.ctrlKey && !e.metaKey) { e.preventDefault(); openZoom(z.getAttribute("data-zoom"), z.querySelector("img").alt); return; }
+    if (z && !e.ctrlKey && !e.metaKey) { e.preventDefault(); openZoom(z.getAttribute("data-zoom"), z.getAttribute("data-alt") || z.querySelector("img").alt); return; }
     if (e.target.closest(".lightbox")) { closeZoom(); return; }
     var el = e.target.closest("[data-f],[data-s],[data-rm],[data-anchor],#theme,#menu");
     if (!el) return;
@@ -710,7 +723,10 @@
       document.body.appendChild(box);
     }
     lastFocus = document.activeElement;
-    box.innerHTML = '<button type="button">' + esc(T().ui.close) + '</button><img src="' + esc(src) + '" alt="' + esc(alt) + '"><p>' + esc(alt) + "</p>";
+    var media = /\.mp4$/.test(src)
+      ? '<video src="' + esc(src) + '" controls autoplay muted loop playsinline aria-label="' + esc(alt) + '"></video>'
+      : '<img src="' + esc(src) + '" alt="' + esc(alt) + '">';
+    box.innerHTML = '<button type="button">' + esc(T().ui.close) + "</button>" + media + "<p>" + esc(alt) + "</p>";
     box.classList.add("open"); document.body.style.overflow = "hidden";
     box.querySelector("button").focus();
   }

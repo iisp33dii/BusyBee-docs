@@ -14,6 +14,55 @@ window.BB = window.BB || {};
 
 BB.releases = [
   {
+    version: "1.66.0",
+    date: "2026-11-11",
+    title: {
+      en: "Connect elements, Space Sync, Parameter Manager and View Templates",
+      de: "Elemente verbinden, MEP-Räume abgleichen, Parameter-Manager und Ansichtsvorlagen"
+    },
+    summary: {
+      en: "Three new tools and four new utilities. Connect elements joins pipes, ducts and fittings that almost touch with two clicks, Connect all closes every small gap in an area at once, and Open ends shows what is still loose. Why hidden finds out why an element doesn't show in a view. Space Sync makes MEP spaces from the architect's rooms, the Parameter Manager lists every parameter with how filled it is, and View Templates compares templates and their filters.",
+      de: "Drei neue Werkzeuge und vier neue Hilfsmittel. Elemente verbinden schließt Rohre, Kanäle und Formteile, die sich fast berühren, mit zwei Klicks zusammen, Alle verbinden schließt jede kleine Lücke in einem Bereich auf einmal, und Offene Enden zeigt, was noch lose ist. Warum unsichtbar findet heraus, warum ein Element in einer Ansicht fehlt. MEP-Räume abgleichen erstellt MEP-Räume aus den Räumen der Architektur, der Parameter-Manager listet jeden Parameter mit seinem Füllstand, und Ansichtsvorlagen vergleicht Vorlagen und ihre Filter."
+    },
+    highlights: [
+      { type: "new", tool: "connect-elements",
+        en: "Connect elements: click the piece that stays, then the one to bring to it. Fittings are turned and moved onto pipes, runs get longer or become one, and elbows, tees, angled tees, crosses, transitions and offsets come from your routing preferences. Flex ducts only bend their end. Repeats until Esc.",
+        de: "Elemente verbinden: Klick das Teil, das bleibt, dann das, das dorthin soll. Formteile werden gedreht und auf Rohre geschoben, Leitungen werden länger oder zu einer, und Bögen, T-Stücke, schräge T-Stücke, Kreuzstücke, Übergänge und Versätze kommen aus deinen Routing-Einstellungen. Flexkanäle biegen nur ihr Ende. Läuft, bis du Esc drückst." },
+      { type: "new", tool: "connect-all",
+        en: "Connect all: draw a box, or select air terminals first, and every gap up to 1 m (2 m for flex ducts) is listed and connected in one undo step.",
+        de: "Alle verbinden: Rechteck ziehen, oder vorher Luftauslässe auswählen, und jede Lücke bis 1 m (2 m bei Flexkanälen) wird aufgelistet und in einem Rückgängig-Schritt verbunden." },
+      { type: "new", tool: "open-ends",
+        en: "Open ends: an orange ring at every unconnected pipe, duct, cable tray and conduit end in the model. Click one to go there.",
+        de: "Offene Enden: ein oranger Ring an jedem unverbundenen Rohr-, Kanal-, Kabeltrassen- und Leerrohrende im Modell. Ein Klick führt hin." },
+      { type: "new", tool: "why-hidden",
+        en: "Why hidden: checks category, filters, worksets, phases, view range, crop region, section box, far clip and more for one element, and undoes most causes with one click.",
+        de: "Warum unsichtbar: prüft Kategorie, Filter, Bearbeitungsbereiche, Phasen, Ansichtsbereich, Zuschneidebereich, 3D-Schnittbereich, hintere Schnittgrenze und mehr für ein Element und hebt die meisten Ursachen mit einem Klick auf." },
+      { type: "new", tool: "space-sync",
+        en: "Space Sync: MEP spaces from the rooms of a linked model, with number, name, height and chosen parameters. A scan lists what is new, changed or left without a room before anything is written.",
+        de: "MEP-Räume abgleichen: MEP-Räume aus den Räumen eines verknüpften Modells, mit Nummer, Name, Höhe und gewählten Parametern. Eine Prüfung listet, was neu, geändert oder ohne Raum ist, bevor etwas geschrieben wird." },
+      { type: "new", tool: "parameter-manager",
+        en: "Parameter Manager: every project and shared parameter in one table, how many elements have a value, duplicates and unbound ones; bind to categories, add from the shared parameter file, delete, export to Excel.",
+        de: "Parameter-Manager: jeder Projekt- und gemeinsam genutzte Parameter in einer Tabelle, wie viele Elemente einen Wert haben, doppelte und nicht zugewiesene; Kategorien zuweisen, aus der Parameterdatei hinzufügen, löschen, nach Excel exportieren." },
+      { type: "new", tool: "view-templates",
+        en: "View Templates: compare two templates, see a filter matrix across several, copy filters between templates and templates into another open model, delete unused ones.",
+        de: "Ansichtsvorlagen: zwei Vorlagen vergleichen, eine Filtermatrix über mehrere sehen, Filter zwischen Vorlagen und Vorlagen in ein anderes offenes Modell kopieren, unbenutzte löschen." }
+    ],
+    builds: [
+      ["1.66.0", "View Templates"],
+      ["1.65.0", "Parameter Manager"],
+      ["1.64.0", "Space Sync"],
+      ["1.63.0", "Why hidden"],
+      ["1.62.7", "Connect all bends flex ducts to air terminals"],
+      ["1.62.6", "Runs get longer instead of moving"],
+      ["1.62.5", "Transitions, offsets, Connect all and Open ends"],
+      ["1.62.4", "Crosses; Connect elements switches off"],
+      ["1.62.3", "Bend to tee"],
+      ["1.62.1", "Angled tees"],
+      ["1.62.0", "Tees"],
+      ["1.61.0", "Connect elements"]
+    ]
+  },
+  {
     version: "1.60.0",
     date: "2026-11-09",
     title: {

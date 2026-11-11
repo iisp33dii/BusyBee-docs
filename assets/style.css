@@ -479,6 +479,16 @@ p { margin: 0 0 1em; }
   background: var(--honey); padding: 5px 8px 5px 7px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 .figure.clip picture { display: block; }
+/* Screen recordings: the same frame and hover as screenshots */
+.figure video {
+  display: block; max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line-2); background: #121212;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 26px 50px -26px rgba(0, 0, 0, 0.7);
+  transition: border-color 0.25s, box-shadow 0.35s, translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.figure a:hover video, .figure a:focus-visible video { border-color: var(--hover-line); translate: 0 -3px; box-shadow: 0 30px 60px -26px rgba(0, 0, 0, 0.8), var(--hover-glow); }
+.lightbox video { display: block; margin: 0 auto; max-width: 100%; max-height: calc(100vh - 120px); border-radius: 8px; border: 1px solid #4b4031; }
+.tc-shot video { width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; transition: scale 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.tool-card:hover .tc-shot video { scale: 1.06; }
 .article { max-width: 940px; }
 .article > :not(.figure):not(.pager) { max-width: 760px; }
 

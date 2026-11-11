@@ -63,7 +63,8 @@ BB.text.en = {
     caption: "Screenshot from Revit 2026 with BusyBee set to English. Category names appear in the Revit language. Click to see it full size.",
     close: "Close",
     oldShot: "This screenshot is from version 1.18. The window now has more options, described below.",
-    clipCaption: "Short clip from Revit 2026 with the Snowdon Towers sample. The yellow ring marks a click. Click to see it full size."
+    clipCaption: "Short clip from Revit 2026 with the Snowdon Towers sample. The yellow ring marks a click. Click to see it full size.",
+    videoCaption: "Screen recording from Revit 2026. Click to see it full size."
   },
 
   home: {
@@ -73,7 +74,7 @@ BB.text.en = {
     ctaTools: "Browse the tools",
     current: "Current release",
     toolsTitle: "What BusyBee does",
-    toolsLead: "Eleven tools in three groups. Open any of them from the BusyBee panel.",
+    toolsLead: "Every tool and utility, in three groups. Open any of them from the BusyBee panel or the ribbon.",
     whatsNew: "New in this release",
     allChanges: "Full changelog",
     next: "Coming next",
@@ -723,6 +724,209 @@ BB.text.en = {
       ],
       settings: [],
       tips: ["Changes to rooms in this model show straight away. For changes in a link, switch the outlines off and on again."],
+      issues: [],
+      shots: []
+    },
+
+    "connect-elements": {
+      name: "Connect elements",
+      tagline: "Click two pipes, ducts or fittings that almost touch, and they're connected.",
+      summary: "For pipes, ducts, cable trays, fittings and accessories that end close to each other but aren't connected. Click the piece that stays, then the piece to bring to it. BusyBee picks the right fix: it moves and turns a fitting onto the pipe, lengthens a pipe, merges two pipes into one, or puts in an elbow, tee, cross, transition or offset from your routing preferences. A flex duct or pipe only bends its end. It keeps asking for the next pair until you press Esc.",
+      when: [
+        "A bend or tee sits a few centimetres off its pipe after copying or moving things.",
+        "Two runs stop short of each other, in line, at an angle or at different heights.",
+        "A branch ends beside a main and needs a tee, or a bend should become a tee for a new pipe.",
+        "Flex ducts were drawn first and the air terminals placed later."
+      ],
+      steps: [
+        "Click [[Connect elements]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel. The panel button gets a yellow outline while the tool runs.",
+        "Click the piece that should stay where it is.",
+        "Click the piece to bring to it. BusyBee connects their nearest open ends and the two flash as selected.",
+        "Click the next pair. Press Esc, or click the outlined button again, to finish. Each pair is one undo step."
+      ],
+      settings: [
+        ["Fitting to pipe", "The fitting is turned to face the pipe end, rolled to match for rectangular ducts and moved onto it. Its other connections come along."],
+        ["Pipe to pipe in line", "Same type and size: they become one pipe. Different sizes: the second one gets longer and a transition goes in. Its far end stays where it is."],
+        ["At an angle", "Two pipes or ducts that meet at a corner get an elbow."],
+        ["Tee", "A pipe or duct that ends beside another gets a tee there. Branches at an angle get an angled tee or wye if the routing preferences have one; types set to Tap get a tap."],
+        ["Bend to tee, tee to cross", "Click a bend and a pipe coming in from the other side: the bend becomes a tee. Click a square tee and a pipe opposite its branch: it becomes a cross."],
+        ["Offset", "Two parallel runs at different heights, or side by side when the second one is fixed at its far end, get two elbows and a piece between them: 45° where there's room, otherwise 90°."],
+        ["Flex", "A flex duct or pipe is never moved as a whole. Only its end goes to the other piece and the flex bends to follow, in either click order."],
+        ["Resize", "A fitting brought to a pipe of another size asks whether to resize it to match. If you say no, or Revit can't, it's connected at its own size."],
+        ["Far apart", "If the ends are more than 1 m apart, BusyBee asks before moving anything."]
+      ],
+      tips: [
+        "Pieces with no open end, such as a pipe connected at both ends, can still be clicked: they get a tee.",
+        "If a tee, cross or transition is refused, the message names the pipe or duct type: add the fitting to that type's routing preferences.",
+        "Pinned pieces aren't moved. Unpin them, or click the two the other way round.",
+        "To connect many gaps at once, use [[Connect all]]."
+      ],
+      issues: [],
+      shots: [
+        { video: "connect-elements-pipes.mp4", still: 22.7, alt: "Pipes that stop short are connected pair by pair: a tee onto the main, angled branches and bends" },
+        { video: "connect-elements-flex-duct.mp4", still: 10.5, alt: "A flex duct is clicked after the air terminal: only its end bends onto the terminal" }
+      ]
+    },
+
+    "connect-all": {
+      name: "Connect all",
+      tagline: "Connect every small gap in an area in one go.",
+      summary: "Draw a box over part of the model, or select pieces first. BusyBee lists every two open ends that point at each other and are at most 1 m apart, and every flex duct or pipe end with something up to 2 m away it can bend to. Untick what you don't want and click Connect: each pair is connected the same way as with Connect elements, and one Ctrl+Z undoes them all.",
+      when: [
+        "A floor full of fittings and pipes that were copied in slightly off.",
+        "Flex ducts above a row of air terminals.",
+        "Tidying an imported or converted model."
+      ],
+      steps: [
+        "Click [[Connect all]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel.",
+        "Draw a box over the area. Or select pieces first, for example the air terminals, and press the button: each one is paired with the open ends around it in the view.",
+        "The list shows each pair as moves → stays, with the gap, nearest first. Untick the ones to leave alone.",
+        "Click [[Connect]]. A summary says how many were connected and why any weren't."
+      ],
+      settings: [
+        ["Which ends pair", "Ends of the same kind (pipe, duct, cable tray, conduit) that point at each other within 10° and are at most 1 m apart. Each end is used once, nearest first."],
+        ["Flex ends", "A flex end pairs with an end of an air terminal, fitting or accessory up to 2 m away in any direction, as long as that end doesn't point away from it. The flex bends; the terminal stays."],
+        ["Who moves", "A flex bends to the other piece. Otherwise a fitting comes to a pipe or duct, not the other way round."]
+      ],
+      tips: [
+        "Nothing is asked per pair: ticking it in the list is the go-ahead.",
+        "Turn on [[Open ends]] first to see what is still loose, and again afterwards to check."
+      ],
+      issues: [],
+      shots: [
+        { video: "connect-elements-flex.mp4", still: 5, alt: "A flex duct and an air terminal: the flex end bends down onto the terminal and is connected" }
+      ]
+    },
+
+    "open-ends": {
+      name: "Open ends",
+      tagline: "See every unconnected end in the model.",
+      summary: "Puts an orange ring at every end of a pipe, duct, cable tray, conduit, fitting or accessory that isn't connected to anything. Air terminals and equipment are left out, because their spare connections are usually on purpose. The rings are drawn over the view like the clash markers: nothing is added to the model.",
+      when: [
+        "Before handing over a model, to find runs that stop in mid-air.",
+        "After Connect all, to see what is still loose.",
+        "When a system shows as not connected and you can't see where."
+      ],
+      steps: [
+        "Click [[Open ends]] in the Utilities section of the BusyBee panel or on the Utilities ribbon panel. A message says how many open ends the model has and how many are in this view.",
+        "Hover a ring to see the piece, click it to select the piece and zoom to it.",
+        "The rings follow you to other views of the model and update when you connect pieces with Connect elements or Connect all.",
+        "Click the button again to hide them."
+      ],
+      settings: [],
+      tips: [
+        "The rings show in plans, sections and 3D views, not on sheets, schedules or perspective views.",
+        "Showing clash markers hides the rings, and the other way round."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "why-hidden": {
+      name: "Why hidden",
+      tagline: "Find out why an element doesn't show in a view, and undo it with one click.",
+      summary: "Select an element in a view that shows it, open the view where it is missing and click Check active view. BusyBee checks everything that can hide it: category and subcategory, whole category groups, hidden in view, temporary hide, view filters, worksets, phases, parts, the crop region, the 3D section box, the section line and far clip, the view range, and detail elements that belong to another view. Most causes have a button that undoes them.",
+      when: [
+        "A duct is in 3D but not in the plan, and Visibility/Graphics looks fine.",
+        "A colleague's view template or filter hides something and you don't know which.",
+        "A detail element seems to be gone."
+      ],
+      steps: [
+        "Select the element in a view that shows it and click [[Why hidden]] in the Utilities section or on the ribbon. Or open it and type the element ID.",
+        "Open the view where the element is missing and click [[Check active view]]. The window stays open beside Revit.",
+        "Each cause is listed with its details, such as the filter's name or the heights of the view range.",
+        "Click the button on a cause, such as [[Show category]], [[Show filter]], [[Unhide]], [[Crop off]] or [[Section box off]], to undo it. The view is checked again afterwards. Each fix is one undo step.",
+        "[[Show element]] selects the element and lets Revit bring it on screen."
+      ],
+      settings: [
+        ["View templates", "When a view template controls the setting, the row says so and the fix asks before changing the template."],
+        ["Explained, not changed", "View range, phases and closed worksets are explained with the numbers and names, but BusyBee doesn't change them."],
+        ["Design options", "Revit doesn't tell add-ins which design option a view shows, so an element in a secondary option is listed as a possible cause."]
+      ],
+      tips: ["If nothing explains it, the window lists what it can't read: plan regions, drawn crop shapes, family visibility settings, link display settings and the discipline."],
+      issues: [],
+      shots: []
+    },
+
+    "space-sync": {
+      name: "Space Sync",
+      tagline: "Create and update MEP spaces from the architect's rooms.",
+      summary: "Takes the rooms from a linked model, or from this one, and finds the space at each room's place. Every room is listed as New space, Changed or Up to date, and spaces whose room is gone as No room. Sync ticked creates, updates and deletes them in one undo step, with number, name, height and any parameters you choose.",
+      when: [
+        "Setting up spaces in a new MEP model from the architecture link.",
+        "The architect renamed, renumbered or deleted rooms and the spaces should follow.",
+        "Copying room parameters such as usage or fire zone to the spaces."
+      ],
+      steps: [
+        "Open [[Space Sync]] from the Automation section of the panel or the ribbon.",
+        "Under [[Rooms from]], pick the linked model (or this model). If the link isn't room bounding, click [[Make room bounding]].",
+        "Choose what to copy: number, name, height and, with [[Parameters…]], more room parameters to copy to the space parameter of the same name.",
+        "Click [[Scan]]. New and changed rows come ticked; changes show as old → new. Double-click a row to zoom to it.",
+        "Click [[Sync ticked]]. Cancel in the progress window undoes everything."
+      ],
+      settings: [
+        ["Space height", "Same top as the room, up to the level above, or don't change."],
+        ["Levels", "Spaces go on the level of this model at the room's level height (within 10 mm). Without one, the row says No level: copy the levels first, for example with Copy levels."],
+        ["No room", "Spaces whose room was deleted or moved are never ticked by themselves. Deleting them asks first."],
+        ["Phases", "Rooms come from the newest phase of the source model that has rooms; spaces go into this model's last phase."]
+      ],
+      tips: [
+        "Two rooms inside one space are reported, not written.",
+        "New spaces that end up with no area are counted in the result: check the room bounding of the link and the level heights."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "parameter-manager": {
+      name: "Parameter Manager",
+      tagline: "Every project and shared parameter in one table, with usage and issues.",
+      summary: "Lists every project and shared parameter of the model with its kind, instance or type, group, data type and categories. Count usage shows how many elements actually have a value. Bind several parameters to other categories at once, add parameters from the shared parameter file, delete the ones nobody uses, and save the table to Excel.",
+      when: [
+        "Cleaning up a model or a template full of old parameters.",
+        "Checking which parameters are really filled before a handover.",
+        "Adding the office's shared parameters to several categories at once."
+      ],
+      steps: [
+        "Open [[Parameter Manager]] from the Automation section of the panel or the ribbon.",
+        "Search by name, group, category or GUID. Hover the categories to see all of them.",
+        "Click [[Count usage]] to fill the Filled column, such as 12 / 340 (4 %). [[Only with issues]] shows names that exist twice, parameters bound to no category and, after counting, the ones never filled.",
+        "Tick parameters and use [[Categories…]], [[Delete]] or [[Excel…]]. [[Add from shared file…]] adds parameters the model doesn't have yet."
+      ],
+      settings: [
+        ["Categories…", "Binds the ticked parameters to exactly the categories you tick; instance or type and the group stay. It starts from the categories they all share."],
+        ["Add from shared file…", "Lists the parameters of Revit's current shared parameter file that the model lacks. Tick parameters and categories, choose instance or type and the group in Properties."],
+        ["Undo", "Each change is one undo step."]
+      ],
+      tips: [
+        "Removing a category deletes the parameter's values on those elements. BusyBee asks first; try it on a copy.",
+        "With no shared parameter file set in Revit, Add from shared file… says where to set one."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "view-templates": {
+      name: "View Template Manager",
+      tagline: "Compare view templates, see their filters side by side and copy them between models.",
+      summary: "Lists every view template with its view type, how many views use it, how many settings it controls, how many categories it hides and how many filters it has. Compare two templates, see a filter matrix across several, copy filters from one template to others, copy templates into another open project, and delete the unused ones.",
+      when: [
+        "Two templates that should match don't, and you want to know where.",
+        "Rolling out a new view filter to all plan templates.",
+        "Bringing the office templates into a project, or clearing out unused ones."
+      ],
+      steps: [
+        "Open [[View Templates]] from the Automation section of the panel or the ribbon.",
+        "Search, or tick [[Only unused]] to see templates no view uses. Hover the Views count for the view names.",
+        "Tick two templates and click [[Compare]] for every setting, category and filter that differs.",
+        "Tick several and click [[Filter matrix]]: each filter's state in each template, such as visible, hidden or switched off.",
+        "[[Copy filters from…]] gives the ticked templates another template's filters with the same visibility and overrides. [[Copy to model…]] copies them into another open project. [[Delete]] removes them."
+      ],
+      settings: [
+        ["Copy filters from…", "Filters the target templates already have stay as they are."],
+        ["Copy to model…", "Templates whose name already exists in the other model are skipped, and the other model's own types win over ones with the same name."]
+      ],
+      tips: ["Setting names and values follow Revit's language, as in its own View Templates dialog."],
       issues: [],
       shots: []
     },

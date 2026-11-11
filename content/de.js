@@ -64,7 +64,8 @@ BB.text.de = {
     captionDe: "Screenshot aus Revit 2026 mit BusyBee auf Deutsch. Klick drauf, um ihn in voller Größe zu sehen.",
     close: "Schließen",
     oldShot: "Dieser Screenshot stammt aus Version 1.18. Das Fenster hat inzwischen mehr Optionen, siehe unten.",
-    clipCaption: "Kurzer Clip aus Revit 2026 mit dem Beispielprojekt Snowdon Towers. Der gelbe Ring zeigt einen Klick. Klick drauf, um ihn in voller Größe zu sehen."
+    clipCaption: "Kurzer Clip aus Revit 2026 mit dem Beispielprojekt Snowdon Towers. Der gelbe Ring zeigt einen Klick. Klick drauf, um ihn in voller Größe zu sehen.",
+    videoCaption: "Bildschirmaufnahme aus Revit 2026. Klick drauf, um sie in voller Größe zu sehen."
   },
 
   home: {
@@ -74,7 +75,7 @@ BB.text.de = {
     ctaTools: "Werkzeuge ansehen",
     current: "Aktuelle Version",
     toolsTitle: "Was BusyBee kann",
-    toolsLead: "Elf Werkzeuge in drei Gruppen. Du öffnest alle aus dem BusyBee-Bereich.",
+    toolsLead: "Alle Werkzeuge und Hilfsmittel, in drei Gruppen. Du öffnest sie aus dem BusyBee-Bereich oder der Multifunktionsleiste.",
     whatsNew: "Neu in dieser Version",
     allChanges: "Alle Änderungen",
     next: "Als Nächstes",
@@ -724,6 +725,209 @@ BB.text.de = {
       ],
       settings: [],
       tips: ["Änderungen an Räumen in diesem Modell erscheinen sofort. Für Änderungen in einer Verknüpfung schalt die Umrisse aus und wieder ein."],
+      issues: [],
+      shots: []
+    },
+
+    "connect-elements": {
+      name: "Elemente verbinden",
+      tagline: "Zwei Rohre, Kanäle oder Formteile anklicken, die sich fast berühren, und sie sind verbunden.",
+      summary: "Für Rohre, Kanäle, Kabeltrassen, Formteile und Zubehör, die dicht nebeneinander enden, aber nicht verbunden sind. Klick zuerst das Teil, das bleibt, dann das Teil, das dorthin soll. BusyBee wählt die passende Lösung: Es dreht und schiebt ein Formteil auf das Rohr, verlängert ein Rohr, macht aus zwei Rohren eines oder setzt einen Bogen, ein T-Stück, ein Kreuzstück, einen Übergang oder einen Versatz aus deinen Routing-Einstellungen ein. Ein Flexkanal oder Flexrohr biegt nur sein Ende. Es fragt nach dem nächsten Paar, bis du Esc drückst.",
+      when: [
+        "Ein Bogen oder T-Stück sitzt nach dem Kopieren oder Verschieben ein paar Zentimeter neben seinem Rohr.",
+        "Zwei Leitungen hören kurz voreinander auf, in einer Linie, im Winkel oder in verschiedenen Höhen.",
+        "Ein Abzweig endet neben einer Hauptleitung und braucht ein T-Stück, oder ein Bogen soll für ein neues Rohr zum T-Stück werden.",
+        "Die Flexkanäle wurden zuerst gezeichnet und die Luftauslässe später gesetzt."
+      ],
+      steps: [
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Elemente verbinden]]. Solange das Werkzeug läuft, ist die Schaltfläche im Bereich gelb umrandet.",
+        "Klick das Teil, das bleiben soll, wo es ist.",
+        "Klick das Teil, das dorthin soll. BusyBee verbindet ihre nächsten offenen Enden.",
+        "Klick das nächste Paar. Esc oder ein weiterer Klick auf die umrandete Schaltfläche beendet es. Jedes Paar ist ein Rückgängig-Schritt."
+      ],
+      settings: [
+        ["Formteil an Rohr", "Das Formteil wird zum Rohrende gedreht, bei Rechteckkanälen passend gerollt und daraufgeschoben. Seine anderen Verbindungen kommen mit."],
+        ["Rohr an Rohr in einer Linie", "Gleicher Typ und gleiche Größe: Sie werden zu einem Rohr. Verschiedene Größen: Das zweite wird länger und ein Übergang kommt dazwischen. Sein anderes Ende bleibt, wo es ist."],
+        ["Im Winkel", "Zwei Rohre oder Kanäle, die sich an einer Ecke treffen, bekommen einen Bogen."],
+        ["T-Stück", "Ein Rohr oder Kanal, das neben einem anderen endet, bekommt dort ein T-Stück. Schräge Abzweige bekommen ein schräges T-Stück oder Hosenstück, wenn die Routing-Einstellungen eines haben; Typen mit Abzweig-Anschluss bekommen einen solchen."],
+        ["Bogen zu T-Stück, T-Stück zu Kreuz", "Klick einen Bogen und ein Rohr, das von der anderen Seite kommt: Der Bogen wird zum T-Stück. Klick ein rechtwinkliges T-Stück und ein Rohr gegenüber seinem Abzweig: Es wird zum Kreuzstück."],
+        ["Versatz", "Zwei parallele Leitungen in verschiedenen Höhen, oder nebeneinander, wenn die zweite am anderen Ende festhängt, bekommen zwei Bögen und ein Stück dazwischen: 45°, wo Platz ist, sonst 90°."],
+        ["Flex", "Ein Flexkanal oder Flexrohr wird nie als Ganzes verschoben. Nur sein Ende geht zum anderen Teil, und der Flex biegt sich mit, egal in welcher Reihenfolge du klickst."],
+        ["Größe anpassen", "Ein Formteil, das an ein Rohr anderer Größe kommt, fragt, ob es angepasst werden soll. Sagst du nein, oder geht es nicht, wird es in seiner eigenen Größe verbunden."],
+        ["Weit auseinander", "Liegen die Enden mehr als 1 m auseinander, fragt BusyBee, bevor es etwas verschiebt."]
+      ],
+      tips: [
+        "Auch Teile ohne offenes Ende, etwa ein an beiden Enden verbundenes Rohr, lassen sich anklicken: Sie bekommen ein T-Stück.",
+        "Wird ein T-Stück, Kreuzstück oder Übergang abgelehnt, nennt die Meldung den Rohr- oder Kanaltyp: Füg das Formteil in dessen Routing-Einstellungen hinzu.",
+        "Fixierte Teile werden nicht verschoben. Lös die Fixierung, oder klick die beiden andersherum.",
+        "Um viele Lücken auf einmal zu schließen, nimm [[Alle verbinden]]."
+      ],
+      issues: [],
+      shots: [
+        { video: "connect-elements-pipes.mp4", still: 22.7, alt: "Rohre, die zu kurz enden, werden Paar für Paar verbunden: ein T-Stück an die Hauptleitung, schräge Abzweige und Bögen" },
+        { video: "connect-elements-flex-duct.mp4", still: 10.5, alt: "Ein Flexkanal wird nach dem Luftauslass angeklickt: Nur sein Ende biegt sich auf den Auslass" }
+      ]
+    },
+
+    "connect-all": {
+      name: "Alle verbinden",
+      tagline: "Alle kleinen Lücken in einem Bereich auf einmal schließen.",
+      summary: "Zieh ein Rechteck über einen Teil des Modells, oder wähl vorher Teile aus. BusyBee listet je zwei offene Enden, die aufeinander zeigen und höchstens 1 m auseinander liegen, und jedes Flexkanal- oder Flexrohrende mit etwas bis 2 m entfernt, zu dem es sich biegen kann. Nimm die Haken weg, wo du nichts willst, und klick Verbinden: Jedes Paar wird verbunden wie mit Elemente verbinden, und ein Strg+Z macht alle rückgängig.",
+      when: [
+        "Ein Geschoss voller Formteile und Rohre, die leicht versetzt hineinkopiert wurden.",
+        "Flexkanäle über einer Reihe von Luftauslässen.",
+        "Ein importiertes oder umgewandeltes Modell aufräumen."
+      ],
+      steps: [
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Alle verbinden]].",
+        "Zieh ein Rechteck über den Bereich. Oder wähl vorher Teile aus, zum Beispiel die Luftauslässe, und drück dann die Schaltfläche: Jedes wird mit den offenen Enden um es herum in der Ansicht gepaart.",
+        "Die Liste zeigt jedes Paar als bewegt → bleibt, mit dem Abstand, das nächste zuerst. Nimm den Haken weg, wo nichts passieren soll.",
+        "Klick [[Verbinden]]. Eine Zusammenfassung sagt, wie viele verbunden wurden und warum andere nicht."
+      ],
+      settings: [
+        ["Welche Enden", "Enden derselben Art (Rohr, Kanal, Kabeltrasse, Leerrohr), die innerhalb von 10° aufeinander zeigen und höchstens 1 m auseinander liegen. Jedes Ende einmal, das nächste zuerst."],
+        ["Flexenden", "Ein Flexende passt zu einem Ende eines Luftauslasses, Formteils oder Zubehörs bis 2 m entfernt, in jeder Richtung, solange dieses Ende nicht von ihm wegzeigt. Der Flex biegt sich; der Auslass bleibt."],
+        ["Wer sich bewegt", "Ein Flex biegt sich zum anderen Teil. Sonst kommt ein Formteil zum Rohr oder Kanal, nicht umgekehrt."]
+      ],
+      tips: [
+        "Es wird nicht pro Paar nachgefragt: Der Haken in der Liste ist die Zustimmung.",
+        "Schalt vorher [[Offene Enden]] ein, um zu sehen, was noch lose ist, und danach noch einmal zur Kontrolle."
+      ],
+      issues: [],
+      shots: [
+        { video: "connect-elements-flex.mp4", still: 5, alt: "Ein Flexkanal und ein Luftauslass: Das Flexende biegt sich auf den Auslass und wird verbunden" }
+      ]
+    },
+
+    "open-ends": {
+      name: "Offene Enden",
+      tagline: "Jedes unverbundene Ende im Modell sehen.",
+      summary: "Setzt einen orangen Ring an jedes Ende eines Rohrs, Kanals, einer Kabeltrasse, eines Leerrohrs, Formteils oder Zubehörs, das mit nichts verbunden ist. Luftauslässe und Geräte bleiben außen vor, weil ihre freien Anschlüsse meist Absicht sind. Die Ringe werden wie die Kollisionsmarkierungen über die Ansicht gezeichnet: Im Modell kommt nichts dazu.",
+      when: [
+        "Vor der Übergabe eines Modells, um Leitungen zu finden, die in der Luft enden.",
+        "Nach Alle verbinden, um zu sehen, was noch lose ist.",
+        "Wenn ein System als nicht verbunden gilt und du nicht siehst, wo."
+      ],
+      steps: [
+        "Klick im Abschnitt Hilfsmittel des BusyBee-Bereichs oder in der Gruppe Hilfsmittel der Multifunktionsleiste auf [[Offene Enden]]. Eine Meldung sagt, wie viele offene Enden das Modell hat und wie viele in dieser Ansicht liegen.",
+        "Fahr über einen Ring, um das Teil zu sehen; ein Klick wählt es aus und zoomt hin.",
+        "Die Ringe folgen dir in andere Ansichten des Modells und werden aktualisiert, wenn du Teile mit Elemente verbinden oder Alle verbinden verbindest.",
+        "Klick die Schaltfläche noch einmal, um sie auszublenden."
+      ],
+      settings: [],
+      tips: [
+        "Die Ringe erscheinen in Grundrissen, Schnitten und 3D-Ansichten, nicht auf Plänen, in Bauteillisten oder perspektivischen Ansichten.",
+        "Kollisionsmarkierungen blenden die Ringe aus, und umgekehrt."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "why-hidden": {
+      name: "Warum unsichtbar",
+      tagline: "Herausfinden, warum ein Element in einer Ansicht fehlt, und es mit einem Klick beheben.",
+      summary: "Wähl ein Element in einer Ansicht, die es zeigt, öffne die Ansicht, in der es fehlt, und klick Aktive Ansicht prüfen. BusyBee prüft alles, was es verbergen kann: Kategorie und Unterkategorie, ganze Kategoriegruppen, In Ansicht ausblenden, temporäres Ausblenden, Ansichtsfilter, Bearbeitungsbereiche, Phasen, Teile, den Zuschneidebereich, den 3D-Schnittbereich, die Schnittlinie und hintere Schnittgrenze, den Ansichtsbereich und Detailelemente, die zu einer anderen Ansicht gehören. Für die meisten Ursachen gibt es eine Schaltfläche, die sie aufhebt.",
+      when: [
+        "Ein Kanal ist in 3D zu sehen, aber nicht im Grundriss, und Sichtbarkeit/Grafiken sieht gut aus.",
+        "Die Ansichtsvorlage oder ein Filter eines Kollegen verbirgt etwas, und du weißt nicht, welcher.",
+        "Ein Detailelement scheint verschwunden."
+      ],
+      steps: [
+        "Wähl das Element in einer Ansicht, die es zeigt, und klick im Abschnitt Hilfsmittel oder in der Multifunktionsleiste auf [[Warum unsichtbar]]. Oder öffne es und gib die Element-ID ein.",
+        "Öffne die Ansicht, in der das Element fehlt, und klick [[Aktive Ansicht prüfen]]. Das Fenster bleibt neben Revit offen.",
+        "Jede Ursache steht mit ihren Details da, etwa dem Namen des Filters oder den Höhen des Ansichtsbereichs.",
+        "Klick die Schaltfläche einer Ursache, etwa [[Kategorie einblenden]], [[Filter einblenden]], [[Einblenden]], [[Zuschnitt aus]] oder [[Schnittbereich aus]], um sie aufzuheben. Danach wird die Ansicht neu geprüft. Jede Korrektur ist ein Rückgängig-Schritt.",
+        "[[Element zeigen]] wählt das Element aus und lässt Revit es auf den Bildschirm holen."
+      ],
+      settings: [
+        ["Ansichtsvorlagen", "Steuert eine Ansichtsvorlage die Einstellung, sagt die Zeile das, und die Korrektur fragt, bevor sie die Vorlage ändert."],
+        ["Erklärt, nicht geändert", "Ansichtsbereich, Phasen und geschlossene Bearbeitungsbereiche werden mit Zahlen und Namen erklärt, aber BusyBee ändert sie nicht."],
+        ["Entwurfsoptionen", "Revit verrät Add-ins nicht, welche Entwurfsoption eine Ansicht zeigt. Ein Element in einer Nebenoption steht deshalb als mögliche Ursache da."]
+      ],
+      tips: ["Erklärt nichts das Fehlen, listet das Fenster, was es nicht lesen kann: Planbereiche, gezeichnete Zuschnittformen, Sichtbarkeitseinstellungen von Familien, Anzeigeeinstellungen von Verknüpfungen und die Disziplin."],
+      issues: [],
+      shots: []
+    },
+
+    "space-sync": {
+      name: "MEP-Räume abgleichen",
+      tagline: "MEP-Räume aus den Räumen der Architektur erstellen und aktuell halten.",
+      summary: "Nimmt die Räume aus einem verknüpften Modell, oder aus diesem, und sucht den MEP-Raum an der Stelle jedes Raums. Jeder Raum steht als Neuer MEP-Raum, Geändert oder Aktuell in der Liste, MEP-Räume ohne Raum als Kein Raum. Angehakte abgleichen erstellt, ändert und löscht sie in einem Rückgängig-Schritt, mit Nummer, Name, Höhe und den Parametern, die du wählst.",
+      when: [
+        "MEP-Räume in einem neuen TGA-Modell aus der Architekturverknüpfung anlegen.",
+        "Die Architektur hat Räume umbenannt, umnummeriert oder gelöscht, und die MEP-Räume sollen folgen.",
+        "Raumparameter wie Nutzung oder Brandabschnitt auf die MEP-Räume übertragen."
+      ],
+      steps: [
+        "Öffne [[MEP-Räume abgleichen]] im Abschnitt Automatisierung des Bereichs oder in der Multifunktionsleiste.",
+        "Wähl unter [[Räume aus]] das verknüpfte Modell (oder dieses Modell). Ist die Verknüpfung nicht raumbegrenzend, klick [[Raumbegrenzend machen]].",
+        "Wähl, was übertragen wird: Nummer, Name, Höhe und mit [[Parameter…]] weitere Raumparameter, die in den gleichnamigen Parameter des MEP-Raums kommen.",
+        "Klick [[Prüfen]]. Neue und geänderte Zeilen sind angehakt; Änderungen stehen als alt → neu da. Ein Doppelklick zoomt hin.",
+        "Klick [[Angehakte abgleichen]]. Abbrechen im Fortschrittsfenster macht alles rückgängig."
+      ],
+      settings: [
+        ["Höhe des MEP-Raums", "Gleiche Oberkante wie der Raum, bis zur Ebene darüber, oder nicht ändern."],
+        ["Ebenen", "MEP-Räume kommen auf die Ebene dieses Modells in der Höhe der Raumebene (auf 10 mm genau). Fehlt sie, steht Keine Ebene da: Kopier die Ebenen vorher, zum Beispiel mit Ebenen kopieren."],
+        ["Kein Raum", "MEP-Räume, deren Raum gelöscht oder verschoben wurde, sind nie von selbst angehakt. Löschen fragt vorher."],
+        ["Phasen", "Räume kommen aus der neuesten Phase des Quellmodells, die Räume hat; MEP-Räume in die letzte Phase dieses Modells."]
+      ],
+      tips: [
+        "Zwei Räume in einem MEP-Raum werden gemeldet, nicht geschrieben.",
+        "Neue MEP-Räume ohne Fläche werden im Ergebnis gezählt: Prüf die Raumbegrenzung der Verknüpfung und die Ebenenhöhen."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "parameter-manager": {
+      name: "Parameter-Manager",
+      tagline: "Alle Projekt- und gemeinsam genutzten Parameter in einer Tabelle, mit Nutzung und Auffälligkeiten.",
+      summary: "Listet jeden Projekt- und gemeinsam genutzten Parameter des Modells mit Art, Exemplar oder Typ, Gruppe, Datentyp und Kategorien. Nutzung zählen zeigt, wie viele Elemente wirklich einen Wert haben. Weise mehrere Parameter auf einmal anderen Kategorien zu, füg Parameter aus der Parameterdatei hinzu, lösch die, die niemand nutzt, und speichere die Tabelle als Excel-Datei.",
+      when: [
+        "Ein Modell oder eine Vorlage voller alter Parameter aufräumen.",
+        "Vor einer Übergabe prüfen, welche Parameter wirklich gefüllt sind.",
+        "Die gemeinsam genutzten Parameter des Büros mehreren Kategorien auf einmal zuweisen."
+      ],
+      steps: [
+        "Öffne [[Parameter-Manager]] im Abschnitt Automatisierung des Bereichs oder in der Multifunktionsleiste.",
+        "Such nach Name, Gruppe, Kategorie oder GUID. Fahr über die Kategorien, um alle zu sehen.",
+        "Klick [[Nutzung zählen]], um die Spalte Gefüllt zu füllen, etwa 12 / 340 (4 %). [[Nur Auffällige]] zeigt doppelte Namen, Parameter ohne Kategorie und nach dem Zählen die nie gefüllten.",
+        "Hak Parameter an und nimm [[Kategorien…]], [[Löschen]] oder [[Excel…]]. [[Aus Parameterdatei hinzufügen…]] fügt Parameter hinzu, die das Modell noch nicht hat."
+      ],
+      settings: [
+        ["Kategorien…", "Weist die angehakten Parameter genau den angehakten Kategorien zu; Exemplar oder Typ und die Gruppe bleiben. Es startet mit den Kategorien, die alle gemeinsam haben."],
+        ["Aus Parameterdatei hinzufügen…", "Listet die Parameter der aktuellen Parameterdatei von Revit, die das Modell nicht hat. Hak Parameter und Kategorien an, wähl Exemplar oder Typ und die Gruppe in den Eigenschaften."],
+        ["Rückgängig", "Jede Änderung ist ein Rückgängig-Schritt."]
+      ],
+      tips: [
+        "Eine Kategorie zu entfernen löscht die Werte des Parameters an diesen Elementen. BusyBee fragt vorher; probier es an einer Kopie.",
+        "Ist in Revit keine Parameterdatei eingestellt, sagt Aus Parameterdatei hinzufügen…, wo du sie einstellst."
+      ],
+      issues: [],
+      shots: []
+    },
+
+    "view-templates": {
+      name: "Ansichtsvorlagen",
+      tagline: "Ansichtsvorlagen vergleichen, ihre Filter nebeneinander sehen und zwischen Modellen kopieren.",
+      summary: "Listet jede Ansichtsvorlage mit Ansichtstyp, wie viele Ansichten sie nutzen, wie viele Einstellungen sie steuert, wie viele Kategorien sie ausblendet und wie viele Filter sie hat. Vergleich zwei Vorlagen, sieh eine Filtermatrix über mehrere, übernimm die Filter einer Vorlage in andere, kopier Vorlagen in ein anderes offenes Projekt und lösch die unbenutzten.",
+      when: [
+        "Zwei Vorlagen sollten gleich sein, sind es aber nicht, und du willst wissen, wo.",
+        "Einen neuen Ansichtsfilter in alle Grundrissvorlagen bringen.",
+        "Die Bürovorlagen in ein Projekt holen oder unbenutzte aufräumen."
+      ],
+      steps: [
+        "Öffne [[Ansichtsvorlagen]] im Abschnitt Automatisierung des Bereichs oder in der Multifunktionsleiste.",
+        "Such, oder hak [[Nur unbenutzte]] an, um Vorlagen zu sehen, die keine Ansicht nutzt. Fahr über die Zahl der Ansichten für ihre Namen.",
+        "Hak zwei Vorlagen an und klick [[Vergleichen]]: jede Einstellung, Kategorie und jeder Filter, der sich unterscheidet.",
+        "Hak mehrere an und klick [[Filtermatrix]]: der Zustand jedes Filters in jeder Vorlage, etwa sichtbar, ausgeblendet oder ausgeschaltet.",
+        "[[Filter übernehmen von…]] gibt den angehakten Vorlagen die Filter einer anderen Vorlage mit gleicher Sichtbarkeit und Überschreibungen. [[In Modell kopieren…]] kopiert sie in ein anderes offenes Projekt. [[Löschen]] entfernt sie."
+      ],
+      settings: [
+        ["Filter übernehmen von…", "Filter, die die Zielvorlagen schon haben, bleiben, wie sie sind."],
+        ["In Modell kopieren…", "Vorlagen, deren Name es im anderen Modell schon gibt, werden übersprungen, und die eigenen Typen des anderen Modells gewinnen gegen gleichnamige."]
+      ],
+      tips: ["Namen und Werte der Einstellungen folgen der Sprache von Revit, wie in seinem eigenen Dialog Ansichtsvorlagen."],
       issues: [],
       shots: []
     },
